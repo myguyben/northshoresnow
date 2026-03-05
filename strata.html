@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strata Council Snow &amp; Ice Management | NorthShoreSnow - North Vancouver</title>
+  <meta name="description" content="Professional snow and ice management for strata councils in North Vancouver. Common area maintenance, liability protection, seasonal contracts, and compliance documentation.">
+  <link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/685dfb107a5167887f1441bf_NSS%20logo%20orginal%20no%20text.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lato:wght@300;400;700&family=Open+Sans:wght@400;600&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Strata Page Specific Styles */
+    .hero-services {
+      position: relative;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      padding-top: 100px;
+      padding-bottom: 60px;
+      overflow: hidden;
+    }
+    .hero-services .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-services .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-services .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(15,42,74,0.93) 0%, rgba(26,58,92,0.8) 50%, rgba(15,42,74,0.7) 100%);
+      z-index: 1;
+    }
+    .hero-services .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 750px;
+    }
+    .hero-services h1 {
+      color: var(--white);
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    .hero-services .hero-text {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 28px;
+      line-height: 1.7;
+    }
+    .hero-services .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+    .check-list {
+      list-style: none;
+      padding: 0;
+      margin: 24px 0;
+    }
+    .check-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      font-size: 0.95rem;
+      color: var(--gray-700);
+    }
+    .check-list li svg {
+      width: 22px;
+      height: 22px;
+      color: var(--success);
+      flex-shrink: 0;
+    }
+    .section-dark .check-list li {
+      color: rgba(255,255,255,0.85);
+    }
+    .section-dark .check-list li svg {
+      color: var(--accent);
+    }
+    .section-dark .feature-card {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.1);
+    }
+    .section-dark .feature-card:hover {
+      border-color: var(--accent);
+      background: rgba(255,255,255,0.1);
+    }
+    .section-dark .feature-card h4,
+    .section-dark .feature-card p {
+      color: var(--white);
+    }
+    .section-dark .feature-card p {
+      color: rgba(255,255,255,0.7);
+    }
+    .area-intro {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--gray-700);
+      margin-bottom: 20px;
+    }
+    .compliance-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 32px;
+    }
+    .compliance-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: var(--transition);
+    }
+    .compliance-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+    .compliance-card .card-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(56,189,248,0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .compliance-card .card-icon svg {
+      width: 24px;
+      height: 24px;
+      color: var(--accent);
+    }
+    .compliance-card h4 {
+      margin-bottom: 8px;
+      font-size: 1.05rem;
+    }
+    .compliance-card p {
+      font-size: 0.92rem;
+      color: var(--gray-600);
+      line-height: 1.6;
+    }
+    @media (max-width: 768px) {
+      .hero-services {
+        min-height: auto;
+        padding: 120px 0 50px;
+      }
+      .hero-services .hero-buttons {
+        flex-direction: column;
+      }
+      .hero-services .hero-buttons .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="header">
+    <div class="container">
+      <div class="header-top">
+        <div style="display:flex;align-items:center;gap:24px;">
+          <a href="mailto:Quotes@northshoresnow.com" style="display:flex;align-items:center;gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            Quotes@northshoresnow.com
+          </a>
+          <a href="tel:6049907072" style="display:flex;align-items:center;gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            (604) 990-7072
+          </a>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <span>North Vancouver, BC</span>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="header-main">
+        <a href="index.html" class="logo">
+          <img src="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/685dfb107a5167887f1441bf_NSS%20logo%20orginal%20no%20text.png" alt="NorthShoreSnow Logo">
+          <span class="logo-text">NorthShore<span>Snow</span></span>
+        </a>
+        <nav class="nav" id="main-nav">
+          <div class="nav-item">
+            <a href="#" class="nav-link">
+              Our Services
+              <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+            <div class="dropdown">
+              <div class="dropdown-header">Services</div>
+              <a href="snow-removal.html" class="dropdown-link">Commercial Snow Removal<small>Parking lots, walkways &amp; more</small></a>
+              <a href="de-icing.html" class="dropdown-link">De-Icing &amp; Salting<small>Premium de-icing solutions</small></a>
+              <a href="services.html#blackice" class="dropdown-link">Black Ice Protocol<small>24/7 monitoring &amp; prevention</small></a>
+            </div>
+          </div>
+          <div class="nav-item">
+            <a href="#" class="nav-link">
+              Areas
+              <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+            <div class="dropdown">
+              <div class="dropdown-header">Service Areas</div>
+              <a href="areas.html#northshore" class="dropdown-link">North Shore<small>North &amp; West Vancouver</small></a>
+              <a href="areas.html#downtown" class="dropdown-link">Downtown Vancouver<small>Central business district</small></a>
+            </div>
+          </div>
+          <div class="nav-item">
+            <a href="#" class="nav-link">
+              Who We Serve
+              <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+            <div class="dropdown">
+              <div class="dropdown-header">Industries</div>
+              <a href="strata.html" class="dropdown-link">Strata Councils<small>Multi-unit residential properties</small></a>
+              <a href="property-managers.html" class="dropdown-link">Property Managers<small>Commercial property portfolios</small></a>
+            </div>
+          </div>
+          <div class="nav-item">
+            <a href="blog.html" class="nav-link">Blog</a>
+          </div>
+          <div class="nav-item">
+            <a href="contact.html" class="nav-link">Contact</a>
+          </div>
+        </nav>
+        <div class="header-actions">
+          <a href="tel:6049907072" class="header-phone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            (604) 990-7072
+          </a>
+          <a href="contact.html" class="btn btn-primary btn-sm">Get A Quote</a>
+          <button class="mobile-toggle" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero-services">
+    <div class="hero-bg">
+      <img loading="lazy" src="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/682525d988362a7675893d82_mm-1-2.jpg" alt="Snow and ice management for strata councils">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <div class="hero-content">
+        <h1>Snow &amp; Ice Management for Strata Councils</h1>
+        <p class="hero-text">Comprehensive winter maintenance designed for multi-unit residential properties. Protect your residents, reduce liability, and maintain compliance with professional snow and ice management.</p>
+        <div class="hero-buttons">
+          <a href="contact.html" class="btn btn-primary btn-lg">
+            Get Free Quote
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="services.html" class="btn btn-outline btn-lg">Our Services</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMMON AREA MAINTENANCE ============ -->
+  <section class="section" id="common-areas">
+    <div class="container">
+      <div class="split">
+        <div class="split-img">
+          <img loading="lazy" src="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/682525d988362a7675893d82_mm-1-2.jpg" alt="Strata common area snow clearing">
+        </div>
+        <div>
+          <span class="section-label">Common Area Maintenance</span>
+          <h2>Complete Coverage for Shared Spaces</h2>
+          <p class="area-intro">Strata councils carry a significant responsibility for maintaining safe common areas during winter. NorthShoreSnow provides thorough snow removal and ice management for all shared spaces, ensuring every resident can move safely throughout the property.</p>
+          <p>Our teams clear and treat walkways, parking areas, building entrances, garbage and recycling access points, mail kiosks, and any other common areas specified in your strata's site plan. We work around resident schedules and minimize disruption while maximizing safety.</p>
+          <ul class="check-list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Walkways, pathways, and pedestrian corridors
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Parking lots, visitor stalls, and underground ramps
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Building entrances, lobbies, and stairways
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Garbage, recycling, and mail access areas
+            </li>
+          </ul>
+          <a href="contact.html" class="btn btn-primary">
+            Request Quote
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LIABILITY PROTECTION ============ -->
+  <section class="section section-light" id="liability">
+    <div class="container">
+      <div class="split split-reverse">
+        <div>
+          <span class="section-label">Liability Protection</span>
+          <h2>Reduce Your Council's Slip &amp; Fall Risk</h2>
+          <p class="area-intro">As a strata council, you carry direct liability for conditions on your property's common areas. Slip-and-fall claims during winter can result in significant legal costs, insurance premium increases, and damage to your council's reputation with residents.</p>
+          <p>NorthShoreSnow's documented, proactive approach provides the evidence trail you need to demonstrate due diligence. Every service visit is recorded with timestamps, photos, weather conditions, and a detailed log of work performed, giving your council a defensible record of winter maintenance.</p>
+          <ul class="check-list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Timestamped before-and-after photos of every visit
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Detailed service logs with weather data
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Fully insured operations with $5M liability coverage
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Monthly summary reports for council records
+            </li>
+          </ul>
+          <a href="contact.html" class="btn btn-primary">
+            Learn More
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="split-img">
+          <img loading="lazy" src="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/6890fdfa18638d1473325ddb_AdobeStock_95600292.jpeg" alt="Documented snow removal for strata liability protection">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STRATA COMPLIANCE CHECKLIST ============ -->
+  <section class="section" id="compliance">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Strata Compliance</span>
+        <h2>Your Strata Compliance Checklist</h2>
+        <p style="max-width:650px;margin:0 auto;color:var(--gray-600);">NorthShoreSnow ensures your strata meets all winter maintenance obligations. Here is what our comprehensive service covers.</p>
+      </div>
+      <div class="compliance-grid">
+        <div class="compliance-card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <h4>Compliance Documentation</h4>
+          <p>Complete service records that satisfy BC Strata Property Act requirements and demonstrate your council's due diligence in maintaining safe common areas.</p>
+        </div>
+        <div class="compliance-card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h4>Insurance Coverage</h4>
+          <p>Fully insured operations with comprehensive commercial general liability coverage. Certificates of insurance provided for your strata's records and insurance provider.</p>
+        </div>
+        <div class="compliance-card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <h4>Seasonal Contracts</h4>
+          <p>Predictable budgeting with seasonal contracts that cover the entire winter period. No surprise costs or per-visit billing uncertainty for your annual budget.</p>
+        </div>
+        <div class="compliance-card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h4>24/7 Weather Monitoring</h4>
+          <p>Proactive dispatch based on real-time weather data ensures your property is treated before conditions become hazardous, not after residents complain.</p>
+        </div>
+        <div class="compliance-card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+          </div>
+          <h4>Site-Specific Plans</h4>
+          <p>A custom winter operations plan developed for your property's unique layout, including priority zones, equipment selection, and de-icing material specifications.</p>
+        </div>
+        <div class="compliance-card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h4>Council Communication</h4>
+          <p>Direct communication with your strata council, including service notifications, weather alerts, and monthly summary reports for AGM presentation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHY STRATA CHOOSE US ============ -->
+  <section class="section section-dark">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Why Strata Councils Choose Us</span>
+        <h2>Built for Multi-Unit Properties</h2>
+      </div>
+      <div class="grid-4">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <h4>Strata Experience</h4>
+          <p>We manage winter maintenance for dozens of strata properties across the North Shore, understanding the unique demands of multi-unit operations.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>
+          </div>
+          <h4>Eco-Friendly De-Icing</h4>
+          <p>We use environmentally responsible de-icing products that are safe for landscaping, pets, and the shared outdoor spaces your residents enjoy.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <h4>Budget Predictability</h4>
+          <p>Fixed seasonal pricing means no surprise invoices. Your council can budget accurately for winter maintenance every year.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h4>Liability Shield</h4>
+          <p>Our documented approach and comprehensive insurance provide a strong defence against slip-and-fall claims on your common areas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA BANNER ============ -->
+  <section class="cta-banner">
+    <div class="container">
+      <h2>Ready to Protect Your Strata This Winter?</h2>
+      <p>Get a customized snow and ice management plan tailored to your strata property's unique layout and compliance requirements.</p>
+      <a href="contact.html" class="btn btn-primary btn-lg">Get A Free Quote</a>
+      <a href="contact.html" class="btn btn-outline btn-lg">Contact Us</a>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <img src="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/6824fd7687d3c66c13fe26ff_Logo.png" alt="NorthShoreSnow" style="height:50px;">
+          </a>
+          <p>Professional commercial snow and ice management services for North Vancouver and the Lower Mainland. Keeping your property safe all winter long.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+        </div>
+        <!-- Services Column -->
+        <div>
+          <h4>Services</h4>
+          <div class="footer-links">
+            <a href="snow-removal.html">Snow Removal</a>
+            <a href="de-icing.html">De-Icing &amp; Salting</a>
+            <a href="services.html#blackice">Black Ice Protocol</a>
+          </div>
+        </div>
+        <!-- Areas Column -->
+        <div>
+          <h4>Service Areas</h4>
+          <div class="footer-links">
+            <a href="areas.html#northshore">North Vancouver</a>
+            <a href="areas.html#westvancouver">West Vancouver</a>
+            <a href="areas.html#downtown">Downtown Vancouver</a>
+            <a href="areas.html#burnaby">Burnaby</a>
+          </div>
+        </div>
+        <!-- Contact Column -->
+        <div>
+          <h4>Contact</h4>
+          <div class="footer-links">
+            <a href="tel:6049907072">(604) 990-7072</a>
+            <a href="mailto:Quotes@northshoresnow.com">Quotes@northshoresnow.com</a>
+            <a href="contact.html">Request a Quote</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2025 NorthShoreSnow. All rights reserved.</span>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="about.html">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

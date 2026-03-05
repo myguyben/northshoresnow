@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Where We Serve | NorthShoreSnow - Snow &amp; Ice Management Service Areas</title>
+  <meta name="description" content="NorthShoreSnow serves North Vancouver, West Vancouver, Downtown Vancouver, and surrounding areas with professional snow removal and ice management services.">
+  <link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/685dfb107a5167887f1441bf_NSS%20logo%20orginal%20no%20text.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lato:wght@300;400;700&family=Open+Sans:wght@400;600&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Service Areas Page Specific Styles */
+    .hero-services {
+      position: relative;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      padding-top: 100px;
+      padding-bottom: 60px;
+      overflow: hidden;
+    }
+    .hero-services .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-services .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-services .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(15,42,74,0.93) 0%, rgba(26,58,92,0.8) 50%, rgba(15,42,74,0.7) 100%);
+      z-index: 1;
+    }
+    .hero-services .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 750px;
+    }
+    .hero-services h1 {
+      color: var(--white);
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    .hero-services .hero-text {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 28px;
+      line-height: 1.7;
+    }
+    .hero-services .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+    .sa-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+      margin-top: 40px;
+    }
+    .sa-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 32px;
+      text-decoration: none;
+      color: inherit;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .sa-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      opacity: 0;
+      transition: var(--transition);
+    }
+    .sa-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+    }
+    .sa-card:hover::before {
+      opacity: 1;
+    }
+    .sa-card-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(56,189,248,0.1);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 4px;
+    }
+    .sa-card-icon svg {
+      width: 26px;
+      height: 26px;
+      color: var(--accent);
+    }
+    .sa-card h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      color: var(--primary);
+    }
+    .sa-card p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--gray-600);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .sa-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .sa-tag {
+      padding: 4px 10px;
+      background: var(--gray-100);
+      border-radius: 12px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--gray-700);
+    }
+    .sa-card-arrow {
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      transition: var(--transition);
+    }
+    .sa-card:hover .sa-card-arrow {
+      gap: 10px;
+    }
+    .coverage-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 28px 20px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+    }
+    .stat-number {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      display: block;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+    }
+    @media (max-width: 768px) {
+      .hero-services {
+        min-height: auto;
+        padding: 120px 0 50px;
+      }
+      .hero-services .hero-buttons {
+        flex-direction: column;
+      }
+      .hero-services .hero-buttons .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .sa-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="header">
+    <div class="container">
+      <div class="header-top">
+        <div style="display:flex;align-items:center;gap:24px;">
+          <a href="mailto:Quotes@northshoresnow.com" style="display:flex;align-items:center;gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            Quotes@northshoresnow.com
+          </a>
+          <a href="tel:6049907072" style="display:flex;align-items:center;gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            (604) 990-7072
+          </a>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <span>North Vancouver, BC</span>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="header-main">
+        <a href="index.html" class="logo">
+          <img src="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/685dfb107a5167887f1441bf_NSS%20logo%20orginal%20no%20text.png" alt="NorthShoreSnow Logo">
+          <span class="logo-text">NorthShore<span>Snow</span></span>
+        </a>
+        <nav class="nav" id="main-nav">
+          <div class="nav-item">
+            <a href="#" class="nav-link">
+              Our Services
+              <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+            <div class="dropdown">
+              <div class="dropdown-header">Services</div>
+              <a href="snow-removal.html" class="dropdown-link">Commercial Snow Removal<small>Parking lots, walkways &amp; more</small></a>
+              <a href="de-icing.html" class="dropdown-link">De-Icing &amp; Salting<small>Premium de-icing solutions</small></a>
+              <a href="services.html#blackice" class="dropdown-link">Black Ice Protocol<small>24/7 monitoring &amp; prevention</small></a>
+            </div>
+          </div>
+          <div class="nav-item">
+            <a href="#" class="nav-link">
+              Areas
+              <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+            <div class="dropdown">
+              <div class="dropdown-header">Service Areas</div>
+              <a href="areas.html#northshore" class="dropdown-link">North Shore<small>North &amp; West Vancouver</small></a>
+              <a href="areas.html#downtown" class="dropdown-link">Downtown Vancouver<small>Central business district</small></a>
+            </div>
+          </div>
+          <div class="nav-item">
+            <a href="#" class="nav-link">
+              Who We Serve
+              <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+            <div class="dropdown">
+              <div class="dropdown-header">Industries</div>
+              <a href="strata.html" class="dropdown-link">Strata Councils<small>Multi-unit residential properties</small></a>
+              <a href="property-managers.html" class="dropdown-link">Property Managers<small>Commercial property portfolios</small></a>
+            </div>
+          </div>
+          <div class="nav-item">
+            <a href="blog.html" class="nav-link">Blog</a>
+          </div>
+          <div class="nav-item">
+            <a href="contact.html" class="nav-link">Contact</a>
+          </div>
+        </nav>
+        <div class="header-actions">
+          <a href="tel:6049907072" class="header-phone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            (604) 990-7072
+          </a>
+          <a href="contact.html" class="btn btn-primary btn-sm">Get A Quote</a>
+          <button class="mobile-toggle" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero-services">
+    <div class="hero-bg">
+      <img loading="lazy" src="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/6890047c55b644223e5166f3_NSS.jpg" alt="NorthShoreSnow service coverage across Vancouver">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <div class="hero-content">
+        <h1>Where We Serve</h1>
+        <p class="hero-text">From the North Shore mountains to downtown Vancouver, NorthShoreSnow keeps commercial and residential properties safe throughout the winter season. Discover our service coverage below.</p>
+        <div class="hero-buttons">
+          <a href="contact.html" class="btn btn-primary btn-lg">
+            Get Free Quote
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="#service-areas" class="btn btn-outline btn-lg">View Areas</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICE AREAS GRID ============ -->
+  <section class="section" id="service-areas">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Service Coverage</span>
+        <h2>Areas We Cover</h2>
+        <p>Our crews are strategically positioned for rapid response across the North Shore and Greater Vancouver region.</p>
+      </div>
+      <div class="sa-grid">
+        <a href="north-vancouver.html" class="sa-card">
+          <div class="sa-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3>North Vancouver</h3>
+          <p>Our home base. Full coverage from Lower Lonsdale to the upper mountain neighborhoods, including all commercial districts and residential complexes.</p>
+          <div class="sa-card-tags">
+            <span class="sa-tag">Lonsdale</span>
+            <span class="sa-tag">Deep Cove</span>
+            <span class="sa-tag">Lynn Valley</span>
+            <span class="sa-tag">Edgemont</span>
+          </div>
+          <span class="sa-card-arrow">
+            View Details
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+        <a href="west-vancouver.html" class="sa-card">
+          <div class="sa-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3>West Vancouver</h3>
+          <p>Specialized hillside expertise for West Vancouver's premium properties. From British Properties to Horseshoe Bay, we handle the toughest terrain.</p>
+          <div class="sa-card-tags">
+            <span class="sa-tag">British Properties</span>
+            <span class="sa-tag">Ambleside</span>
+            <span class="sa-tag">Dundarave</span>
+          </div>
+          <span class="sa-card-arrow">
+            View Details
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+        <a href="contact.html" class="sa-card">
+          <div class="sa-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3>Downtown Vancouver</h3>
+          <p>Commercial snow clearing for the central business district. Office buildings, retail frontages, and parkade entrances cleared before business hours.</p>
+          <div class="sa-card-tags">
+            <span class="sa-tag">Yaletown</span>
+            <span class="sa-tag">Coal Harbour</span>
+            <span class="sa-tag">Gastown</span>
+          </div>
+          <span class="sa-card-arrow">
+            Request Quote
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+        <a href="deep-cove.html" class="sa-card">
+          <div class="sa-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3>Deep Cove</h3>
+          <p>Winter maintenance for Deep Cove's charming village, residential streets, and hillside strata complexes with specialized steep-terrain equipment.</p>
+          <div class="sa-card-tags">
+            <span class="sa-tag">Village</span>
+            <span class="sa-tag">Residential</span>
+            <span class="sa-tag">Strata</span>
+          </div>
+          <span class="sa-card-arrow">
+            View Details
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+        <a href="lynn-valley.html" class="sa-card">
+          <div class="sa-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3>Lynn Valley</h3>
+          <p>Comprehensive coverage for Lynn Valley's townhome complexes, commercial town centre, and surrounding mountain-side residential neighborhoods.</p>
+          <div class="sa-card-tags">
+            <span class="sa-tag">Town Centre</span>
+            <span class="sa-tag">Townhomes</span>
+            <span class="sa-tag">Residential</span>
+          </div>
+          <span class="sa-card-arrow">
+            View Details
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+        <a href="edgemont-village.html" class="sa-card">
+          <div class="sa-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3>Edgemont Village</h3>
+          <p>Premium winter services for Edgemont's elevated village commercial area and surrounding upscale residential properties at higher North Shore elevations.</p>
+          <div class="sa-card-tags">
+            <span class="sa-tag">Village</span>
+            <span class="sa-tag">Commercial</span>
+            <span class="sa-tag">Residential</span>
+          </div>
+          <span class="sa-card-arrow">
+            View Details
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COVERAGE STATS ============ -->
+  <section class="section section-dark" id="stats">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">By The Numbers</span>
+        <h2 style="color: var(--white);">Our Coverage at a Glance</h2>
+      </div>
+      <div class="coverage-stats">
+        <div class="stat-item">
+          <span class="stat-number">6+</span>
+          <span class="stat-label">Service Areas</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">50+</span>
+          <span class="stat-label">Neighborhoods Covered</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">24/7</span>
+          <span class="stat-label">Weather Monitoring</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">Fast</span>
+          <span class="stat-label">Response Times</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA BANNER ============ -->
+  <section class="cta-banner">
+    <div class="container">
+      <h2>Is Your Property in Our Service Area?</h2>
+      <p>Contact us today to confirm coverage for your location and receive a free, no-obligation snow management quote.</p>
+      <a href="contact.html" class="btn btn-primary btn-lg">Get A Free Quote</a>
+      <a href="contact.html" class="btn btn-outline btn-lg">Contact Us</a>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <img src="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/6824fd7687d3c66c13fe26ff_Logo.png" alt="NorthShoreSnow" style="height:50px;">
+          </a>
+          <p>Professional commercial snow and ice management services for North Vancouver and the Lower Mainland. Keeping your property safe all winter long.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+        </div>
+        <!-- Services Column -->
+        <div>
+          <h4>Services</h4>
+          <div class="footer-links">
+            <a href="snow-removal.html">Snow Removal</a>
+            <a href="de-icing.html">De-Icing &amp; Salting</a>
+            <a href="services.html#blackice">Black Ice Protocol</a>
+          </div>
+        </div>
+        <!-- Areas Column -->
+        <div>
+          <h4>Service Areas</h4>
+          <div class="footer-links">
+            <a href="areas.html#northshore">North Vancouver</a>
+            <a href="areas.html#westvancouver">West Vancouver</a>
+            <a href="areas.html#downtown">Downtown Vancouver</a>
+            <a href="areas.html#burnaby">Burnaby</a>
+          </div>
+        </div>
+        <!-- Contact Column -->
+        <div>
+          <h4>Contact</h4>
+          <div class="footer-links">
+            <a href="tel:6049907072">(604) 990-7072</a>
+            <a href="mailto:Quotes@northshoresnow.com">Quotes@northshoresnow.com</a>
+            <a href="contact.html">Request a Quote</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2025 NorthShoreSnow. All rights reserved.</span>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="about.html">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

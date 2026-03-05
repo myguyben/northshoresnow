@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>De-Icing &amp; Salting Services | NorthShoreSnow - Professional Ice Management</title>
+  <meta name="description" content="Professional de-icing and salting services in North Vancouver, BC. Premium materials, environmental care, and proactive application for lasting winter safety.">
+  <link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/685dfb107a5167887f1441bf_NSS%20logo%20orginal%20no%20text.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lato:wght@300;400;700&family=Open+Sans:wght@400;600&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* De-Icing Page Specific Styles */
+    .hero-services {
+      position: relative;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      padding-top: 100px;
+      padding-bottom: 60px;
+      overflow: hidden;
+    }
+    .hero-services .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-services .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-services .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(15,42,74,0.93) 0%, rgba(26,58,92,0.8) 50%, rgba(15,42,74,0.7) 100%);
+      z-index: 1;
+    }
+    .hero-services .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 750px;
+    }
+    .hero-services h1 {
+      color: var(--white);
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    .hero-services .hero-text {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 28px;
+      line-height: 1.7;
+    }
+    .hero-services .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .check-list {
+      list-style: none;
+      padding: 0;
+      margin: 24px 0;
+    }
+    .check-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      font-size: 0.95rem;
+      color: var(--gray-700);
+    }
+    .check-list li svg {
+      width: 22px;
+      height: 22px;
+      color: var(--success);
+      flex-shrink: 0;
+    }
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      margin-top: 48px;
+    }
+    .detail-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 32px;
+      transition: var(--transition);
+    }
+    .detail-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+    .detail-card .card-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .detail-card .card-icon svg {
+      width: 24px;
+      height: 24px;
+      color: var(--white);
+    }
+    .detail-card h4 {
+      margin-bottom: 12px;
+      font-size: 1.15rem;
+    }
+    .detail-card p {
+      color: var(--gray-600);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .material-comparison {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .material-item {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .material-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+    }
+    .material-item h4 {
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+    .material-item .material-tag {
+      display: inline-block;
+      background: rgba(56,189,248,0.1);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .material-item p {
+      color: var(--gray-600);
+      font-size: 0.92rem;
+      line-height: 1.65;
+    }
+    .section-dark .check-list li {
+      color: rgba(255,255,255,0.85);
+    }
+    .section-dark .check-list li svg {
+      color: var(--accent);
+    }
+    @media (max-width: 768px) {
+      .hero-services {
+        min-height: auto;
+        padding: 120px 0 50px;
+      }
+      .hero-services .hero-buttons {
+        flex-direction: column;
+      }
+      .hero-services .hero-buttons .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="header">
+    <div class="container">
+      <div class="header-top">
+        <div style="display:flex;align-items:center;gap:24px;">
+          <a href="mailto:Quotes@northshoresnow.com" style="display:flex;align-items:center;gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            Quotes@northshoresnow.com
+          </a>
+          <a href="tel:6049907072" style="display:flex;align-items:center;gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            (604) 990-7072
+          </a>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <span>North Vancouver, BC</span>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="header-main">
+        <a href="index.html" class="logo">
+          <img src="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/685dfb107a5167887f1441bf_NSS%20logo%20orginal%20no%20text.png" alt="NorthShoreSnow Logo">
+          <span class="logo-text">NorthShore<span>Snow</span></span>
+        </a>
+        <nav class="nav" id="main-nav">
+          <div class="nav-item">
+            <a href="#" class="nav-link">
+              Our Services
+              <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+            <div class="dropdown">
+              <div class="dropdown-header">Services</div>
+              <a href="snow-removal.html" class="dropdown-link">Commercial Snow Removal<small>Parking lots, walkways &amp; more</small></a>
+              <a href="de-icing.html" class="dropdown-link">De-Icing &amp; Salting<small>Premium de-icing solutions</small></a>
+              <a href="services.html#blackice" class="dropdown-link">Black Ice Protocol<small>24/7 monitoring &amp; prevention</small></a>
+            </div>
+          </div>
+          <div class="nav-item">
+            <a href="#" class="nav-link">
+              Areas
+              <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+            <div class="dropdown">
+              <div class="dropdown-header">Service Areas</div>
+              <a href="areas.html#northshore" class="dropdown-link">North Shore<small>North &amp; West Vancouver</small></a>
+              <a href="areas.html#downtown" class="dropdown-link">Downtown Vancouver<small>Central business district</small></a>
+            </div>
+          </div>
+          <div class="nav-item">
+            <a href="#" class="nav-link">
+              Who We Serve
+              <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+            <div class="dropdown">
+              <div class="dropdown-header">Industries</div>
+              <a href="strata.html" class="dropdown-link">Strata Councils<small>Multi-unit residential properties</small></a>
+              <a href="property-managers.html" class="dropdown-link">Property Managers<small>Commercial property portfolios</small></a>
+            </div>
+          </div>
+          <div class="nav-item">
+            <a href="blog.html" class="nav-link">Blog</a>
+          </div>
+          <div class="nav-item">
+            <a href="contact.html" class="nav-link">Contact</a>
+          </div>
+        </nav>
+        <div class="header-actions">
+          <a href="tel:6049907072" class="header-phone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            (604) 990-7072
+          </a>
+          <a href="contact.html" class="btn btn-primary btn-sm">Get A Quote</a>
+          <button class="mobile-toggle" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero-services">
+    <div class="hero-bg">
+      <img loading="lazy" src="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/6890047c55b644223e5166f3_NSS.jpg" alt="Professional de-icing and salting services">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <div class="hero-content">
+        <span class="section-label" style="color:var(--accent);margin-bottom:12px;display:inline-block;">De-Icing &amp; Salting</span>
+        <h1>Professional De-Icing &amp; Salting Services</h1>
+        <p class="hero-text">Prevent dangerous ice buildup and protect your property with premium de-icing solutions applied by experienced winter maintenance professionals.</p>
+        <div class="hero-buttons">
+          <a href="contact.html" class="btn btn-primary btn-lg">
+            Get Free Quote
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="services.html" class="btn btn-outline btn-lg">All Services</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OVERVIEW SPLIT ============ -->
+  <section class="section" id="overview">
+    <div class="container">
+      <div class="split">
+        <div class="split-img">
+          <img loading="lazy" src="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/6890047c55b644223e5166f3_NSS.jpg" alt="De-icing application on commercial property">
+        </div>
+        <div>
+          <span class="section-label">Our Approach</span>
+          <h2>Comprehensive De-Icing for Safe Surfaces</h2>
+          <p>Ice poses one of the greatest winter hazards for commercial properties. Our professional salting and de-icing services are designed to prevent ice formation before it becomes dangerous and to treat existing icy conditions with premium materials that provide lasting protection against refreeze.</p>
+          <ul class="check-list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Premium de-icing materials
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Environmental care in every application
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Proactive application before conditions worsen
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Lasting protection against refreeze
+            </li>
+          </ul>
+          <a href="contact.html" class="btn btn-primary">
+            Request Quote
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MATERIALS ============ -->
+  <section class="section section-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Our Materials</span>
+        <h2>Premium De-Icing Products</h2>
+        <p style="max-width:640px;margin:0 auto;color:var(--gray-600);line-height:1.7;">We select the right de-icing material for each situation, balancing effectiveness, surface safety, and environmental responsibility.</p>
+      </div>
+      <div class="material-comparison">
+        <div class="material-item">
+          <span class="material-tag">Standard</span>
+          <h4>Rock Salt (Sodium Chloride)</h4>
+          <p>The industry standard for de-icing large commercial areas. Effective down to -12C, rock salt provides reliable ice melting for parking lots, roadways, and high-traffic zones at an excellent value.</p>
+        </div>
+        <div class="material-item">
+          <span class="material-tag">Premium</span>
+          <h4>Calcium Chloride Blend</h4>
+          <p>A high-performance blend that works in colder temperatures down to -25C. Generates heat on contact for faster melting action and is gentler on concrete surfaces than traditional rock salt.</p>
+        </div>
+        <div class="material-item">
+          <span class="material-tag">Eco-Friendly</span>
+          <h4>Treated Sand &amp; Grit</h4>
+          <p>For environmentally sensitive areas near waterways and green spaces. Provides excellent traction on icy surfaces while minimizing chemical runoff and impact on surrounding vegetation.</p>
+        </div>
+        <div class="material-item">
+          <span class="material-tag">Pre-Treatment</span>
+          <h4>Liquid Brine Solution</h4>
+          <p>Applied before storms arrive to prevent ice from bonding to pavement. This proactive approach reduces the amount of de-icing material needed and keeps surfaces safer from the start.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHY DE-ICING MATTERS ============ -->
+  <section class="section section-dark">
+    <div class="container">
+      <div class="split split-reverse">
+        <div>
+          <span class="section-label" style="color:var(--accent);">Why It Matters</span>
+          <h2 style="color:var(--white);">The Importance of Professional De-Icing</h2>
+          <p style="color:rgba(255,255,255,0.8);">Ice-related slip-and-fall incidents are among the most common and costly liability claims for commercial property owners. Professional de-icing is not just about convenience -- it is about protecting your tenants, employees, customers, and your bottom line.</p>
+          <ul class="check-list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Reduce slip-and-fall liability exposure
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Maintain safe access for customers and staff
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Documented service records for legal protection
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Comply with municipal winter maintenance bylaws
+            </li>
+          </ul>
+        </div>
+        <div class="split-img">
+          <img loading="lazy" src="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/682525d988362a7675893d82_mm-1-2.jpg" alt="Ice prevention on commercial walkway">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICE DETAILS ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Service Details</span>
+        <h2>Our De-Icing Process</h2>
+      </div>
+      <div class="detail-grid">
+        <div class="detail-card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h4>Proactive Monitoring</h4>
+          <p>We continuously track weather forecasts and temperature trends. When conditions indicate ice formation risk, our crews are dispatched proactively -- before ice becomes a hazard.</p>
+        </div>
+        <div class="detail-card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>
+          </div>
+          <h4>Precision Application</h4>
+          <p>Using calibrated spreaders, we apply the right amount of material to each surface. Controlled application prevents waste while ensuring complete coverage of all critical areas.</p>
+        </div>
+        <div class="detail-card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h4>Surface Protection</h4>
+          <p>We select materials compatible with your property's surfaces -- concrete, asphalt, pavers, or specialty finishes -- to provide effective de-icing without causing surface damage.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA BANNER ============ -->
+  <section class="cta-banner">
+    <div class="container">
+      <h2>Keep Your Property Ice-Free This Winter</h2>
+      <p>Get a customized de-icing plan with premium materials selected specifically for your commercial property's surfaces and environmental needs.</p>
+      <a href="contact.html" class="btn btn-primary btn-lg">Get A Free Quote</a>
+      <a href="services.html" class="btn btn-outline btn-lg">View All Services</a>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <img src="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/6824fd7687d3c66c13fe26ff_Logo.png" alt="NorthShoreSnow" style="height:50px;">
+          </a>
+          <p>Professional commercial snow and ice management services for North Vancouver and the Lower Mainland. Keeping your property safe all winter long.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+        </div>
+        <!-- Services Column -->
+        <div>
+          <h4>Services</h4>
+          <div class="footer-links">
+            <a href="snow-removal.html">Snow Removal</a>
+            <a href="de-icing.html">De-Icing &amp; Salting</a>
+            <a href="services.html#blackice">Black Ice Protocol</a>
+          </div>
+        </div>
+        <!-- Areas Column -->
+        <div>
+          <h4>Service Areas</h4>
+          <div class="footer-links">
+            <a href="areas.html#northshore">North Vancouver</a>
+            <a href="areas.html#westvancouver">West Vancouver</a>
+            <a href="areas.html#downtown">Downtown Vancouver</a>
+            <a href="areas.html#burnaby">Burnaby</a>
+          </div>
+        </div>
+        <!-- Contact Column -->
+        <div>
+          <h4>Contact</h4>
+          <div class="footer-links">
+            <a href="tel:6049907072">(604) 990-7072</a>
+            <a href="mailto:Quotes@northshoresnow.com">Quotes@northshoresnow.com</a>
+            <a href="contact.html">Request a Quote</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2025 NorthShoreSnow. All rights reserved.</span>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="about.html">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

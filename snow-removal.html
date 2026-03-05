@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commercial Snow Removal | NorthShoreSnow - Professional Snow Clearing</title>
+  <meta name="description" content="Professional commercial snow removal services in North Vancouver, BC. Heavy-duty equipment, rapid response times, and experienced operators for parking lots and walkways.">
+  <link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/685dfb107a5167887f1441bf_NSS%20logo%20orginal%20no%20text.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lato:wght@300;400;700&family=Open+Sans:wght@400;600&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Snow Removal Page Specific Styles */
+    .hero-services {
+      position: relative;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      padding-top: 100px;
+      padding-bottom: 60px;
+      overflow: hidden;
+    }
+    .hero-services .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-services .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-services .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(15,42,74,0.93) 0%, rgba(26,58,92,0.8) 50%, rgba(15,42,74,0.7) 100%);
+      z-index: 1;
+    }
+    .hero-services .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 750px;
+    }
+    .hero-services h1 {
+      color: var(--white);
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    .hero-services .hero-text {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 28px;
+      line-height: 1.7;
+    }
+    .hero-services .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .check-list {
+      list-style: none;
+      padding: 0;
+      margin: 24px 0;
+    }
+    .check-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      font-size: 0.95rem;
+      color: var(--gray-700);
+    }
+    .check-list li svg {
+      width: 22px;
+      height: 22px;
+      color: var(--success);
+      flex-shrink: 0;
+    }
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      margin-top: 48px;
+    }
+    .detail-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 32px;
+      transition: var(--transition);
+    }
+    .detail-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+    .detail-card .card-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .detail-card .card-icon svg {
+      width: 24px;
+      height: 24px;
+      color: var(--white);
+    }
+    .detail-card h4 {
+      margin-bottom: 12px;
+      font-size: 1.15rem;
+    }
+    .detail-card p {
+      color: var(--gray-600);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .section-dark .detail-card {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.1);
+    }
+    .section-dark .detail-card:hover {
+      border-color: var(--accent);
+      background: rgba(255,255,255,0.1);
+    }
+    .section-dark .detail-card h4,
+    .section-dark .detail-card p {
+      color: var(--white);
+    }
+    .section-dark .detail-card p {
+      color: rgba(255,255,255,0.7);
+    }
+    .process-steps {
+      counter-reset: step-counter;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 32px;
+      margin-top: 40px;
+    }
+    .process-step {
+      position: relative;
+      padding: 32px;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      counter-increment: step-counter;
+    }
+    .process-step::before {
+      content: counter(step-counter, decimal-leading-zero);
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      opacity: 0.3;
+      display: block;
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+    .process-step h4 {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+    .process-step p {
+      color: var(--gray-600);
+      font-size: 0.92rem;
+      line-height: 1.65;
+    }
+    @media (max-width: 768px) {
+      .hero-services {
+        min-height: auto;
+        padding: 120px 0 50px;
+      }
+      .hero-services .hero-buttons {
+        flex-direction: column;
+      }
+      .hero-services .hero-buttons .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="header">
+    <div class="container">
+      <div class="header-top">
+        <div style="display:flex;align-items:center;gap:24px;">
+          <a href="mailto:Quotes@northshoresnow.com" style="display:flex;align-items:center;gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            Quotes@northshoresnow.com
+          </a>
+          <a href="tel:6049907072" style="display:flex;align-items:center;gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            (604) 990-7072
+          </a>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <span>North Vancouver, BC</span>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="header-main">
+        <a href="index.html" class="logo">
+          <img src="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/685dfb107a5167887f1441bf_NSS%20logo%20orginal%20no%20text.png" alt="NorthShoreSnow Logo">
+          <span class="logo-text">NorthShore<span>Snow</span></span>
+        </a>
+        <nav class="nav" id="main-nav">
+          <div class="nav-item">
+            <a href="#" class="nav-link">
+              Our Services
+              <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+            <div class="dropdown">
+              <div class="dropdown-header">Services</div>
+              <a href="snow-removal.html" class="dropdown-link">Commercial Snow Removal<small>Parking lots, walkways &amp; more</small></a>
+              <a href="de-icing.html" class="dropdown-link">De-Icing &amp; Salting<small>Premium de-icing solutions</small></a>
+              <a href="services.html#blackice" class="dropdown-link">Black Ice Protocol<small>24/7 monitoring &amp; prevention</small></a>
+            </div>
+          </div>
+          <div class="nav-item">
+            <a href="#" class="nav-link">
+              Areas
+              <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+            <div class="dropdown">
+              <div class="dropdown-header">Service Areas</div>
+              <a href="areas.html#northshore" class="dropdown-link">North Shore<small>North &amp; West Vancouver</small></a>
+              <a href="areas.html#downtown" class="dropdown-link">Downtown Vancouver<small>Central business district</small></a>
+            </div>
+          </div>
+          <div class="nav-item">
+            <a href="#" class="nav-link">
+              Who We Serve
+              <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+            <div class="dropdown">
+              <div class="dropdown-header">Industries</div>
+              <a href="strata.html" class="dropdown-link">Strata Councils<small>Multi-unit residential properties</small></a>
+              <a href="property-managers.html" class="dropdown-link">Property Managers<small>Commercial property portfolios</small></a>
+            </div>
+          </div>
+          <div class="nav-item">
+            <a href="blog.html" class="nav-link">Blog</a>
+          </div>
+          <div class="nav-item">
+            <a href="contact.html" class="nav-link">Contact</a>
+          </div>
+        </nav>
+        <div class="header-actions">
+          <a href="tel:6049907072" class="header-phone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            (604) 990-7072
+          </a>
+          <a href="contact.html" class="btn btn-primary btn-sm">Get A Quote</a>
+          <button class="mobile-toggle" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero-services">
+    <div class="hero-bg">
+      <img loading="lazy" src="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/6890fdfa18638d1473325ddb_AdobeStock_95600292.jpeg" alt="Commercial snow removal equipment clearing parking lot">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <div class="hero-content">
+        <span class="section-label" style="color:var(--accent);margin-bottom:12px;display:inline-block;">Snow Removal</span>
+        <h1>Commercial Snow Removal Services</h1>
+        <p class="hero-text">Keep your commercial property safe, accessible, and fully operational throughout winter with our professional snow removal team and heavy-duty equipment fleet.</p>
+        <div class="hero-buttons">
+          <a href="contact.html" class="btn btn-primary btn-lg">
+            Get Free Quote
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="services.html" class="btn btn-outline btn-lg">All Services</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OVERVIEW SPLIT ============ -->
+  <section class="section" id="overview">
+    <div class="container">
+      <div class="split">
+        <div class="split-img">
+          <img loading="lazy" src="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/6890fdfa18638d1473325ddb_AdobeStock_95600292.jpeg" alt="Snow plow clearing commercial parking lot">
+        </div>
+        <div>
+          <span class="section-label">Our Approach</span>
+          <h2>Reliable Snow Removal for Every Commercial Property</h2>
+          <p>When winter storms hit the North Shore, your business cannot afford downtime. Our commercial snow removal services are designed to keep your parking lots, walkways, loading docks, and entrances clear and safe. We deploy a fleet of plow trucks and ATVs equipped with commercial-grade plows to handle any accumulation, from light dustings to heavy snowfall events.</p>
+          <ul class="check-list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Heavy-duty equipment for any size property
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Rapid response times when storms hit
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Parking lot &amp; walkway clearing
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Experienced operators on every job
+            </li>
+          </ul>
+          <a href="contact.html" class="btn btn-primary">
+            Request Quote
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EQUIPMENT & CAPABILITIES ============ -->
+  <section class="section section-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Equipment &amp; Capabilities</span>
+        <h2>Our Commercial Snow Removal Fleet</h2>
+        <p style="max-width:640px;margin:0 auto;color:var(--gray-600);line-height:1.7;">We maintain a diverse fleet of snow removal equipment to handle any commercial property, from compact urban lots to sprawling industrial facilities.</p>
+      </div>
+      <div class="detail-grid">
+        <div class="detail-card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <h4>Plow Trucks</h4>
+          <p>Heavy-duty plow trucks capable of clearing large parking lots and roadways quickly and efficiently, even in the heaviest snowfall conditions.</p>
+        </div>
+        <div class="detail-card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <h4>ATVs with Plows</h4>
+          <p>Compact ATVs with mounted plows for navigating tight spaces, sidewalks, pathways, and pedestrian areas that larger trucks cannot reach.</p>
+        </div>
+        <div class="detail-card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93 4.93 19.07"/></svg>
+          </div>
+          <h4>Snow Blowers</h4>
+          <p>Industrial-grade snow blowers for clearing walkways, entranceways, and areas where precision snow removal is essential for safety.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OUR PROCESS ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Our Process</span>
+        <h2>How Our Snow Removal Works</h2>
+        <p style="max-width:640px;margin:0 auto;color:var(--gray-600);line-height:1.7;">A systematic approach ensures your property is cleared quickly, safely, and documented for your records.</p>
+      </div>
+      <div class="process-steps">
+        <div class="process-step">
+          <h4>Weather Monitoring</h4>
+          <p>Our team monitors weather conditions 24/7, tracking incoming storms so crews can be pre-positioned and ready to deploy at a moment's notice.</p>
+        </div>
+        <div class="process-step">
+          <h4>Rapid Deployment</h4>
+          <p>When snow accumulation thresholds are met, our crews mobilize immediately with the right equipment for your property's specific needs.</p>
+        </div>
+        <div class="process-step">
+          <h4>Systematic Clearing</h4>
+          <p>Following your property's custom site plan, operators clear priority areas first -- entrances, fire lanes, and high-traffic zones -- then complete the full property.</p>
+        </div>
+        <div class="process-step">
+          <h4>Documentation</h4>
+          <p>Every service visit is documented with timestamped photos and detailed reports, providing you with complete records for liability protection.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ AREAS WE CLEAR ============ -->
+  <section class="section section-light">
+    <div class="container">
+      <div class="split split-reverse">
+        <div>
+          <span class="section-label">Coverage Areas</span>
+          <h2>What We Clear</h2>
+          <p>Our snow removal services cover every part of your commercial property, ensuring comprehensive winter safety for employees, customers, and visitors.</p>
+          <ul class="check-list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Parking lots and parkades
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Sidewalks and pedestrian pathways
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Building entrances and exits
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Loading docks and service areas
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Fire lanes and emergency access routes
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Ramps, stairs, and accessibility routes
+            </li>
+          </ul>
+        </div>
+        <div class="split-img">
+          <img loading="lazy" src="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/6825257f10f34d4ece061275_mm-10.jpg" alt="Commercial property snow clearing">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA BANNER ============ -->
+  <section class="cta-banner">
+    <div class="container">
+      <h2>Ready for Reliable Snow Removal?</h2>
+      <p>Get a customized snow removal plan designed for your commercial property's layout, traffic patterns, and priority areas.</p>
+      <a href="contact.html" class="btn btn-primary btn-lg">Get A Free Quote</a>
+      <a href="services.html" class="btn btn-outline btn-lg">View All Services</a>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <img src="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/6824fd7687d3c66c13fe26ff_Logo.png" alt="NorthShoreSnow" style="height:50px;">
+          </a>
+          <p>Professional commercial snow and ice management services for North Vancouver and the Lower Mainland. Keeping your property safe all winter long.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+        </div>
+        <!-- Services Column -->
+        <div>
+          <h4>Services</h4>
+          <div class="footer-links">
+            <a href="snow-removal.html">Snow Removal</a>
+            <a href="de-icing.html">De-Icing &amp; Salting</a>
+            <a href="services.html#blackice">Black Ice Protocol</a>
+          </div>
+        </div>
+        <!-- Areas Column -->
+        <div>
+          <h4>Service Areas</h4>
+          <div class="footer-links">
+            <a href="areas.html#northshore">North Vancouver</a>
+            <a href="areas.html#westvancouver">West Vancouver</a>
+            <a href="areas.html#downtown">Downtown Vancouver</a>
+            <a href="areas.html#burnaby">Burnaby</a>
+          </div>
+        </div>
+        <!-- Contact Column -->
+        <div>
+          <h4>Contact</h4>
+          <div class="footer-links">
+            <a href="tel:6049907072">(604) 990-7072</a>
+            <a href="mailto:Quotes@northshoresnow.com">Quotes@northshoresnow.com</a>
+            <a href="contact.html">Request a Quote</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2025 NorthShoreSnow. All rights reserved.</span>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="about.html">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

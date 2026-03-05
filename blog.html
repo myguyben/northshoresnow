@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | NorthShoreSnow - Commercial Snow & Ice Management</title>
+    <meta name="description" content="Read the latest articles on commercial snow removal, ice management, and winter safety for North Vancouver businesses.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lato:wght@300;400;700&family=Open+Sans:wght@300;400;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* ===== HEADER / NAV ===== */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            transition: background 0.3s;
+        }
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            height: 72px;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .nav-logo img {
+            height: 42px;
+        }
+        .nav-logo span {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            gap: 6px;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-menu > li {
+            position: relative;
+        }
+        .nav-menu > li > a {
+            display: block;
+            padding: 10px 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.2s;
+            border-radius: 6px;
+        }
+        .nav-menu > li > a:hover,
+        .nav-menu > li > a.active {
+            color: #1a8fe3;
+        }
+        .nav-menu > li > a.active {
+            background: rgba(26, 143, 227, 0.08);
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 220px;
+            background: rgba(15, 30, 52, 0.98);
+            backdrop-filter: blur(12px);
+            border-radius: 10px;
+            padding: 8px 0;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(8px);
+            transition: all 0.25s ease;
+            list-style: none;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .nav-menu > li:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .dropdown-menu li a {
+            display: block;
+            padding: 10px 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            color: #94a3b8;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .dropdown-menu li a:hover {
+            color: #fff;
+            background: rgba(26, 143, 227, 0.1);
+            padding-left: 24px;
+        }
+        .nav-cta {
+            margin-left: 10px;
+        }
+        .nav-cta a {
+            display: inline-block;
+            padding: 10px 22px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #fff;
+            background: #1a8fe3;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .nav-cta a:hover {
+            background: #1478c2;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(26, 143, 227, 0.4);
+        }
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px;
+        }
+        .mobile-toggle span {
+            display: block;
+            width: 24px;
+            height: 2.5px;
+            background: #f1f5f9;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        .mobile-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .mobile-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .mobile-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ===== BLOG HERO ===== */
+        .blog-hero {
+            position: relative;
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: url('https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/682525d988362a7675893d82_mm-1-2.jpg') center center / cover no-repeat;
+            padding: 120px 20px 60px;
+        }
+        .blog-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(10, 25, 47, 0.82) 0%, rgba(10, 25, 47, 0.7) 100%);
+            z-index: 1;
+        }
+        .blog-hero .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 860px;
+        }
+        .blog-hero h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(2.2rem, 5vw, 3.6rem);
+            font-weight: 700;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+        .blog-hero p {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            color: rgba(255, 255, 255, 0.88);
+            line-height: 1.7;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        /* ===== BLOG POSTS ===== */
+        .blog-section {
+            padding: 80px 20px;
+            background: #f8fafc;
+        }
+        .blog-section .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .blog-section .section-header h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 700;
+            color: #0a192f;
+            text-transform: uppercase;
+        }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .blog-card {
+            background: #ffffff;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            display: flex;
+            flex-direction: column;
+        }
+        .blog-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+        }
+        .blog-card-img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            display: block;
+        }
+        .blog-card-body {
+            padding: 28px 28px 32px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .blog-card-body h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #0a192f;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+        .blog-card-body p {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.93rem;
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+        .blog-card-body .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #1a8fe3;
+            text-decoration: none;
+            transition: gap 0.3s ease, color 0.2s;
+        }
+        .blog-card-body .read-more:hover {
+            gap: 10px;
+            color: #0e6db8;
+        }
+        .blog-card-body .read-more svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* ===== CTA BANNER ===== */
+        .cta-banner {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #0a192f 0%, #0f2847 50%, #0a192f 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -25%;
+            width: 150%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(26, 143, 227, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .cta-banner .cta-content {
+            position: relative;
+            z-index: 2;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+        .cta-banner h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 700;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+        }
+        .cta-banner p {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+            margin-bottom: 32px;
+        }
+        .cta-banner .btn-primary {
+            display: inline-block;
+            padding: 16px 40px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #fff;
+            background: linear-gradient(135deg, #1a8fe3 0%, #0e6db8 100%);
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .cta-banner .btn-primary:hover {
+            background: linear-gradient(135deg, #1478c2 0%, #0b5a9e 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(26, 143, 227, 0.4);
+        }
+
+        /* ===== FOOTER ===== */
+        .site-footer {
+            background: #0a192f;
+            color: #cbd5e1;
+            padding: 60px 20px 0;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-bottom: 40px;
+        }
+        .footer-brand img {
+            height: 48px;
+            margin-bottom: 16px;
+        }
+        .footer-brand p {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: #94a3b8;
+            line-height: 1.6;
+            max-width: 300px;
+        }
+        .footer-col h4 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+        }
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+        .footer-col ul li a {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-col ul li a:hover {
+            color: #1a8fe3;
+        }
+        .footer-contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            color: #94a3b8;
+        }
+        .footer-contact-item svg {
+            width: 16px;
+            height: 16px;
+            stroke: #1a8fe3;
+            fill: none;
+            stroke-width: 2;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .footer-bottom p {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            color: #64748b;
+            margin: 0;
+        }
+        .footer-socials {
+            display: flex;
+            gap: 12px;
+        }
+        .footer-socials a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        .footer-socials a:hover {
+            background: #1a8fe3;
+            transform: translateY(-2px);
+        }
+        .footer-socials a svg {
+            width: 16px;
+            height: 16px;
+            fill: #94a3b8;
+        }
+        .footer-socials a:hover svg {
+            fill: #fff;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 991px) {
+            .mobile-toggle {
+                display: flex;
+            }
+            .nav-menu {
+                position: fixed;
+                top: 72px;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                flex-direction: column;
+                background: rgba(10, 25, 47, 0.98);
+                padding: 30px 20px;
+                gap: 4px;
+                transform: translateX(100%);
+                transition: transform 0.35s ease;
+                overflow-y: auto;
+            }
+            .nav-menu.open {
+                transform: translateX(0);
+            }
+            .nav-menu > li > a {
+                padding: 14px 16px;
+                font-size: 1rem;
+            }
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                background: rgba(255, 255, 255, 0.03);
+                border: none;
+                padding: 0 0 0 16px;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+            .dropdown-menu.open {
+                max-height: 300px;
+            }
+            .nav-cta {
+                margin: 16px 0 0;
+            }
+            .nav-cta a {
+                display: block;
+                text-align: center;
+                padding: 14px 22px;
+            }
+        }
+        @media (max-width: 768px) {
+            .blog-grid {
+                grid-template-columns: 1fr;
+                max-width: 540px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 480px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-bottom {
+                justify-content: center;
+                text-align: center;
+            }
+        }
+    </style>
+  <link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/685dfb107a5167887f1441bf_NSS%20logo%20orginal%20no%20text.png">
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+    <div class="container">
+      <div class="header-top">
+        <div style="display:flex;align-items:center;gap:24px;">
+          <a href="mailto:Quotes@northshoresnow.com" style="display:flex;align-items:center;gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            Quotes@northshoresnow.com
+          </a>
+          <a href="tel:6049907072" style="display:flex;align-items:center;gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            (604) 990-7072
+          </a>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <span>North Vancouver, BC</span>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="header-main">
+        <a href="index.html" class="logo">
+          <img src="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/685dfb107a5167887f1441bf_NSS%20logo%20orginal%20no%20text.png" alt="NorthShoreSnow Logo">
+          <span class="logo-text">NorthShore<span>Snow</span></span>
+        </a>
+        <nav class="nav" id="main-nav">
+          <div class="nav-item">
+            <a href="#" class="nav-link">
+              Our Services
+              <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+            <div class="dropdown">
+              <div class="dropdown-header">Services</div>
+              <a href="snow-removal.html" class="dropdown-link">Commercial Snow Removal<small>Parking lots, walkways &amp; more</small></a>
+              <a href="de-icing.html" class="dropdown-link">De-Icing &amp; Salting<small>Premium de-icing solutions</small></a>
+              <a href="services.html#blackice" class="dropdown-link">Black Ice Protocol<small>24/7 monitoring &amp; prevention</small></a>
+            </div>
+          </div>
+          <div class="nav-item">
+            <a href="#" class="nav-link">
+              Areas
+              <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+            <div class="dropdown">
+              <div class="dropdown-header">Service Areas</div>
+              <a href="areas.html#northshore" class="dropdown-link">North Shore<small>North &amp; West Vancouver</small></a>
+              <a href="areas.html#downtown" class="dropdown-link">Downtown Vancouver<small>Central business district</small></a>
+            </div>
+          </div>
+          <div class="nav-item">
+            <a href="#" class="nav-link">
+              Who We Serve
+              <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+            <div class="dropdown">
+              <div class="dropdown-header">Industries</div>
+              <a href="strata.html" class="dropdown-link">Strata Councils<small>Multi-unit residential properties</small></a>
+              <a href="property-managers.html" class="dropdown-link">Property Managers<small>Commercial property portfolios</small></a>
+            </div>
+          </div>
+          <div class="nav-item">
+            <a href="blog.html" class="nav-link">Blog</a>
+          </div>
+          <div class="nav-item">
+            <a href="contact.html" class="nav-link">Contact</a>
+          </div>
+        </nav>
+        <div class="header-actions">
+          <a href="tel:6049907072" class="header-phone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            (604) 990-7072
+          </a>
+          <a href="contact.html" class="btn btn-primary btn-sm">Get A Quote</a>
+          <button class="mobile-toggle" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="blog-hero">
+        <div class="hero-content">
+            <h1>Commercial Snow and Ice Management</h1>
+            <p>Stay open and safe all winter. We deliver proactive, reliable service for retail, industrial, office, and strata properties&mdash;no delays, no disruptions.</p>
+        </div>
+    </section>
+
+    <!-- ===== BLOG POSTS ===== -->
+    <section class="blog-section">
+        <div class="section-header">
+            <h2>Latest Articles</h2>
+        </div>
+        <div class="blog-grid">
+
+            <!-- Card 1 -->
+            <article class="blog-card">
+                <img loading="lazy" src="https://cdn.prod.website-files.com/68264801ad22c2da2e2d111f/68b07afaf65cb55ed0948334_NSS-01.jpg" alt="Vancouver Snow Removal & Black Ice Protocol" class="blog-card-img">
+                <div class="blog-card-body">
+                    <h3>Vancouver Snow Removal &amp; Black Ice Protocol</h3>
+                    <p>We keep your sites safe, open, and liability-smart&mdash;before, during, and after winter events. Our signature Black Ice Protocol, tight response SLAs, and post-event documentation are built for the North Shore's hills, shade, and freeze&ndash;thaw swings.</p>
+                    <a href="#" class="read-more">
+                        Read More
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="blog-card">
+                <img loading="lazy" src="https://cdn.prod.website-files.com/68264801ad22c2da2e2d111f/6882f3fa9ea63b7dab19370f_mm-10.jpg" alt="Winter Safety Starts Here" class="blog-card-img">
+                <div class="blog-card-body">
+                    <h3>Winter Safety Starts Here: North Shore Snow Removal Services</h3>
+                    <p>This blog outlines the importance of professional snow removal and ice management for commercial properties. It highlights safety, liability, and operational benefits of timely winter maintenance.</p>
+                    <a href="#" class="read-more">
+                        Read More
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="blog-card">
+                <img loading="lazy" src="https://cdn.prod.website-files.com/68264801ad22c2da2e2d111f/6882f5d33843d643834fbf0f_Maintenance%20Masters.jpg" alt="Expert Snow & De-Icing For The North Shore" class="blog-card-img">
+                <div class="blog-card-body">
+                    <h3>Expert Snow &amp; De-Icing For The North Shore</h3>
+                    <p>NorthShoreSnow provides fast, reliable, and eco-friendly snow removal and de-icing services. With steep terrain, heavy precipitation, and freeze-thaw cycles, the North Shore demands proactive winter preparation.</p>
+                    <a href="#" class="read-more">
+                        Read More
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Card 4 -->
+            <article class="blog-card">
+                <img loading="lazy" src="https://cdn.prod.website-files.com/68264801ad22c2da2e2d111f/6838a4069fb2a387538f0492_mm-1-2.jpg" alt="Ensuring Safety and Accessibility Throughout Winter" class="blog-card-img">
+                <div class="blog-card-body">
+                    <h3>Ensuring Safety and Accessibility Throughout Winter</h3>
+                    <p>Professional snow removal and de-icing across North and West Vancouver addressing unique winter challenges. Includes expert local knowledge, eco-friendly practices, advanced equipment, and customized service plans.</p>
+                    <a href="#" class="read-more">
+                        Read More
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- ===== CTA BANNER ===== -->
+    <section class="cta-banner">
+        <div class="cta-content">
+            <h2>Stay Ahead of Winter</h2>
+            <p>Keep your property safe, clear, and operational&mdash;no matter the weather.</p>
+            <a href="contact.html" class="btn-primary">Get A Quote</a>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <img src="https://cdn.prod.website-files.com/6812b1491e33f1ba06dfdb52/6824fd7687d3c66c13fe26ff_Logo.png" alt="NorthShoreSnow" style="height:50px;">
+          </a>
+          <p>Professional commercial snow and ice management services for North Vancouver and the Lower Mainland. Keeping your property safe all winter long.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+        </div>
+        <!-- Services Column -->
+        <div>
+          <h4>Services</h4>
+          <div class="footer-links">
+            <a href="snow-removal.html">Snow Removal</a>
+            <a href="de-icing.html">De-Icing &amp; Salting</a>
+            <a href="services.html#blackice">Black Ice Protocol</a>
+          </div>
+        </div>
+        <!-- Areas Column -->
+        <div>
+          <h4>Service Areas</h4>
+          <div class="footer-links">
+            <a href="areas.html#northshore">North Vancouver</a>
+            <a href="areas.html#westvancouver">West Vancouver</a>
+            <a href="areas.html#downtown">Downtown Vancouver</a>
+            <a href="areas.html#burnaby">Burnaby</a>
+          </div>
+        </div>
+        <!-- Contact Column -->
+        <div>
+          <h4>Contact</h4>
+          <div class="footer-links">
+            <a href="tel:6049907072">(604) 990-7072</a>
+            <a href="mailto:Quotes@northshoresnow.com">Quotes@northshoresnow.com</a>
+            <a href="contact.html">Request a Quote</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2025 NorthShoreSnow. All rights reserved.</span>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="about.html">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Mobile Navigation Toggle
+        (function() {
+            var toggle = document.getElementById('mobileToggle');
+            var menu = document.getElementById('navMenu');
+            if (toggle && menu) {
+                toggle.addEventListener('click', function() {
+                    toggle.classList.toggle('active');
+                    menu.classList.toggle('open');
+                });
+                var dropdownParents = menu.querySelectorAll('li');
+                dropdownParents.forEach(function(li) {
+                    var dropdown = li.querySelector('.dropdown-menu');
+                    if (dropdown) {
+                        li.querySelector('a').addEventListener('click', function(e) {
+                            if (window.innerWidth <= 991) {
+                                e.preventDefault();
+                                dropdown.classList.toggle('open');
+                            }
+                        });
+                    }
+                });
+            }
+        })();
+    </script>
+</body>
+</html>
