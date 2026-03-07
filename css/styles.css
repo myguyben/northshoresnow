@@ -1493,10 +1493,17 @@ p {
     background: var(--primary-dark);
     padding: 20px;
     box-shadow: var(--shadow-lg);
+    max-height: 80vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .nav-item { width: 100%; }
-  .nav-link { padding: 12px 0; }
+  .nav-link {
+    padding: 12px 0;
+    color: rgba(255,255,255,0.9);
+    font-size: 1rem;
+  }
 
   .dropdown {
     position: static;
@@ -1507,6 +1514,7 @@ p {
     background: rgba(255,255,255,0.05);
     border-radius: var(--radius);
     display: none;
+    min-width: 0;
   }
 
   .nav-item.open .dropdown {
@@ -1515,11 +1523,13 @@ p {
 
   .dropdown-link {
     color: rgba(255,255,255,0.7);
+    padding: 10px 16px;
   }
 
   .dropdown-link:hover {
     background: rgba(255,255,255,0.05);
     color: var(--accent);
+    padding-left: 20px;
   }
 
   .dropdown-header {
@@ -1530,12 +1540,15 @@ p {
 
   .header-phone { display: none; }
   .header-top { display: none; }
+  .header-actions .btn { display: none; }
 
   .hero { min-height: auto; padding: 120px 0 60px; }
   .hero-stats { flex-wrap: wrap; gap: 20px; }
+  .hero-stat .number { font-size: 1.6rem; }
 
   .split { grid-template-columns: 1fr; gap: 30px; }
   .split-reverse { direction: ltr; }
+  .split-img img { min-height: 250px; height: auto; }
 
   .grid-2, .grid-3 { grid-template-columns: 1fr; }
 
@@ -1544,16 +1557,36 @@ p {
 
   .footer-grid { grid-template-columns: 1fr; gap: 30px; }
   .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .footer-legal { justify-content: center; }
 
   .form-row { grid-template-columns: 1fr; }
 
+  .cta-banner { padding: 50px 0; }
   .cta-banner .btn { display: block; margin: 8px auto; width: fit-content; }
+
+  .tabs { gap: 0; }
+  .tab-btn { padding: 10px 16px; font-size: 0.82rem; }
+
+  .section-header { margin-bottom: 36px; }
+
+  .testimonial-card { padding: 24px; }
+  .feature-card { padding: 24px; }
+  .pricing-card { padding: 28px; }
 }
 
 @media (max-width: 480px) {
   .container { padding: 0 16px; }
+  .section { padding: 40px 0; }
   .logo-strip { gap: 30px; }
   .logo-strip img { height: 28px; }
   .logo-marquee::before, .logo-marquee::after { width: 40px; }
   .stats-row { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .stat-number { font-size: 2rem; }
+  .hero { padding: 100px 0 50px; }
+  .hero-buttons .btn { padding: 12px 20px; font-size: 0.9rem; }
+  .btn { padding: 12px 22px; font-size: 0.88rem; }
+  .btn-lg { padding: 14px 28px; font-size: 0.95rem; }
+  .cta-banner { padding: 40px 0; }
+  .footer { padding: 50px 0 0; }
+  .area-card { height: 220px; }
 }
