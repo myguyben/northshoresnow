@@ -1,0 +1,83 @@
+---
+const plans = [
+  {
+    name: 'Per-Event Service',
+    tagline: 'Pay only when it snows',
+    popular: false,
+    features: [
+      'Dispatched automatically on snowfall triggers',
+      'Plowing, shoveling and salting per visit',
+      'Photo-verified service reports after every visit',
+      'Priority response for contracted clients',
+      'No charge in snow-free months',
+    ],
+    note: 'Best for properties with flexible budgets that want to pay per storm.',
+  },
+  {
+    name: 'Seasonal Contract',
+    tagline: 'One fixed price, Nov 1 – Apr 30',
+    popular: true,
+    features: [
+      'Unlimited snow clearing all season — no per-storm billing',
+      'Proactive de-icing whenever temperatures reach 0°C',
+      '24/7 weather monitoring and automatic dispatch',
+      'Photo-verified service reports after every visit',
+      'Guaranteed capacity — you are never in a queue',
+      'Predictable budgeting for strata and property managers',
+    ],
+    note: 'Most popular with strata councils and commercial property managers.',
+  },
+]
+---
+
+<section class="section bg-white" id="pricing">
+  <div class="container-site">
+    <div class="max-w-2xl">
+      <p class="eyebrow">Simple pricing</p>
+      <h2 class="h2 mt-2">Two ways to buy winter peace of mind</h2>
+      <p class="mt-4 text-lg">
+        Every property is measured by satellite and priced on its actual serviceable area —
+        no guesswork, no padding.
+      </p>
+    </div>
+    <div class="mt-12 grid gap-6 lg:grid-cols-2">
+      {plans.map((plan) => (
+        <div
+          class:list={[
+            'card card-hover relative flex flex-col p-8',
+            plan.popular ? 'ring-2 ring-brand-500' : '',
+          ]}
+        >
+          {plan.popular && (
+            <span class="absolute -top-3 left-8 rounded-full bg-badge-amber px-3 py-1 text-xs font-bold tracking-wide text-ink-950 uppercase">
+              Most popular
+            </span>
+          )}
+          <h3 class="font-display text-2xl font-bold">{plan.name}</h3>
+          <p class="mt-1 font-medium text-brand-600">{plan.tagline}</p>
+          <ul class="mt-6 flex-1 space-y-3">
+            {plan.features.map((feature) => (
+              <li class="flex gap-3 text-[15px]">
+                <svg
+                  class="mt-1 h-4 w-4 shrink-0 text-brand-500"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  aria-hidden="true"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.5 8.5l3.5 3.5 7.5-8" />
+                </svg>
+                {feature}
+              </li>
+            ))}
+          </ul>
+          <p class="mt-6 text-sm text-body/80">{plan.note}</p>
+          <a href="/contact#quote" class:list={[plan.popular ? 'btn-primary' : 'btn-ghost-light', 'mt-6']}>
+            Get a Free Quote
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

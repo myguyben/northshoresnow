@@ -1,0 +1,28 @@
+---
+import Breadcrumbs from './Breadcrumbs.astro'
+
+interface Props {
+  eyebrow?: string
+  heading: string
+  lede?: string
+  trail?: Array<{ name: string; path: string }>
+  cta?: boolean
+}
+
+const { eyebrow, heading, lede, trail = [], cta = true } = Astro.props
+---
+
+<section class="hero-dark pt-[104px] pb-14 md:pt-[128px] md:pb-20">
+  <div class="container-site">
+    {trail.length > 0 && <Breadcrumbs trail={trail} />}
+    {eyebrow && <p class="eyebrow mt-6">{eyebrow}</p>}
+    <h1 class="h1 mt-3 max-w-3xl !text-white">{heading}</h1>
+    {lede && <p class="mt-5 max-w-2xl text-lg leading-relaxed text-body-dark">{lede}</p>}
+    {cta && (
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="/contact#quote" class="btn-primary">Get a Free Quote</a>
+        <a href="tel:+16049907072" class="btn-ghost-dark">Call (604) 990-7072</a>
+      </div>
+    )}
+  </div>
+</section>

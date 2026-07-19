@@ -1,0 +1,212 @@
+---
+import { Image } from 'astro:assets'
+import { SITE, SERVICE_LINKS, AREA_LINKS, INDUSTRY_LINKS } from '../lib/site'
+import brandLogo from '../assets/brand/nss-logo.png'
+
+interface Props {
+  /** Transparent over a dark hero until scroll; otherwise solid from load. */
+  overHero?: boolean
+}
+
+const { overHero = false } = Astro.props
+
+const navAreas = AREA_LINKS.slice(0, 8)
+---
+
+<header
+  id="site-header"
+  data-over-hero={overHero ? 'true' : 'false'}
+  class:list={[
+    'fixed inset-x-0 top-0 z-50 transition-all duration-300',
+    overHero ? 'bg-transparent' : 'header-solid',
+  ]}
+>
+  <div class="container-site flex h-[72px] items-center justify-between gap-6">
+    <a href="/" class="flex items-center gap-2.5" aria-label={`${SITE.name} — home`}>
+      <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/95 shadow-[0_1px_4px_rgb(10_20_32/0.15)]">
+        <Image src={brandLogo} alt="" width={80} class="h-9 w-9 object-contain" loading="eager" />
+      </span>
+      <span class="font-display text-lg leading-tight font-bold tracking-tight header-brand">
+        North Shore Snow
+      </span>
+    </a>
+
+    <nav class="hidden items-center gap-1 lg:flex" aria-label="Primary">
+      <div class="group relative">
+        <a href="/services" class="nav-link">Services</a>
+        <div class="dropdown">
+          {SERVICE_LINKS.map((s) => <a href={`/${s.slug}`}>{s.name}</a>)}
+        </div>
+      </div>
+      <div class="group relative">
+        <a href="/areas" class="nav-link">Areas</a>
+        <div class="dropdown">
+          {navAreas.map((a) => <a href={`/${a.slug}`}>{a.name}</a>)}
+          <a href="/service-areas" class="font-semibold">All service areas →</a>
+        </div>
+      </div>
+      <div class="group relative">
+        <a href="/commercial" class="nav-link">Industries</a>
+        <div class="dropdown">
+          {INDUSTRY_LINKS.map((i) => <a href={`/${i.slug}`}>{i.name}</a>)}
+        </div>
+      </div>
+      <a href="/about" class="nav-link">About</a>
+      <a href="/blog" class="nav-link">Blog</a>
+    </nav>
+
+    <div class="hidden items-center gap-4 lg:flex">
+      <a href={SITE.phoneHref} class="text-[15px] font-semibold header-phone">
+        {SITE.phone}
+      </a>
+      <a href="/contact#quote" class="btn-primary !py-2.5 text-sm">Get a Quote</a>
+    </div>
+
+    <button
+      id="mobile-menu-button"
+      class="inline-flex h-11 w-11 items-center justify-center rounded-xl lg:hidden header-phone"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"></path>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile menu sheet -->
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-[60] hidden flex-col bg-ink-950 text-white lg:hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Menu"
+>
+  <div class="container-site flex h-[72px] items-center justify-between">
+    <span class="font-display text-lg font-bold">North Shore Snow</span>
+    <button
+      id="mobile-menu-close"
+      class="inline-flex h-11 w-11 items-center justify-center rounded-xl text-white"
+      aria-label="Close menu"
+    >
+      <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"></path>
+      </svg>
+    </button>
+  </div>
+  <nav class="container-site flex-1 space-y-1 overflow-y-auto pb-6" aria-label="Mobile">
+    <a href="/services" class="mobile-link">Services</a>
+    {SERVICE_LINKS.map((s) => (
+      <a href={`/${s.slug}`} class="mobile-sublink">{s.name}</a>
+    ))}
+    <a href="/areas" class="mobile-link">Areas</a>
+    <a href="/commercial" class="mobile-link">Industries</a>
+    <a href="/about" class="mobile-link">About</a>
+    <a href="/blog" class="mobile-link">Blog</a>
+    <a href="/contact" class="mobile-link">Contact</a>
+  </nav>
+  <div class="container-site space-y-3 border-t border-white/10 py-5">
+    <a href="/contact#quote" class="btn-primary w-full">Get a Free Quote</a>
+    <a href={SITE.phoneHref} class="btn-ghost-dark w-full">Call {SITE.phone}</a>
+  </div>
+</div>
+
+<style>
+  .header-solid {
+    background: rgb(255 255 255 / 0.9);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 rgb(10 20 32 / 0.06), 0 4px 16px rgb(10 20 32 / 0.05);
+  }
+  .header-solid .header-brand,
+  .header-solid .nav-link,
+  .header-solid .header-phone {
+    color: var(--color-ink-950);
+  }
+  [data-over-hero='true']:not(.header-solid) .header-brand,
+  [data-over-hero='true']:not(.header-solid) .nav-link,
+  [data-over-hero='true']:not(.header-solid) .header-phone {
+    color: #fff;
+  }
+  .nav-link {
+    display: inline-block;
+    padding: 0.5rem 0.75rem;
+    font-size: 15px;
+    font-weight: 550;
+    border-radius: 0.75rem;
+    transition: opacity 0.15s;
+  }
+  .nav-link:hover {
+    opacity: 0.75;
+  }
+  .dropdown {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    min-width: 240px;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    background: #fff;
+    border: 1px solid var(--color-frost-200);
+    box-shadow: var(--shadow-card-hover);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px);
+    transition: all 0.18s ease;
+  }
+  .group:hover .dropdown,
+  .group:focus-within .dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .dropdown a {
+    display: block;
+    padding: 0.55rem 0.85rem;
+    border-radius: 0.6rem;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: var(--color-ink-900);
+  }
+  .dropdown a:hover {
+    background: var(--color-frost-50);
+    color: var(--color-brand-600);
+  }
+  .mobile-link {
+    display: block;
+    padding: 0.85rem 0;
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 650;
+    border-bottom: 1px solid rgb(255 255 255 / 0.08);
+  }
+  .mobile-sublink {
+    display: block;
+    padding: 0.5rem 0 0.5rem 1rem;
+    font-size: 1rem;
+    color: var(--color-body-dark);
+  }
+</style>
+
+<script>
+  const header = document.getElementById('site-header')
+  if (header?.dataset.overHero === 'true') {
+    const onScroll = () => header.classList.toggle('header-solid', window.scrollY > 24)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+  }
+
+  const menu = document.getElementById('mobile-menu')
+  const openButton = document.getElementById('mobile-menu-button')
+  const closeButton = document.getElementById('mobile-menu-close')
+  const setOpen = (open: boolean) => {
+    menu?.classList.toggle('hidden', !open)
+    menu?.classList.toggle('flex', open)
+    openButton?.setAttribute('aria-expanded', String(open))
+    document.documentElement.style.overflow = open ? 'hidden' : ''
+  }
+  openButton?.addEventListener('click', () => setOpen(true))
+  closeButton?.addEventListener('click', () => setOpen(false))
+  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)))
+</script>

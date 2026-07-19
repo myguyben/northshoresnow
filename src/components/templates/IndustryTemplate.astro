@@ -1,0 +1,80 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { render } from 'astro:content'
+import Base from '../../layouts/Base.astro'
+import HeroPage from '../HeroPage.astro'
+import CtaBand from '../CtaBand.astro'
+import FaqAccordion from '../FaqAccordion.astro'
+import ServiceSchema from '../schema/ServiceSchema.astro'
+import { SERVICE_LINKS, INDUSTRY_LINKS } from '../../lib/site'
+
+interface Props {
+  entry: CollectionEntry<'industries'>
+}
+
+const { entry } = Astro.props
+const { Content } = await render(entry)
+const data = entry.data
+const others = INDUSTRY_LINKS.filter((i) => i.slug !== entry.id)
+---
+
+<Base title={data.title} description={data.description} ogImage="/og/industry.jpg">
+  <HeroPage
+    eyebrow="Who we serve"
+    heading={data.hero}
+    lede={data.description}
+    trail={[{ name: data.name, path: `/${entry.id}` }]}
+  />
+
+  <section class="section bg-white !pb-16">
+    <div class="container-site">
+      <h2 class="h2 max-w-2xl">The problems we take off your plate</h2>
+      <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {data.painPoints.map((point) => (
+          <div class="card p-6">
+            <h3 class="font-display text-lg font-bold">{point.title}</h3>
+            <p class="mt-2 text-[15px]">{point.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white pb-20 md:pb-24">
+    <div class="container-site grid gap-12 lg:grid-cols-[1fr_320px]">
+      <article class="prose-site">
+        <Content />
+      </article>
+      <aside class="space-y-6">
+        <div class="card p-6">
+          <h2 class="font-display text-lg font-bold">Our services</h2>
+          <ul class="mt-4 space-y-2.5">
+            {SERVICE_LINKS.map((s) => (
+              <li>
+                <a href={`/${s.slug}`} class="text-[15px] font-medium text-brand-600 hover:underline">
+                  {s.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="card p-6">
+          <h2 class="font-display text-lg font-bold">Also serving</h2>
+          <ul class="mt-4 space-y-2.5">
+            {others.map((i) => (
+              <li>
+                <a href={`/${i.slug}`} class="text-[15px] font-medium text-brand-600 hover:underline">
+                  {i.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <FaqAccordion faqs={data.faqs} heading={`${data.name} — common questions`} />
+  <CtaBand />
+  <ServiceSchema name={`Snow removal for ${data.name.toLowerCase()}`} description={data.description} />
+</Base>

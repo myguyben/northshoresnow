@@ -1,0 +1,57 @@
+---
+/**
+ * Compact hero variant: address + email only. Hands off to /contact#quote
+ * with both values as query params, where the full form prefills step 1.
+ */
+---
+
+<div class="card p-6 md:p-7">
+  <h2 class="font-display text-xl font-bold">Get a free satellite-measured quote</h2>
+  <p class="mt-1.5 text-sm text-body">
+    We measure your property from satellite imagery — most quotes are ready the same day.
+  </p>
+  <form class="mt-5 space-y-3" method="get" action="/contact" id="quote-mini">
+    <div>
+      <label class="label" for="qfm-address">Property address</label>
+      <input
+        class="input"
+        id="qfm-address"
+        name="address"
+        type="text"
+        required
+        minlength="5"
+        autocomplete="street-address"
+        placeholder="123 Main St, North Vancouver, BC"
+      />
+    </div>
+    <div>
+      <label class="label" for="qfm-email">Work email</label>
+      <input
+        class="input"
+        id="qfm-email"
+        name="email"
+        type="email"
+        required
+        autocomplete="email"
+        placeholder="you@company.com"
+      />
+    </div>
+    <button type="submit" class="btn-primary w-full">Start my quote</button>
+  </form>
+  <p class="mt-3 text-center text-[13px] text-body/80">
+    No obligation · Response within one business day
+  </p>
+</div>
+
+<script>
+  // Preserve the #quote anchor through the GET handoff.
+  const mini = document.getElementById('quote-mini') as HTMLFormElement | null
+  mini?.addEventListener('submit', (event) => {
+    event.preventDefault()
+    const data = new FormData(mini)
+    const params = new URLSearchParams()
+    params.set('address', String(data.get('address') ?? ''))
+    params.set('email', String(data.get('email') ?? ''))
+    window.location.assign(`/contact?${params.toString()}#quote`)
+  })
+</script>

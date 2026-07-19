@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content'
+import ServiceTemplate from '../components/templates/ServiceTemplate.astro'
+import AreaTemplate from '../components/templates/AreaTemplate.astro'
+import IndustryTemplate from '../components/templates/IndustryTemplate.astro'
+
+/**
+ * Renders every collection-driven root-level slug (services, areas,
+ * industries) so URLs like /snow-removal, /lynn-valley and /strata keep their
+ * original flat structure. Explicit pages (about.astro, …) win over this route.
+ */
+export async function getStaticPaths() {
+  const [services, areas, industries] = await Promise.all([
+    getCollection('services'),
+    getCollection('areas'),
+    getCollection('industries'),
+  ])
+  return [
+    ...services.map((entry) => ({ params: { slug: entry.id }, props: { entry, kind: 'service' } })),
+    ...areas.map((entry) => ({ params: { slug: entry.id }, props: { entry, kind: 'area' } })),
+    ...industries.map((entry) => ({
+      params: { slug: entry.id },
+      props: { entry, kind: 'industry' },
+    })),
+  ]
+}
+
+const { entry, kind } = Astro.props
+---
+
+{kind === 'service' && <ServiceTemplate entry={entry} />}
+{kind === 'area' && <AreaTemplate entry={entry} />}
+{kind === 'industry' && <IndustryTemplate entry={entry} />}

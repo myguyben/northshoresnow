@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content'
+import Base from '../layouts/Base.astro'
+import HeroPage from '../components/HeroPage.astro'
+import CardGrid from '../components/CardGrid.astro'
+import PricingCards from '../components/PricingCards.astro'
+import CtaBand from '../components/CtaBand.astro'
+import LogoMarquee from '../components/LogoMarquee.astro'
+import { INDUSTRY_LINKS } from '../lib/site'
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order)
+---
+
+<Base
+  title="Commercial Snow & Ice Management Services | North Shore Snow"
+  description="Snow removal, plowing, salting, de-icing and full winter maintenance programs for commercial and strata properties across Greater Vancouver. Call (604) 990-7072."
+>
+  <HeroPage
+    eyebrow="Services"
+    heading="Everything winter throws at your property, handled"
+    lede="One contractor and one contract covering plowing, shoveling, salting and proactive de-icing — dispatched automatically on weather triggers, documented with photos every visit."
+    trail={[{ name: 'Services', path: '/services' }]}
+  />
+
+  <CardGrid
+    eyebrow="Core services"
+    heading="Choose a service to see how it works"
+    items={services.map((s) => ({
+      href: `/${s.id}`,
+      title: s.data.name,
+      body: s.data.description,
+    }))}
+    columns={2}
+  />
+
+  <CardGrid
+    eyebrow="Who we serve"
+    heading="Programs built for your property type"
+    items={INDUSTRY_LINKS.map((i) => ({
+      href: `/${i.slug}`,
+      title: i.name,
+      body: `Winter maintenance designed around the operating realities of ${i.name.toLowerCase()} — response windows, documentation and budgeting included.`,
+    }))}
+    background="frost"
+  />
+
+  <PricingCards />
+  <LogoMarquee />
+  <CtaBand />
+</Base>

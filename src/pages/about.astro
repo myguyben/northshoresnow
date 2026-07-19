@@ -1,0 +1,101 @@
+---
+import { Image } from 'astro:assets'
+import Base from '../layouts/Base.astro'
+import HeroPage from '../components/HeroPage.astro'
+import StatsBar from '../components/StatsBar.astro'
+import LogoMarquee from '../components/LogoMarquee.astro'
+import CtaBand from '../components/CtaBand.astro'
+import teamPhoto from '../assets/photos/nss-team.jpg'
+import opsPhoto1 from '../assets/photos/nss-02.jpg'
+import opsPhoto2 from '../assets/photos/nss-05.jpg'
+
+const values = [
+  {
+    title: 'Show up before you have to call',
+    body: 'Dispatch is triggered by weather monitoring, not complaints. If you are phoning your snow contractor during a storm, they have already failed.',
+  },
+  {
+    title: 'Document everything',
+    body: 'GPS-stamped, photo-verified service records for every visit — because "we were there" should be provable, especially when liability is on the line.',
+  },
+  {
+    title: 'Price honestly',
+    body: 'Satellite measurement means you pay for your property\'s actual serviceable area. No padding, no guessing, no surprise extras in February.',
+  },
+  {
+    title: 'Run it like an operation',
+    body: 'Routed crews, maintained equipment, materials stocked before the first flurry. Winter is not an emergency when you plan for it all year.',
+  },
+]
+---
+
+<Base
+  title="About Us | North Shore Snow"
+  description="North Vancouver's commercial snow & ice management company — local crews, modern dispatch technology and photo-verified service across the North Shore. Call (604) 990-7072."
+>
+  <HeroPage
+    eyebrow="About us"
+    heading="A snow company built like an operations company"
+    lede="We started North Shore Snow because commercial properties deserved better than a truck with a plow and a phone that goes to voicemail during storms."
+    trail={[{ name: 'About', path: '/about' }]}
+  />
+
+  <section class="section">
+    <div class="container-site grid items-center gap-12 lg:grid-cols-2">
+      <div class="prose-site">
+        <h2 class="h2 !mt-0">Local crews. Modern systems. Zero excuses.</h2>
+        <p>
+          North Shore Snow is a North Vancouver company, and it shows in how we operate. Our
+          routes are engineered around the North Shore's unusual geography — sea-level
+          commercial districts that see rain while hillside strata 300 metres up are getting
+          dumped on. We know which parkades ice over first, which Lynn Valley cul-de-sacs
+          drift in a northeaster, and which loading docks need to be clear before the 6am
+          delivery window.
+        </p>
+        <p>
+          Behind the trucks is dispatch software most snow contractors simply don't have:
+          live GPS tracking on every crew, automatic weather-triggered routing, satellite
+          property measurement for quoting, and photo documentation uploaded from site
+          before the crew leaves. Your property file shows every visit, every photo, every
+          timestamp — all season.
+        </p>
+        <p>
+          Today we manage 100+ commercial, strata and institutional sites across the North
+          Shore and Downtown Vancouver, with a 95% client retention rate we're genuinely
+          proud of. Winters here are unpredictable. Your snow contractor shouldn't be.
+        </p>
+      </div>
+      <div class="grid gap-5">
+        <Image src={teamPhoto} alt="North Shore Snow crew with equipment" width={880} class="rounded-2xl border border-frost-200 object-cover" loading="eager" />
+        <div class="grid grid-cols-2 gap-5">
+          <Image src={opsPhoto1} alt="Snow clearing operations at a commercial property" width={440} class="rounded-2xl border border-frost-200 object-cover" />
+          <Image src={opsPhoto2} alt="North Shore Snow truck salting a parking lot" width={440} class="rounded-2xl border border-frost-200 object-cover" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-y border-frost-100 bg-frost-50 py-14">
+    <div class="container-site">
+      <StatsBar />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-site">
+      <p class="eyebrow">How we work</p>
+      <h2 class="h2 mt-2 max-w-2xl">The standards behind the service</h2>
+      <div class="mt-12 grid gap-6 md:grid-cols-2">
+        {values.map((value) => (
+          <div class="card p-8">
+            <h3 class="font-display text-xl font-bold">{value.title}</h3>
+            <p class="mt-3 text-[15px] leading-relaxed">{value.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <LogoMarquee />
+  <CtaBand heading="Work with a crew that takes winter seriously" />
+</Base>

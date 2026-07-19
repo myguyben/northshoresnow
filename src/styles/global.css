@@ -1,0 +1,201 @@
+@import 'tailwindcss';
+
+/*
+ * North Shore Snow design tokens.
+ * Winter/professional: deep ink navys for dark surfaces, confident brand
+ * blues for action, pale ice accents on dark, frost neutrals on light.
+ */
+@theme {
+  --color-ink-950: #0a1420;
+  --color-ink-900: #0f2033;
+  --color-ink-800: #16304a;
+
+  --color-brand-700: #154e9c;
+  --color-brand-600: #1b63c4;
+  --color-brand-500: #2478e5;
+
+  --color-ice-400: #63c9f5;
+  --color-ice-300: #a5e3ff;
+
+  --color-frost-50: #f6f9fc;
+  --color-frost-100: #edf2f7;
+  --color-frost-200: #dce5ee;
+
+  --color-body: #3d4c5e;
+  --color-body-dark: #b9c7d6;
+
+  --color-snow: #ffffff;
+  --color-badge-amber: #ffb020;
+
+  --font-display: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-card: 0 1px 2px rgb(10 20 32 / 0.06), 0 8px 24px rgb(10 20 32 / 0.07);
+  --shadow-card-hover: 0 2px 4px rgb(10 20 32 / 0.08), 0 16px 40px rgb(10 20 32 / 0.12);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: var(--color-body);
+    background-color: var(--color-snow);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 650;
+    letter-spacing: -0.02em;
+    color: var(--color-ink-950);
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background-color: var(--color-ice-300);
+    color: var(--color-ink-950);
+  }
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-7xl px-6;
+  }
+
+  .section {
+    @apply py-20 md:py-28;
+  }
+
+  .eyebrow {
+    @apply text-[13px] font-semibold uppercase tracking-[0.14em] text-brand-600;
+  }
+
+  .h1 {
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    line-height: 1.08;
+  }
+
+  .h2 {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    line-height: 1.15;
+  }
+
+  .card {
+    @apply rounded-2xl border border-frost-200 bg-white shadow-card transition-all duration-300;
+  }
+
+  .card-hover {
+    @apply hover:-translate-y-0.5 hover:shadow-card-hover;
+  }
+
+  .btn,
+  .btn-primary,
+  .btn-ghost-dark,
+  .btn-ghost-light {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[15px] font-semibold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ice-400 focus-visible:ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply bg-brand-600 text-white hover:bg-brand-500;
+  }
+
+  .btn-ghost-dark {
+    @apply border border-white/25 text-white hover:border-white/60 hover:bg-white/5;
+  }
+
+  .btn-ghost-light {
+    @apply border border-frost-200 text-ink-900 hover:border-brand-500 hover:text-brand-600;
+  }
+
+  .input {
+    @apply w-full rounded-xl border border-frost-200 bg-white px-4 py-3 text-[15px] text-ink-950 placeholder:text-body/50 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20;
+  }
+
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-ink-900;
+  }
+
+  /* Dark hero surface: photo overlay gradient + radial ice glow. */
+  .hero-dark {
+    background-color: var(--color-ink-950);
+    background-image: radial-gradient(
+      600px at 80% 0%,
+      rgb(99 201 245 / 0.14),
+      transparent
+    );
+  }
+
+  .text-gradient-ice {
+    background: linear-gradient(92deg, var(--color-ice-400), var(--color-ice-300));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .prose-site {
+    @apply max-w-none text-body;
+  }
+  .prose-site h2 {
+    @apply mt-12 mb-4 text-2xl md:text-3xl;
+  }
+  .prose-site h3 {
+    @apply mt-8 mb-3 text-xl;
+  }
+  .prose-site p {
+    @apply mb-5;
+  }
+  .prose-site ul {
+    @apply mb-5 list-disc space-y-2 pl-6;
+  }
+  .prose-site ol {
+    @apply mb-5 list-decimal space-y-2 pl-6;
+  }
+  .prose-site a {
+    @apply font-medium text-brand-600 underline decoration-brand-500/30 underline-offset-2 hover:decoration-brand-500;
+  }
+  .prose-site strong {
+    @apply font-semibold text-ink-900;
+  }
+  .prose-site blockquote {
+    @apply my-6 border-l-4 border-ice-400 bg-frost-50 py-3 pr-4 pl-5 italic;
+  }
+  .prose-site table {
+    @apply my-6 w-full border-collapse text-[15px];
+  }
+  .prose-site th {
+    @apply border-b-2 border-frost-200 px-3 py-2 text-left font-semibold text-ink-900;
+  }
+  .prose-site td {
+    @apply border-b border-frost-100 px-3 py-2 align-top;
+  }
+}
+
+@layer utilities {
+  /* CSS-only logo marquee; static wrap under reduced motion. */
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .animate-marquee {
+    animation: marquee 40s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee {
+      animation: none;
+    }
+  }
+}

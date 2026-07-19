@@ -1,0 +1,96 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { render } from 'astro:content'
+import Base from '../../layouts/Base.astro'
+import HeroPage from '../HeroPage.astro'
+import CtaBand from '../CtaBand.astro'
+import FaqAccordion from '../FaqAccordion.astro'
+import ServiceSchema from '../schema/ServiceSchema.astro'
+import { AREA_LINKS, SERVICE_LINKS } from '../../lib/site'
+
+interface Props {
+  entry: CollectionEntry<'services'>
+}
+
+const { entry } = Astro.props
+const { Content } = await render(entry)
+const data = entry.data
+const otherServices = SERVICE_LINKS.filter((s) => s.slug !== entry.id)
+const topAreas = AREA_LINKS.slice(0, 6)
+---
+
+<Base title={data.title} description={data.description} ogImage="/og/service.jpg">
+  <HeroPage
+    eyebrow="Commercial service"
+    heading={data.hero}
+    lede={data.description}
+    trail={[
+      { name: 'Services', path: '/services' },
+      { name: data.name, path: `/${entry.id}` },
+    ]}
+  />
+
+  <section class="section bg-white">
+    <div class="container-site grid gap-12 lg:grid-cols-[1fr_320px]">
+      <article class="prose-site">
+        <Content />
+      </article>
+      <aside class="space-y-6 lg:pt-2">
+        <div class="card p-6">
+          <h2 class="font-display text-lg font-bold">Other services</h2>
+          <ul class="mt-4 space-y-2.5">
+            {otherServices.map((s) => (
+              <li>
+                <a href={`/${s.slug}`} class="text-[15px] font-medium text-brand-600 hover:underline">
+                  {s.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="card p-6">
+          <h2 class="font-display text-lg font-bold">Where we work</h2>
+          <ul class="mt-4 space-y-2.5">
+            {topAreas.map((a) => (
+              <li>
+                <a href={`/${a.slug}`} class="text-[15px] font-medium text-brand-600 hover:underline">
+                  {a.name}
+                </a>
+              </li>
+            ))}
+            <li>
+              <a href="/service-areas" class="text-[15px] font-semibold text-ink-900 hover:underline">
+                All service areas →
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="card bg-ink-950 p-6 text-white">
+          <h2 class="font-display text-lg font-bold">Get a fast quote</h2>
+          <p class="mt-2 text-sm text-body-dark">
+            Satellite-measured pricing, usually same-day.
+          </p>
+          <a href="/contact#quote" class="btn-primary mt-4 w-full text-sm">Get a Free Quote</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section bg-frost-50 !py-16">
+    <div class="container-site">
+      <h2 class="h2 max-w-2xl">What's included</h2>
+      <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {data.features.map((feature) => (
+          <div class="card p-6">
+            <h3 class="font-display text-lg font-bold">{feature.title}</h3>
+            <p class="mt-2 text-[15px]">{feature.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <FaqAccordion faqs={data.faqs} heading={`${data.name} — common questions`} />
+  <CtaBand />
+  <ServiceSchema name={data.name} description={data.description} />
+</Base>
