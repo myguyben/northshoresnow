@@ -51,4 +51,4 @@ Because we cover two municipalities, we handle two sets of rules without you tra
 
 ## Built for how the North Shore actually storms
 
-Seasonal contracts run November 1 to April 30, sized to the property rather than a flat regional rate. Satellite measurement lets us quote most sites same-day without a site visit, and weather-triggered dispatch means crews are moving before the first accumulation rather than after your phone starts ringing. [Request a quote](/contact#quote) or call (604) 990-7072 to map your property to the right elevation route.
+Seasonal contracts run October 1 to April 30, sized to the property rather than a flat regional rate. Satellite measurement lets us quote most sites same-day without a site visit, and weather-triggered dispatch means crews are moving before the first accumulation rather than after your phone starts ringing. [Request a quote](/contact#quote) or call (604) 990-7072 to map your property to the right elevation route.

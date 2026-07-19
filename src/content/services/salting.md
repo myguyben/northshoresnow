@@ -79,5 +79,5 @@ automatically whenever temperatures reach 0°C, and it's built into every plow v
 Not sure when your lot actually needs salt? Read
 [when to salt a parking lot](/blog/when-to-salt-parking-lot), or
 [request a same-day quote](/contact#quote) — measured by satellite, no site visit required.
-Seasonal contracts run Nov 1–Apr 30 across [North Vancouver](/north-vancouver) and the North
+Seasonal contracts run Oct 1–Apr 30 across [North Vancouver](/north-vancouver) and the North
 Shore.

@@ -49,4 +49,4 @@ Few streets on the North Shore pack in as much variety. The Shipyards District a
 
 Lonsdale is one of the most-walked corridors on the North Shore, which puts the City of North Vancouver's 10am sidewalk-clearing bylaw front and centre. We map each property's frontage — sidewalks, transit stops and corner cuts — into the service plan so it's cleared on the same pass as the lot, keeping strata councils and property managers compliant and reducing slip-and-fall exposure on a busy public walkway. Our [strata snow removal requirements guide](/blog/strata-snow-removal-requirements-bc) covers what that responsibility involves.
 
-Seasonal contracts run November 1 to April 30, and satellite measurement lets us quote most corridor properties same-day. [Request a quote](/contact#quote) or call (604) 990-7072.
+Seasonal contracts run October 1 to April 30, and satellite measurement lets us quote most corridor properties same-day. [Request a quote](/contact#quote) or call (604) 990-7072.

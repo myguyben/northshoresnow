@@ -49,4 +49,4 @@ Norgate's wide flat lots and loading areas are their own challenge: meltwater po
 
 Marine Drive is one of the North Shore's key arterials, and the sidewalk-clearing obligation along it is visible and enforced — the District and City of North Vancouver both require owners to clear adjacent sidewalks by 10am after a snowfall. We map that frontage into your plan and clear it alongside the lot. For strata on the Pemberton Heights slope, our [strata snow removal requirements guide](/blog/strata-snow-removal-requirements-bc) lays out what councils are responsible for.
 
-Seasonal contracts run November 1 to April 30, priced to each site's elevation and layout. [Request a quote](/contact#quote) or call (604) 990-7072.
+Seasonal contracts run October 1 to April 30, priced to each site's elevation and layout. [Request a quote](/contact#quote) or call (604) 990-7072.

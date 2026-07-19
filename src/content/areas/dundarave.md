@@ -50,4 +50,4 @@ Because much of the village runs decorative and higher-end paving, we favour tar
 
 The District of West Vancouver requires owners and occupiers to clear the sidewalks bordering their property by 10am after a snowfall. On a pedestrian village strip that's a real, visible obligation, so we map each business's frontage into the service plan and clear it alongside the lot or entrance. Our [strata snow removal requirements guide](/blog/strata-snow-removal-requirements-bc) is a good primer for councils sorting out who owns what.
 
-Seasonal contracts run November 1 to April 30. [Request a quote](/contact#quote) or call (604) 990-7072.
+Seasonal contracts run October 1 to April 30. [Request a quote](/contact#quote) or call (604) 990-7072.

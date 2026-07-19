@@ -20,7 +20,7 @@ faqs:
   - q: Our complex has tight laneways — can you access them?
     a: Yes. We run compact equipment specifically for strata laneways, visitor parking, and parkade ramps that full-size plow trucks can't work safely.
   - q: When does the seasonal contract run?
-    a: November 1 through April 30, covering every snowfall and every freezing event in between — no per-storm charges, no caps.
+    a: October 1 through April 30, covering every snowfall and every freezing event in between — no per-storm charges, no caps.
 ---
 
 ## Built for how stratas actually work
@@ -29,7 +29,7 @@ A strata corporation isn't a business with a facilities manager — it's a volun
 making decisions on behalf of dozens of owners, with a fiduciary duty and a shared budget.
 Our strata programs are designed around exactly that reality.
 
-**One fixed number for the budget.** Seasonal contracts (Nov 1 – Apr 30) turn winter from
+**One fixed number for the budget.** Seasonal contracts (Oct 1 – Apr 30) turn winter from
 an unpredictable expense into a single line item council can approve once and stop
 thinking about. When it snows six times in January, your invoice doesn't change.
 

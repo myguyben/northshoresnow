@@ -49,4 +49,4 @@ We service the Gallant Avenue retail strip, village-centre businesses, and the m
 
 Deep Cove is often described as remote, but for us it's the eastern anchor of our North Vancouver route, worked alongside [Seymour](/seymour) and the Mount Seymour Parkway corridor. Crews reach contracted properties early and rotate back through as freeze-thaw cycles refreeze the shaded grades — which, in this microclimate, they reliably do.
 
-The City and District of North Vancouver both require owners to clear adjacent sidewalks by 10am after a snowfall, and your bylaw frontage is mapped into the service plan by default. Seasonal contracts run November 1 to April 30. [Request a quote](/contact#quote) or call (604) 990-7072.
+The City and District of North Vancouver both require owners to clear adjacent sidewalks by 10am after a snowfall, and your bylaw frontage is mapped into the service plan by default. Seasonal contracts run October 1 to April 30. [Request a quote](/contact#quote) or call (604) 990-7072.

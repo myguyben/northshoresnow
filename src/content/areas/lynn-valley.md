@@ -48,4 +48,4 @@ Every visit is documented with timestamped photos — the record a strata counci
 
 ## Priced and routed for elevation
 
-We service the Lynn Valley Centre area, surrounding offices and services, and strata throughout Westlynn, Kilmer and the upper benches. Contracts are sized to the property's real elevation and snow exposure, not a flat regional rate, and the District of North Vancouver's 10am sidewalk-clearing bylaw is built into your frontage by default. Seasonal programs run November 1 to April 30. [Request a quote](/contact#quote) or call (604) 990-7072.
+We service the Lynn Valley Centre area, surrounding offices and services, and strata throughout Westlynn, Kilmer and the upper benches. Contracts are sized to the property's real elevation and snow exposure, not a flat regional rate, and the District of North Vancouver's 10am sidewalk-clearing bylaw is built into your frontage by default. Seasonal programs run October 1 to April 30. [Request a quote](/contact#quote) or call (604) 990-7072.

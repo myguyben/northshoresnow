@@ -51,4 +51,4 @@ Every visit is documented with timestamped photos — the record that protects a
 
 The City of Vancouver requires property owners to clear the sidewalks bordering their property by 10am after a snowfall, and downtown frontages are long, busy and highly visible. We build your full tower or retail frontage into the service map so compliance happens on the same early pass as your entrances and ramps. For portfolios juggling multiple buildings, our guide on [when to salt a parking lot](/blog/when-to-salt-parking-lot) covers the trigger points worth knowing.
 
-Seasonal contracts run November 1 to April 30. Satellite measurement means we can quote most downtown frontages same-day. [Request a quote](/contact#quote) or call (604) 990-7072.
+Seasonal contracts run October 1 to April 30. Satellite measurement means we can quote most downtown frontages same-day. [Request a quote](/contact#quote) or call (604) 990-7072.

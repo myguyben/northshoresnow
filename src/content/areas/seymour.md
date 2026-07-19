@@ -49,4 +49,4 @@ Maplewood is the North Shore's working east end — warehouses, auto dealerships
 
 Because the Seymour area storms so differently top to bottom, we size each contract to its real elevation and layout, not a flat regional rate — and the District of North Vancouver's 10am sidewalk-clearing bylaw is built into your frontage by default. For strata on the benches, our [strata snow removal requirements guide](/blog/strata-snow-removal-requirements-bc) covers what councils are on the hook for.
 
-Seasonal contracts run November 1 to April 30. Satellite measurement lets us quote most Seymour-area sites same-day. [Request a quote](/contact#quote) or call (604) 990-7072.
+Seasonal contracts run October 1 to April 30. Satellite measurement lets us quote most Seymour-area sites same-day. [Request a quote](/contact#quote) or call (604) 990-7072.

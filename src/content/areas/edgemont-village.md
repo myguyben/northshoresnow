@@ -48,4 +48,4 @@ On a pedestrian strip, the sidewalk isn't secondary to the parking lot — it's 
 
 Edgemont's retail and professional tenants care how the village looks and feels, so our crews work with the detail a walkable, upscale strip expects — clearing entrances cleanly, keeping walkways passable through a storm, and documenting every visit with timestamped photos for the property managers and strata councils behind the storefronts. For councils sorting out responsibility, our [strata snow removal requirements guide](/blog/strata-snow-removal-requirements-bc) is a useful starting point.
 
-Seasonal contracts run November 1 to April 30, sized to Edgemont's real snow exposure. [Request a quote](/contact#quote) or call (604) 990-7072.
+Seasonal contracts run October 1 to April 30, sized to Edgemont's real snow exposure. [Request a quote](/contact#quote) or call (604) 990-7072.
