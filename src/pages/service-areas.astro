@@ -1,0 +1,109 @@
+---
+import Base from '../layouts/Base.astro'
+import HeroPage from '../components/HeroPage.astro'
+import CtaBand from '../components/CtaBand.astro'
+import FaqAccordion from '../components/FaqAccordion.astro'
+import { AREA_LINKS } from '../lib/site'
+
+/**
+ * Deliberately distinct from /areas (the card hub): this page is the coverage
+ * reference — response tiers, dispatch logic and the full neighborhood list.
+ */
+
+const tiers = [
+  {
+    name: 'Core routes',
+    window: 'Cleared before 6:30am on snow days',
+    areas: 'North Vancouver (Lonsdale, Central/Lower), Lynn Valley, Edgemont Village, Capilano, Marine Drive corridor',
+  },
+  {
+    name: 'North Shore full coverage',
+    window: 'Priority rotation, typically by 8am',
+    areas: 'Deep Cove, Seymour, Blueridge, Dollarton, West Vancouver (Ambleside, Dundarave, British Properties)',
+  },
+  {
+    name: 'Extended coverage',
+    window: 'Scheduled + storm dispatch',
+    areas: 'Downtown Vancouver CBD, Horseshoe Bay, Lions Bay (contract-dependent)',
+  },
+]
+
+const faqs = [
+  {
+    q: 'Do you charge more for higher-elevation properties?',
+    a: 'Elevation affects snowfall frequency, and seasonal pricing reflects the real service load for your specific location — that is why we quote from satellite measurement of your property rather than a flat area rate. A Lynn Valley property sees roughly double the snow days of an Ambleside one, and its price reflects that honestly.',
+  },
+  {
+    q: 'Can you take on a property outside these areas?',
+    a: 'Sometimes — portfolio clients with multiple sites occasionally add a property just outside our core map. Ask when you request your quote and we will confirm routing feasibility.',
+  },
+  {
+    q: 'How do response tiers work during a major storm?',
+    a: 'Core routes are cleared continuously through the storm. Full-coverage areas run on priority rotation with contracted response windows. Every seasonal contract states your response window in writing.',
+  },
+]
+---
+
+<Base
+  title="Coverage Map & Response Times | North Shore Snow"
+  description="Where we plow and how fast: response tiers for North Vancouver, West Vancouver, Downtown and every North Shore neighborhood. Full coverage list. Call (604) 990-7072."
+>
+  <HeroPage
+    eyebrow="Coverage"
+    heading="Where we work — and how fast we get there"
+    lede="Snow response is a routing problem. Here is exactly how our crews are organized across the North Shore, and what response window your property falls into."
+    trail={[
+      { name: 'Areas', path: '/areas' },
+      { name: 'Service Areas', path: '/service-areas' },
+    ]}
+  />
+
+  <section class="section">
+    <div class="container-site">
+      <h2 class="h2 max-w-2xl">Response tiers</h2>
+      <div class="mt-10 overflow-x-auto">
+        <table class="w-full min-w-[640px] border-collapse text-[15px]">
+          <thead>
+            <tr class="border-b-2 border-frost-200 text-left">
+              <th class="px-4 py-3 font-display text-ink-950">Tier</th>
+              <th class="px-4 py-3 font-display text-ink-950">Response window</th>
+              <th class="px-4 py-3 font-display text-ink-950">Areas</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tiers.map((tier) => (
+              <tr class="border-b border-frost-100 align-top">
+                <td class="px-4 py-4 font-semibold text-ink-950">{tier.name}</td>
+                <td class="px-4 py-4 text-brand-600">{tier.window}</td>
+                <td class="px-4 py-4">{tier.areas}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-6 max-w-3xl text-[15px] text-body/80">
+        Response windows above are typical for seasonal-contract clients. Your contract
+        states your specific window in writing — and our dispatch is triggered by weather
+        monitoring, not by your phone call.
+      </p>
+    </div>
+  </section>
+
+  <section class="section bg-frost-50 !py-16">
+    <div class="container-site">
+      <h2 class="h2">Every area we serve</h2>
+      <ul class="mt-8 grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
+        {AREA_LINKS.map((area) => (
+          <li>
+            <a href={`/${area.slug}`} class="font-medium text-brand-600 hover:underline">
+              Snow removal in {area.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <FaqAccordion faqs={faqs} heading="Coverage questions" />
+  <CtaBand />
+</Base>

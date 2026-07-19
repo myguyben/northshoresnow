@@ -1,0 +1,24 @@
+---
+interface Props {
+  heading?: string
+  body?: string
+}
+
+const {
+  heading = 'Ready to protect your property this winter?',
+  body = 'Get a satellite-measured quote — accurate pricing without waiting for a site visit. Most quotes are ready the same day.',
+} = Astro.props
+---
+
+<section class="hero-dark py-16 md:py-20">
+  <div class="container-site flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
+    <div class="max-w-2xl">
+      <h2 class="h2 !text-white">{heading}</h2>
+      <p class="mt-3 text-lg text-body-dark">{body}</p>
+    </div>
+    <div class="flex flex-wrap gap-3">
+      <a href="/contact#quote" class="btn-primary">Get a Free Quote</a>
+      <a href="tel:+16049907072" class="btn-ghost-dark">Call (604) 990-7072</a>
+    </div>
+  </div>
+</section>

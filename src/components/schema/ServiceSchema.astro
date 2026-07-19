@@ -1,0 +1,27 @@
+---
+import { SITE } from '../../lib/site'
+
+interface Props {
+  name: string
+  description: string
+  /** Area the service page targets; defaults to the whole service region. */
+  areaName?: string
+}
+
+const { name, description, areaName } = Astro.props
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name,
+  description,
+  serviceType: name,
+  provider: { '@id': `${SITE.url}/#business` },
+  areaServed: {
+    '@type': 'Place',
+    name: areaName ?? 'North Shore & Greater Vancouver, BC',
+  },
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

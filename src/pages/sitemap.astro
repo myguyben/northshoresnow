@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro'
+import HeroPage from '../components/HeroPage.astro'
+import { SERVICE_LINKS, AREA_LINKS, INDUSTRY_LINKS } from '../lib/site'
+
+const blogLinks = [
+  { slug: 'commercial-snow-removal-north-vancouver', name: 'Commercial Snow Removal in North Vancouver' },
+  { slug: 'strata-snow-removal-requirements-bc', name: 'Strata Snow Removal Requirements in BC' },
+  { slug: 'slip-and-fall-liability-commercial-property-bc', name: 'Slip-and-Fall Liability for Commercial Property in BC' },
+  { slug: 'when-to-salt-parking-lot', name: 'When to Salt a Parking Lot' },
+  { slug: 'snow-removal-cost-vancouver', name: 'Snow Removal Cost in Vancouver' },
+  { slug: 'seasonal-vs-per-event-snow-removal-contracts', name: 'Seasonal vs Per-Event Snow Removal Contracts' },
+  { slug: 'commercial-snow-response-plan-checklist', name: 'Commercial Snow Response Plan Checklist' },
+  { slug: 'best-ice-melt-for-commercial-properties', name: 'Best Ice Melt for Commercial Properties' },
+]
+
+const companyLinks = [
+  { path: '/', name: 'Home' },
+  { path: '/about', name: 'About Us' },
+  { path: '/contact', name: 'Contact & Quote' },
+  { path: '/privacy', name: 'Privacy Policy' },
+  { path: '/terms', name: 'Terms of Service' },
+]
+---
+
+<Base
+  title="Sitemap | North Shore Snow"
+  description="A full index of North Shore Snow pages — commercial snow removal services, service areas across the North Shore and Vancouver, industries we serve, and our blog."
+>
+  <HeroPage
+    eyebrow="Site index"
+    heading="Sitemap"
+    lede="Every page on the North Shore Snow website, grouped by section."
+    trail={[{ name: 'Sitemap', path: '/sitemap' }]}
+    cta={false}
+  />
+
+  <section class="section">
+    <div class="container-site max-w-4xl prose-site">
+      <h2>Services</h2>
+      <ul>
+        <li><a href="/services">All Services</a></li>
+        {SERVICE_LINKS.map((s) => (
+          <li><a href={`/${s.slug}`}>{s.name}</a></li>
+        ))}
+      </ul>
+
+      <h2>Service Areas</h2>
+      <ul>
+        <li><a href="/areas">All Service Areas</a></li>
+        {AREA_LINKS.map((a) => (
+          <li><a href={`/${a.slug}`}>{a.name}</a></li>
+        ))}
+      </ul>
+
+      <h2>Industries We Serve</h2>
+      <ul>
+        {INDUSTRY_LINKS.map((i) => (
+          <li><a href={`/${i.slug}`}>{i.name}</a></li>
+        ))}
+      </ul>
+
+      <h2>Blog</h2>
+      <ul>
+        <li><a href="/blog">Blog Home</a></li>
+        {blogLinks.map((b) => (
+          <li><a href={`/blog/${b.slug}`}>{b.name}</a></li>
+        ))}
+      </ul>
+
+      <h2>Company</h2>
+      <ul>
+        {companyLinks.map((c) => (
+          <li><a href={c.path}>{c.name}</a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>

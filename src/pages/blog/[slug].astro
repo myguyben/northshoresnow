@@ -1,0 +1,91 @@
+---
+import { getCollection, render } from 'astro:content'
+import Base from '../../layouts/Base.astro'
+import Breadcrumbs from '../../components/Breadcrumbs.astro'
+import CtaBand from '../../components/CtaBand.astro'
+import ArticleSchema from '../../components/schema/ArticleSchema.astro'
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog')
+  return posts.map((entry) => ({ params: { slug: entry.id }, props: { entry } }))
+}
+
+const { entry } = Astro.props
+const { Content } = await render(entry)
+const data = entry.data
+const posts = (await getCollection('blog'))
+  .filter((p) => p.id !== entry.id)
+  .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf())
+  .slice(0, 3)
+
+const dateFormat = new Intl.DateTimeFormat('en-CA', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+})
+---
+
+<Base title={`${data.title} | North Shore Snow`} description={data.description} ogType="article" ogImage="/og/blog.jpg">
+  <section class="hero-dark pt-[104px] pb-12 md:pt-[128px] md:pb-16">
+    <div class="container-site max-w-4xl">
+      <Breadcrumbs
+        trail={[
+          { name: 'Blog', path: '/blog' },
+          { name: data.title, path: `/blog/${entry.id}` },
+        ]}
+      />
+      <h1 class="h1 mt-6 !text-white">{data.title}</h1>
+      <p class="mt-5 text-sm text-body-dark">
+        <time datetime={data.updated.toISOString().slice(0, 10)}>
+          Updated {dateFormat.format(data.updated)}
+        </time>
+        · {data.readingMinutes} min read
+      </p>
+    </div>
+  </section>
+
+  <article class="section">
+    <div class="container-site max-w-4xl">
+      <div class="prose-site">
+        <Content />
+      </div>
+
+      <div class="card mt-14 flex flex-col items-start justify-between gap-5 bg-frost-50 p-7 sm:flex-row sm:items-center">
+        <div>
+          <p class="font-display text-lg font-bold text-ink-950">
+            Need this handled before the next storm?
+          </p>
+          <p class="mt-1 text-[15px]">Satellite-measured quotes, usually same-day.</p>
+        </div>
+        <a href="/contact#quote" class="btn-primary shrink-0">Get a Free Quote</a>
+      </div>
+    </div>
+  </article>
+
+  {posts.length > 0 && (
+    <section class="border-t border-frost-100 bg-frost-50 py-16">
+      <div class="container-site">
+        <h2 class="font-display text-2xl font-bold">Keep reading</h2>
+        <div class="mt-8 grid gap-6 md:grid-cols-3">
+          {posts.map((post) => (
+            <a href={`/blog/${post.id}`} class="card card-hover group block p-6">
+              <h3 class="font-display text-lg font-bold group-hover:text-brand-600">
+                {post.data.title}
+              </h3>
+              <p class="mt-2 text-sm text-body">{post.data.description}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <CtaBand />
+  <ArticleSchema
+    title={data.title}
+    description={data.description}
+    published={data.published}
+    updated={data.updated}
+    path={`/blog/${entry.id}`}
+  />
+</Base>

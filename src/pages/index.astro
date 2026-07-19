@@ -1,0 +1,222 @@
+---
+import { Image, getImage } from 'astro:assets'
+import Base from '../layouts/Base.astro'
+import StatsBar from '../components/StatsBar.astro'
+import LogoMarquee from '../components/LogoMarquee.astro'
+import QuoteFormMini from '../components/QuoteFormMini.astro'
+import PricingCards from '../components/PricingCards.astro'
+import Testimonials from '../components/Testimonials.astro'
+import FaqAccordion from '../components/FaqAccordion.astro'
+import CtaBand from '../components/CtaBand.astro'
+import LocalBusinessSchema from '../components/schema/LocalBusinessSchema.astro'
+import { AREA_LINKS } from '../lib/site'
+import heroPhoto from '../assets/photos/nss-01.jpg'
+import plowPhoto from '../assets/photos/nss-04.jpg'
+import saltPhoto from '../assets/photos/nss-06.jpg'
+import sidewalkPhoto from '../assets/photos/nss-07.jpg'
+
+const heroBg = await getImage({ src: heroPhoto, format: 'webp', width: 1600, quality: 70 })
+
+const services = [
+  {
+    href: '/snow-removal',
+    title: 'Commercial Snow Removal',
+    body: 'Complete winter management — plowing, shoveling, hauling and de-icing on automatic snowfall triggers, so your property is clear before business hours.',
+    photo: plowPhoto,
+    alt: 'North Shore Snow plow truck clearing a commercial parking lot',
+  },
+  {
+    href: '/de-icing',
+    title: 'De-Icing & Anti-Icing',
+    body: 'Proactive liquid and granular treatment whenever temperatures reach 0°C — preventing ice before it forms, not after someone slips.',
+    photo: saltPhoto,
+    alt: 'De-icing treatment being applied to a walkway',
+  },
+  {
+    href: '/salting',
+    title: 'Salting & Ice Melt',
+    body: 'Calibrated salt application for parking lots, sidewalks and loading zones, with per-visit records that document your duty of care.',
+    photo: sidewalkPhoto,
+    alt: 'Sidewalk salting outside a commercial building',
+  },
+]
+
+const whyUs = [
+  {
+    title: 'Satellite-measured quotes',
+    body: 'We measure your property from satellite imagery and price on actual serviceable area. Accurate quotes in hours — no waiting a week for a site walk.',
+  },
+  {
+    title: 'Proactive dispatch',
+    body: 'Crews roll on weather triggers, not phone calls. By the time it snows, we are already routed to your property.',
+  },
+  {
+    title: 'Photo-verified service',
+    body: 'Every visit is GPS-logged and photo-documented. If a slip-and-fall claim ever lands on your desk, your service records are already organized.',
+  },
+  {
+    title: '24/7 storm coverage',
+    body: 'Overnight, weekends, statutory holidays — snow does not check the calendar and neither do we.',
+  },
+]
+
+const homeFaqs = [
+  {
+    q: 'How fast can I get a quote?',
+    a: 'Usually the same day. We measure your property from satellite imagery, so most quotes are ready within hours of your request — no site visit needed for standard commercial properties.',
+  },
+  {
+    q: 'Do you only serve commercial properties?',
+    a: 'We specialize in commercial, strata and multi-family properties — parking lots, sidewalks, loading zones and common areas. We do not service single-family driveways.',
+  },
+  {
+    q: 'What triggers a service visit?',
+    a: 'Seasonal contracts include automatic dispatch on snowfall accumulation triggers and proactive de-icing whenever temperatures reach 0°C. You never need to call us out — we are already on the way.',
+  },
+  {
+    q: 'Which areas do you cover?',
+    a: 'The entire North Shore — North Vancouver, West Vancouver, Lynn Valley, Deep Cove, Edgemont, Lonsdale — plus Downtown Vancouver. See our service areas page for the full list.',
+  },
+  {
+    q: 'Are you insured?',
+    a: 'Fully insured with commercial general liability coverage and WorkSafeBC registration. Certificates of insurance are available on request with your quote.',
+  },
+]
+---
+
+<Base
+  title="North Shore Snow | Commercial Snow Removal North Vancouver"
+  description="Commercial snow removal, salting & de-icing for strata, property managers and businesses across North Vancouver, West Vancouver and Downtown. Satellite-measured quotes. Call (604) 990-7072."
+  overHero
+>
+  <link slot="head" rel="preload" as="image" href={heroBg.src} fetchpriority="high" />
+
+  <!-- HERO -->
+  <section
+    class="hero-dark relative overflow-hidden"
+    style={`background-image: linear-gradient(180deg, rgb(10 20 32 / 0.68), rgb(10 20 32 / 0.9)), radial-gradient(600px at 80% 0%, rgb(99 201 245 / 0.14), transparent), url(${heroBg.src}); background-size: cover; background-position: center;`}
+  >
+    <div class="container-site grid items-center gap-12 pt-[128px] pb-16 md:pb-24 lg:grid-cols-[1.2fr_0.8fr] lg:pt-[152px]">
+      <div>
+        <p class="eyebrow !text-ice-300">Commercial snow &amp; ice management · North Shore + Vancouver</p>
+        <h1 class="h1 mt-4 !text-white">
+          Snow cleared before <span class="text-gradient-ice">business hours.</span>
+          Every storm. Guaranteed.
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-body-dark">
+          Strata councils, property managers and businesses across the North Shore trust us
+          to keep parking lots, sidewalks and entrances safe all winter — with
+          photo-verified service after every visit.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/contact#quote" class="btn-primary">Get a Free Quote</a>
+          <a href="/services" class="btn-ghost-dark">Explore Services</a>
+        </div>
+        <div class="mt-12 border-t border-white/10 pt-8">
+          <StatsBar dark />
+        </div>
+      </div>
+      <div class="lg:justify-self-end lg:w-full lg:max-w-md">
+        <QuoteFormMini />
+      </div>
+    </div>
+  </section>
+
+  <LogoMarquee />
+
+  <!-- SERVICES -->
+  <section class="section bg-white">
+    <div class="container-site">
+      <div class="max-w-2xl">
+        <p class="eyebrow">What we do</p>
+        <h2 class="h2 mt-2">Complete winter coverage for commercial properties</h2>
+        <p class="mt-4 text-lg">
+          One contractor, one contract, zero gaps — from the first flurry in November to the
+          last refreeze in April.
+        </p>
+      </div>
+      <div class="mt-12 grid gap-6 lg:grid-cols-3">
+        {services.map((service) => (
+          <a href={service.href} class="card card-hover group overflow-hidden">
+            <div class="aspect-[3/2] overflow-hidden">
+              <Image
+                src={service.photo}
+                alt={service.alt}
+                width={640}
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                loading="lazy"
+              />
+            </div>
+            <div class="p-7">
+              <h3 class="font-display text-xl font-bold group-hover:text-brand-600">
+                {service.title}
+              </h3>
+              <p class="mt-3 text-[15px] leading-relaxed">{service.body}</p>
+              <span class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-600">
+                Learn more
+                <svg class="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 8h10M9 4l4 4-4 4" />
+                </svg>
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+      <p class="mt-8 text-[15px]">
+        Also see <a href="/snow-plowing" class="font-semibold text-brand-600 hover:underline">parking lot snow plowing</a> —
+        or view <a href="/services" class="font-semibold text-brand-600 hover:underline">all services</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="section bg-frost-50">
+    <div class="container-site">
+      <div class="max-w-2xl">
+        <p class="eyebrow">Why North Shore Snow</p>
+        <h2 class="h2 mt-2">Built like an operations company, not a guy with a plow</h2>
+      </div>
+      <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {whyUs.map((item, i) => (
+          <div class="card p-7">
+            <span class="font-display text-sm font-bold text-brand-600">0{i + 1}</span>
+            <h3 class="mt-2 font-display text-lg font-bold">{item.title}</h3>
+            <p class="mt-2.5 text-[15px] leading-relaxed">{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <PricingCards />
+  <Testimonials />
+
+  <!-- AREAS -->
+  <section class="section bg-white">
+    <div class="container-site">
+      <div class="flex flex-wrap items-end justify-between gap-6">
+        <div class="max-w-2xl">
+          <p class="eyebrow">Where we work</p>
+          <h2 class="h2 mt-2">Local crews across the North Shore &amp; Vancouver</h2>
+        </div>
+        <a href="/service-areas" class="btn-ghost-light">All service areas</a>
+      </div>
+      <ul class="mt-10 flex flex-wrap gap-2.5">
+        {AREA_LINKS.map((area) => (
+          <li>
+            <a
+              href={`/${area.slug}`}
+              class="inline-block rounded-full border border-frost-200 bg-white px-4 py-2 text-sm font-medium text-ink-900 transition-colors hover:border-brand-500 hover:text-brand-600"
+            >
+              {area.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <FaqAccordion faqs={homeFaqs} />
+  <CtaBand />
+  <LocalBusinessSchema />
+</Base>

@@ -1,0 +1,42 @@
+---
+import FaqSchema from './schema/FaqSchema.astro'
+
+interface Props {
+  faqs: Array<{ q: string; a: string }>
+  heading?: string
+}
+
+const { faqs, heading = 'Frequently asked questions' } = Astro.props
+---
+
+{faqs.length > 0 && (
+  <>
+  <section class="section bg-frost-50">
+    <div class="container-site max-w-4xl">
+      <p class="eyebrow">FAQ</p>
+      <h2 class="h2 mt-2">{heading}</h2>
+      <div class="mt-8 space-y-3">
+        {faqs.map((faq) => (
+          <details class="group card overflow-hidden">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 font-display text-lg font-semibold text-ink-950 [&::-webkit-details-marker]:hidden">
+              {faq.q}
+              <svg
+                class="h-5 w-5 shrink-0 text-brand-500 transition-transform duration-200 group-open:rotate-45"
+                viewBox="0 0 20 20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path stroke-linecap="round" d="M10 4v12M4 10h12" />
+              </svg>
+            </summary>
+            <p class="px-6 pb-5 text-body">{faq.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+  <FaqSchema faqs={faqs} />
+  </>
+)}

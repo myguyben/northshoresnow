@@ -1,0 +1,52 @@
+---
+import { SITE } from '../lib/site'
+
+interface Props {
+  title: string
+  description: string
+  /** Path beginning with '/', or full URL. Defaults to current pathname. */
+  canonical?: string
+  ogImage?: string
+  ogType?: 'website' | 'article'
+  noindex?: boolean
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogImage = SITE.defaultOgImage,
+  ogType = 'website',
+  noindex = false,
+} = Astro.props
+
+// With build.format 'file', Astro.url.pathname is '/foo.html' — canonicals
+// must always be the clean extensionless URL the site actually serves.
+const path = (canonical ?? Astro.url.pathname)
+  .replace(/index\.html$/, '')
+  .replace(/\.html$/, '')
+const canonicalUrl = path.startsWith('http')
+  ? path
+  : new URL(path === '/' || path === '' ? '/' : path.replace(/\/$/, ''), SITE.url).href
+const ogImageUrl = ogImage.startsWith('http') ? ogImage : new URL(ogImage, SITE.url).href
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<meta property="og:type" content={ogType} />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="en_CA" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageUrl} />

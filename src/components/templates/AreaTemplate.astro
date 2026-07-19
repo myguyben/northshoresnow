@@ -1,0 +1,101 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { render } from 'astro:content'
+import Base from '../../layouts/Base.astro'
+import HeroPage from '../HeroPage.astro'
+import CtaBand from '../CtaBand.astro'
+import FaqAccordion from '../FaqAccordion.astro'
+import ServiceSchema from '../schema/ServiceSchema.astro'
+import { SERVICE_LINKS, AREA_LINKS } from '../../lib/site'
+
+interface Props {
+  entry: CollectionEntry<'areas'>
+}
+
+const { entry } = Astro.props
+const { Content } = await render(entry)
+const data = entry.data
+const siblings = AREA_LINKS.filter((a) => data.siblings.includes(a.slug)).slice(0, 3)
+---
+
+<Base title={data.title} description={data.description} ogImage="/og/area.jpg">
+  <HeroPage
+    eyebrow={`Serving ${data.name}`}
+    heading={data.hero}
+    lede={data.description}
+    trail={[
+      { name: 'Areas', path: '/areas' },
+      { name: data.name, path: `/${entry.id}` },
+    ]}
+  />
+
+  <section class="section bg-white">
+    <div class="container-site grid gap-12 lg:grid-cols-[1fr_320px]">
+      <article class="prose-site">
+        <Content />
+      </article>
+      <aside class="space-y-6 lg:pt-2">
+        <div class="card p-6">
+          <h2 class="font-display text-lg font-bold">Services in {data.name}</h2>
+          <ul class="mt-4 space-y-2.5">
+            {SERVICE_LINKS.map((s) => (
+              <li>
+                <a href={`/${s.slug}`} class="text-[15px] font-medium text-brand-600 hover:underline">
+                  {s.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        {siblings.length > 0 && (
+          <div class="card p-6">
+            <h2 class="font-display text-lg font-bold">Nearby areas</h2>
+            <ul class="mt-4 space-y-2.5">
+              {siblings.map((a) => (
+                <li>
+                  <a href={`/${a.slug}`} class="text-[15px] font-medium text-brand-600 hover:underline">
+                    {a.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <div class="card bg-ink-950 p-6 text-white">
+          <h2 class="font-display text-lg font-bold">Local crews, local knowledge</h2>
+          <p class="mt-2 text-sm text-body-dark">{data.terrainNote}</p>
+          <a href="/contact#quote" class="btn-primary mt-4 w-full text-sm">Get a Free Quote</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section bg-frost-50 !py-16">
+    <div class="container-site">
+      <h2 class="h2">Neighborhoods we serve in {data.name}</h2>
+      <ul class="mt-8 flex flex-wrap gap-2.5">
+        {data.neighborhoods.map((n) => (
+          <li class="rounded-full border border-frost-200 bg-white px-4 py-1.5 text-sm font-medium text-ink-900">
+            {n}
+          </li>
+        ))}
+      </ul>
+      {data.landmarks.length > 0 && (
+        <p class="mt-6 max-w-3xl text-[15px] text-body">
+          Properties we commonly service sit near {data.landmarks.join(', ')} — if you're
+          nearby, we already have crews routed through your area.
+        </p>
+      )}
+    </div>
+  </section>
+
+  <FaqAccordion faqs={data.faqs} heading={`Snow removal in ${data.name} — common questions`} />
+  <CtaBand
+    heading={`Ready for winter in ${data.name}?`}
+  />
+  <ServiceSchema
+    name={`Commercial snow removal in ${data.name}`}
+    description={data.description}
+    areaName={`${data.name}, BC`}
+  />
+</Base>

@@ -1,0 +1,44 @@
+---
+const testimonials = [
+  {
+    quote:
+      'They cleared our three strata buildings before 6am after every snowfall last winter. The photo reports make my council updates effortless.',
+    name: 'Strata property manager',
+    context: 'North Vancouver',
+  },
+  {
+    quote:
+      'Switching to a seasonal contract took snow off my budget-variance list entirely. One number, zero surprises, and the lots are always open by store hours.',
+    name: 'Retail operations manager',
+    context: 'Lower Lonsdale',
+  },
+  {
+    quote:
+      'The satellite quote was ready the next morning and matched the site exactly. No walk-through, no back-and-forth — we signed the same week.',
+    name: 'Commercial property owner',
+    context: 'West Vancouver',
+  },
+]
+---
+
+<section class="section bg-frost-50">
+  <div class="container-site">
+    <p class="eyebrow">What clients say</p>
+    <h2 class="h2 mt-2 max-w-xl">Trusted through every storm</h2>
+    <div class="mt-12 grid gap-6 md:grid-cols-3">
+      {testimonials.map((t) => (
+        <figure class="card flex flex-col p-7">
+          <svg class="h-7 w-7 text-ice-400" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M11 6c-3.9.7-6.5 3.7-6.5 8v4h7v-7H8.2C8.5 8.9 9.6 7.7 11.4 7L11 6zm9 0c-3.9.7-6.5 3.7-6.5 8v4h7v-7h-3.3c.3-2.1 1.4-3.3 3.2-3.9L20 6z" />
+          </svg>
+          <blockquote class="mt-4 flex-1 text-[15px] leading-relaxed text-ink-900">
+            “{t.quote}”
+          </blockquote>
+          <figcaption class="mt-5 text-sm font-semibold text-body">
+            {t.name} <span class="font-normal text-body/80">· {t.context}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>

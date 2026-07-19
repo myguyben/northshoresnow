@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro'
+import { SITE } from '../lib/site'
+---
+
+<Base
+  title="Request Received | North Shore Snow"
+  description="Your quote request has been received. We're measuring your property now — expect your quote shortly."
+  noindex
+>
+  <section class="hero-dark flex min-h-[75vh] items-center pt-[72px]">
+    <div class="container-site max-w-3xl py-20 text-center">
+      <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-600">
+        <svg class="h-8 w-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.5l5 5 10-11" />
+        </svg>
+      </div>
+      <h1 class="h1 mt-7 !text-white">Request received — we're on it</h1>
+      <p class="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-body-dark">
+        Our system is already measuring your property from satellite imagery. You'll get a
+        confirmation email within minutes, and your quote is usually ready the same day.
+      </p>
+      <div class="mx-auto mt-10 grid max-w-lg gap-3 text-left">
+        {[
+          ['Check your inbox', 'A confirmation from our team is on its way (check spam the first time).'],
+          ['We measure + price', 'Satellite measurement and local routing — no site visit needed.'],
+          ['Your quote arrives', 'Clear seasonal and per-event options, ready to sign digitally.'],
+        ].map(([title, body], i) => (
+          <div class="flex gap-4 rounded-2xl border border-white/10 bg-white/5 p-5">
+            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-ice-400 text-sm font-bold text-ink-950">
+              {i + 1}
+            </span>
+            <div>
+              <p class="font-semibold text-white">{title}</p>
+              <p class="mt-0.5 text-sm text-body-dark">{body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="mt-10 text-body-dark">
+        Urgent? Call us directly at
+        <a href={SITE.phoneHref} class="font-bold text-white underline decoration-ice-400 underline-offset-4">
+          {SITE.phone}
+        </a>
+      </p>
+    </div>
+  </section>
+</Base>

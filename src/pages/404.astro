@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro'
+import { SERVICE_LINKS } from '../lib/site'
+---
+
+<Base
+  title="Page Not Found | North Shore Snow"
+  description="That page doesn't exist. Find commercial snow removal, de-icing and salting services for the North Shore and Greater Vancouver."
+  noindex
+>
+  <section class="hero-dark flex min-h-[70vh] items-center pt-[72px]">
+    <div class="container-site py-20 text-center">
+      <p class="eyebrow">404</p>
+      <h1 class="h1 mt-3 !text-white">This page got plowed</h1>
+      <p class="mx-auto mt-5 max-w-xl text-lg text-body-dark">
+        The page you're looking for doesn't exist or has moved. Try one of these instead:
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a href="/" class="btn-primary">Back to home</a>
+        <a href="/contact#quote" class="btn-ghost-dark">Get a Free Quote</a>
+      </div>
+      <nav class="mx-auto mt-10 flex max-w-xl flex-wrap justify-center gap-x-6 gap-y-2 text-[15px]" aria-label="Popular pages">
+        {SERVICE_LINKS.map((s) => (
+          <a href={`/${s.slug}`} class="text-ice-300 hover:text-white">{s.name}</a>
+        ))}
+        <a href="/service-areas" class="text-ice-300 hover:text-white">Service Areas</a>
+        <a href="/blog" class="text-ice-300 hover:text-white">Blog</a>
+      </nav>
+    </div>
+  </section>
+</Base>

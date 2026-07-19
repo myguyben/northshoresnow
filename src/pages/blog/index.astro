@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content'
+import Base from '../../layouts/Base.astro'
+import HeroPage from '../../components/HeroPage.astro'
+import CtaBand from '../../components/CtaBand.astro'
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.published.valueOf() - a.data.published.valueOf()
+)
+
+const dateFormat = new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: 'long', day: 'numeric' })
+---
+
+<Base
+  title="Snow & Ice Management Insights | North Shore Snow"
+  description="Practical guidance on commercial snow removal, de-icing, liability and winter contracts for property managers, strata councils and businesses in Greater Vancouver. Call (604) 990-7072."
+>
+  <HeroPage
+    eyebrow="Blog"
+    heading="Winter operations, explained"
+    lede="Costs, contracts, liability and best practices for commercial properties on the North Shore — written by the crews who do the work."
+    trail={[{ name: 'Blog', path: '/blog' }]}
+    cta={false}
+  />
+
+  <section class="section">
+    <div class="container-site">
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {posts.map((post) => (
+          <a href={`/blog/${post.id}`} class="card card-hover group flex flex-col p-7">
+            <p class="text-[13px] font-medium text-body/80">
+              {dateFormat.format(post.data.published)} · {post.data.readingMinutes} min read
+            </p>
+            <h2 class="mt-3 font-display text-xl font-bold group-hover:text-brand-600">
+              {post.data.title}
+            </h2>
+            <p class="mt-3 flex-1 text-[15px] leading-relaxed">{post.data.description}</p>
+            <span class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-600">
+              Read article
+              <svg class="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8h10M9 4l4 4-4 4" />
+              </svg>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

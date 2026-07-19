@@ -1,0 +1,43 @@
+---
+interface Props {
+  eyebrow?: string
+  heading: string
+  lede?: string
+  items: Array<{ href: string; title: string; body: string }>
+  columns?: 2 | 3
+  background?: 'white' | 'frost'
+}
+
+const { eyebrow, heading, lede, items, columns = 3, background = 'white' } = Astro.props
+---
+
+<section class:list={['section', background === 'frost' ? 'bg-frost-50' : 'bg-white']}>
+  <div class="container-site">
+    <div class="max-w-2xl">
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h2 class="h2 mt-2">{heading}</h2>
+      {lede && <p class="mt-4 text-lg">{lede}</p>}
+    </div>
+    <div
+      class:list={[
+        'mt-12 grid gap-6',
+        columns === 3 ? 'md:grid-cols-2 lg:grid-cols-3' : 'md:grid-cols-2',
+      ]}
+    >
+      {items.map((item) => (
+        <a href={item.href} class="card card-hover group block p-7">
+          <h3 class="font-display text-xl font-bold group-hover:text-brand-600">
+            {item.title}
+          </h3>
+          <p class="mt-3 text-[15px] leading-relaxed">{item.body}</p>
+          <span class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-600">
+            Learn more
+            <svg class="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 8h10M9 4l4 4-4 4" />
+            </svg>
+          </span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

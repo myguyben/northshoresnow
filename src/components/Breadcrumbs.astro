@@ -1,0 +1,35 @@
+---
+import BreadcrumbSchema from './schema/BreadcrumbSchema.astro'
+
+interface Props {
+  trail: Array<{ name: string; path: string }>
+  /** On dark hero bands. */
+  dark?: boolean
+}
+
+const { trail, dark = true } = Astro.props
+const last = trail.length - 1
+---
+
+<nav aria-label="Breadcrumb" class:list={['text-sm', dark ? 'text-white/70' : 'text-body']}>
+  <ol class="flex flex-wrap items-center gap-1.5">
+    <li>
+      <a href="/" class:list={[dark ? 'hover:text-white' : 'hover:text-brand-600']}>Home</a>
+    </li>
+    {trail.map((crumb, i) => (
+      <li class="flex items-center gap-1.5">
+        <span aria-hidden="true">/</span>
+        {i === last ? (
+          <span aria-current="page" class:list={[dark ? 'text-white' : 'text-ink-950']}>
+            {crumb.name}
+          </span>
+        ) : (
+          <a href={crumb.path} class:list={[dark ? 'hover:text-white' : 'hover:text-brand-600']}>
+            {crumb.name}
+          </a>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+<BreadcrumbSchema trail={trail} />

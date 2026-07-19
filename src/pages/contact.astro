@@ -1,0 +1,85 @@
+---
+import Base from '../layouts/Base.astro'
+import Breadcrumbs from '../components/Breadcrumbs.astro'
+import QuoteForm from '../components/QuoteForm.astro'
+import LocalBusinessSchema from '../components/schema/LocalBusinessSchema.astro'
+import { SITE } from '../lib/site'
+---
+
+<Base
+  title="Get a Snow Removal Quote | North Shore Snow"
+  description="Request a free satellite-measured snow removal quote for your commercial or strata property in North Vancouver, West Vancouver or Downtown. Call (604) 990-7072."
+>
+  <section class="hero-dark pt-[104px] pb-12 md:pt-[128px] md:pb-16">
+    <div class="container-site">
+      <Breadcrumbs trail={[{ name: 'Contact', path: '/contact' }]} />
+      <h1 class="h1 mt-6 max-w-3xl !text-white">Let's get your property winter-ready</h1>
+      <p class="mt-5 max-w-2xl text-lg text-body-dark">
+        Tell us the address and we'll measure the property from satellite imagery — most
+        quotes are ready the same day, no site visit required.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-site grid gap-12 lg:grid-cols-[1fr_360px]">
+      <QuoteForm />
+
+      <aside class="space-y-6">
+        <div class="card p-7">
+          <h2 class="font-display text-lg font-bold">Prefer to talk?</h2>
+          <div class="mt-4 space-y-4 text-[15px]">
+            <p>
+              <span class="block text-sm font-semibold text-body/80">Phone (Mon–Fri, 8am–5pm)</span>
+              <a href={SITE.phoneHref} class="text-lg font-bold text-brand-600 hover:underline">
+                {SITE.phone}
+              </a>
+            </p>
+            <p>
+              <span class="block text-sm font-semibold text-body/80">Email</span>
+              <a href={`mailto:${SITE.email}`} class="font-semibold text-brand-600 hover:underline">
+                {SITE.email}
+              </a>
+            </p>
+            <address class="not-italic">
+              <span class="block text-sm font-semibold text-body/80">Office</span>
+              {SITE.address.street}<br />
+              {SITE.address.city}, {SITE.address.region} {SITE.address.postalCode}
+            </address>
+          </div>
+        </div>
+
+        <div class="card bg-frost-50 p-7">
+          <h2 class="font-display text-lg font-bold">What happens next</h2>
+          <ol class="mt-4 space-y-4">
+            {[
+              ['We confirm your request', 'You get an acknowledgment within minutes.'],
+              ['We measure your property', 'Satellite imagery + local knowledge — no walk-through needed for most sites.'],
+              ['You receive your quote', 'Usually the same day, with clear per-event and seasonal options.'],
+            ].map(([title, body], i) => (
+              <li class="flex gap-3.5">
+                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-600 text-sm font-bold text-white">
+                  {i + 1}
+                </span>
+                <div>
+                  <p class="font-semibold text-ink-950">{title}</p>
+                  <p class="mt-0.5 text-sm">{body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <div class="card p-7">
+          <h2 class="font-display text-lg font-bold">Service commitment</h2>
+          <p class="mt-3 text-[15px]">
+            Snow removal and salting are delivered as a combined program: de-icing is
+            performed whenever temperatures reach 0°C, and after every snowfall.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <LocalBusinessSchema />
+</Base>

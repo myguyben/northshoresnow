@@ -1,0 +1,50 @@
+---
+import '../styles/global.css'
+import interWoff2 from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url'
+import bricolageWoff2 from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url'
+import '@fontsource-variable/inter'
+import '@fontsource-variable/bricolage-grotesque'
+import Seo from '../components/Seo.astro'
+import Header from '../components/Header.astro'
+import Footer from '../components/Footer.astro'
+
+interface Props {
+  title: string
+  description: string
+  canonical?: string
+  ogImage?: string
+  ogType?: 'website' | 'article'
+  noindex?: boolean
+  /** Home passes true: transparent header over the dark hero. */
+  overHero?: boolean
+}
+
+const { overHero = false, ...seo } = Astro.props
+---
+
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" as="font" type="font/woff2" href={interWoff2} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={bricolageWoff2} crossorigin />
+    <Seo {...seo} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-ink-950"
+    >
+      Skip to content
+    </a>
+    <Header overHero={overHero} />
+    <main id="main" class:list={[overHero ? '' : 'pt-[72px]']}>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

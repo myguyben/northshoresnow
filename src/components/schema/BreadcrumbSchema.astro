@@ -1,0 +1,26 @@
+---
+import { SITE } from '../../lib/site'
+
+interface Props {
+  /** Ordered trail, home excluded — e.g. [{name:'Areas',path:'/areas'},{name:'Lynn Valley',path:'/lynn-valley'}] */
+  trail: Array<{ name: string; path: string }>
+}
+
+const { trail } = Astro.props
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
+    ...trail.map((crumb, i) => ({
+      '@type': 'ListItem',
+      position: i + 2,
+      name: crumb.name,
+      item: `${SITE.url}${crumb.path}`,
+    })),
+  ],
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

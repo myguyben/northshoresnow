@@ -1,0 +1,89 @@
+---
+import { SITE, SERVICE_LINKS, AREA_LINKS, INDUSTRY_LINKS } from '../lib/site'
+
+const year = new Date().getFullYear()
+---
+
+<footer class="bg-ink-950 pt-16 pb-8 text-body-dark">
+  <div class="container-site">
+    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+      <div>
+        <p class="font-display text-xl font-bold text-white">North Shore Snow</p>
+        <p class="mt-3 text-[15px] leading-relaxed">
+          Commercial snow &amp; ice management for strata, property managers and
+          businesses across the North Shore and Greater Vancouver.
+        </p>
+        <address class="mt-5 space-y-1.5 text-[15px] not-italic">
+          <p>{SITE.address.street}, {SITE.address.city}, {SITE.address.region} {SITE.address.postalCode}</p>
+          <p>
+            <a href={SITE.phoneHref} class="footer-link font-semibold text-white">{SITE.phone}</a>
+          </p>
+          <p>
+            <a href={`mailto:${SITE.email}`} class="footer-link">{SITE.email}</a>
+          </p>
+          <p class="text-sm opacity-80">{SITE.hours}</p>
+        </address>
+      </div>
+
+      <div>
+        <p class="footer-heading">Services</p>
+        <ul class="mt-4 space-y-2.5">
+          {SERVICE_LINKS.map((s) => (
+            <li><a href={`/${s.slug}`} class="footer-link">{s.name}</a></li>
+          ))}
+          {INDUSTRY_LINKS.slice(0, 4).map((i) => (
+            <li><a href={`/${i.slug}`} class="footer-link">{i.name}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-heading">Service Areas</p>
+        <ul class="mt-4 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+          {AREA_LINKS.map((a) => (
+            <li><a href={`/${a.slug}`} class="footer-link">{a.name}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-heading">Company</p>
+        <ul class="mt-4 space-y-2.5">
+          <li><a href="/about" class="footer-link">About Us</a></li>
+          <li><a href="/blog" class="footer-link">Blog</a></li>
+          <li><a href="/contact" class="footer-link">Contact</a></li>
+          <li><a href="/contact#quote" class="footer-link">Get a Free Quote</a></li>
+        </ul>
+        <a href="/contact#quote" class="btn-primary mt-6 text-sm">Request a Quote</a>
+      </div>
+    </div>
+
+    <div
+      class="mt-14 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 text-sm sm:flex-row sm:items-center"
+    >
+      <p>© {year} {SITE.legalName} All rights reserved.</p>
+      <nav class="flex gap-6" aria-label="Legal">
+        <a href="/privacy" class="footer-link">Privacy</a>
+        <a href="/terms" class="footer-link">Terms</a>
+        <a href="/sitemap" class="footer-link">Sitemap</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer-heading {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgb(255 255 255 / 0.55);
+  }
+  .footer-link {
+    font-size: 15px;
+    transition: color 0.15s;
+  }
+  .footer-link:hover {
+    color: #fff;
+  }
+</style>
