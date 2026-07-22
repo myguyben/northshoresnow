@@ -5,17 +5,11 @@ import { SITE } from '../lib/site'
  * Single-step quote form: work email + property address + scope of the site.
  * The AI quoting pipeline measures the property from satellite imagery, so
  * the address is the field that matters most — it autocompletes via the
- * Icey address-autocomplete proxy (Google Places under the hood). Submits
- * JSON to the Icey website-lead endpoint; on failure it degrades to a
- * prefilled mailto (which feeds the same intake via email).
+ * Icey address-autocomplete proxy (Google Places under the hood). The scope
+ * description feeds the pipeline's scope prompt (which areas get outlined
+ * and quoted). Submits JSON to the Icey website-lead endpoint; on failure
+ * it degrades to a prefilled mailto (which feeds the same intake via email).
  */
-
-const SCOPE_OPTIONS = [
-  'Snow plowing',
-  'Sidewalk & walkway clearing',
-  'Salting & de-icing',
-  'Snow hauling / relocation',
-]
 ---
 
 <div class="card p-6 md:p-8" id="quote">
@@ -68,38 +62,21 @@ const SCOPE_OPTIONS = [
         </div>
       </div>
 
-      <fieldset>
-        <legend class="label">Scope of the site *</legend>
-        <p class="mb-2.5 -mt-0.5 text-sm text-body/80">What should we take care of?</p>
-        <div class="grid gap-2.5 sm:grid-cols-2">
-          {SCOPE_OPTIONS.map((option) => (
-            <label class="flex items-center gap-2.5 text-[15px]">
-              <input
-                type="checkbox"
-                name="services"
-                value={option}
-                class="h-4.5 w-4.5 rounded border-frost-200 text-brand-600 focus:ring-brand-500"
-              />
-              {option}
-            </label>
-          ))}
-        </div>
-        <p id="qf-scope-error" hidden class="mt-2 text-sm font-medium text-red-600">
-          Select at least one so we can scope your quote.
-        </p>
-      </fieldset>
-
       <div>
-        <label class="label" for="qf-details">
-          Anything else about the site? <span class="font-normal text-body/70">(optional)</span>
-        </label>
+        <label class="label" for="qf-scope">Scope of the site *</label>
+        <p class="mb-2 -mt-0.5 text-sm text-body/80">
+          Describe what we should take care of — we'll outline exactly those areas on
+          satellite imagery.
+        </p>
         <textarea
           class="input"
-          id="qf-details"
-          name="details"
-          rows="2"
+          id="qf-scope"
+          name="scope"
+          rows="3"
+          required
+          minlength="10"
           maxlength="2000"
-          placeholder="Parking levels, priority entrances, access notes…"></textarea>
+          placeholder="e.g. Clear and salt the main parking lot, both entrances and the sidewalks around the building…"></textarea>
       </div>
 
       <!-- Honeypot: humans never see or fill this. -->

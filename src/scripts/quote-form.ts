@@ -149,7 +149,6 @@ export function setupQuoteForm(): void {
   const spinner = document.getElementById('qf-spinner') as HTMLElement
   const errorPanel = document.getElementById('qf-error') as HTMLElement
   const mailtoLink = document.getElementById('qf-mailto') as HTMLAnchorElement
-  const scopeError = document.getElementById('qf-scope-error') as HTMLElement
   const addressInput = form.elements.namedItem('address') as HTMLInputElement
 
   const submissionId = crypto.randomUUID()
@@ -171,24 +170,21 @@ export function setupQuoteForm(): void {
       submissionId,
       email: String(data.get('email') ?? '').trim(),
       address: String(data.get('address') ?? '').trim(),
-      services: data.getAll('services').map(String),
-      details: String(data.get('details') ?? '').trim(),
+      scope: String(data.get('scope') ?? '').trim(),
       pageUrl: window.location.origin + window.location.pathname,
       website: String(data.get('website') ?? ''),
     }
   }
 
   function validate(): boolean {
-    for (const name of ['email', 'address'] as const) {
+    for (const name of ['email', 'address', 'scope'] as const) {
       const field = form.elements.namedItem(name) as HTMLInputElement
       if (!field.checkValidity()) {
         field.reportValidity()
         return false
       }
     }
-    const hasScope = collect().services.length > 0
-    scopeError.hidden = hasScope
-    return hasScope
+    return true
   }
 
   function mailtoFallback(lead: ReturnType<typeof collect>): string {
@@ -196,9 +192,8 @@ export function setupQuoteForm(): void {
     const body = [
       `Email: ${lead.email}`,
       `Property address: ${lead.address}`,
-      `Scope: ${lead.services.join(', ') || '—'}`,
       '',
-      lead.details,
+      `Scope of the site: ${lead.scope}`,
     ].join('\n')
     return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
   }
