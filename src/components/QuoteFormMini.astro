@@ -1,7 +1,7 @@
 ---
 /**
  * Compact hero variant: address + email only. Hands off to /contact#quote
- * with both values as query params, where the full form prefills step 1.
+ * with both values as query params, where the full form prefills them.
  */
 ---
 
@@ -12,17 +12,30 @@
   </p>
   <form class="mt-5 space-y-3" method="get" action="/contact" id="quote-mini">
     <div>
-      <label class="label" for="qfm-address">Property address</label>
-      <input
-        class="input"
-        id="qfm-address"
-        name="address"
-        type="text"
-        required
-        minlength="5"
-        autocomplete="street-address"
-        placeholder="123 Main St, North Vancouver, BC"
-      />
+      <label class="label" for="qfm-address">Commercial property address</label>
+      <div class="relative" data-address-autocomplete>
+        <input
+          class="input"
+          id="qfm-address"
+          name="address"
+          type="text"
+          required
+          minlength="5"
+          autocomplete="off"
+          role="combobox"
+          aria-expanded="false"
+          aria-controls="qfm-address-listbox"
+          aria-autocomplete="list"
+          placeholder="Start typing the address…"
+        />
+        <ul
+          class="address-listbox"
+          id="qfm-address-listbox"
+          role="listbox"
+          aria-label="Address suggestions"
+          hidden
+        ></ul>
+      </div>
     </div>
     <div>
       <label class="label" for="qfm-email">Work email</label>
@@ -44,8 +57,13 @@
 </div>
 
 <script>
-  // Preserve the #quote anchor through the GET handoff.
+  import { attachAddressAutocomplete } from '../scripts/quote-form'
+
   const mini = document.getElementById('quote-mini') as HTMLFormElement | null
+  const address = document.getElementById('qfm-address') as HTMLInputElement | null
+  if (address) attachAddressAutocomplete(address)
+
+  // Preserve the #quote anchor through the GET handoff.
   mini?.addEventListener('submit', (event) => {
     event.preventDefault()
     const data = new FormData(mini)

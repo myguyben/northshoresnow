@@ -1,98 +1,202 @@
-/** Client logic for the 3-step quote form (QuoteForm.astro). */
+/** Client logic for the quote form (QuoteForm.astro) and the address
+ * autocomplete shared with QuoteFormMini.astro. */
 
 const ENDPOINT =
   import.meta.env.PUBLIC_QUOTE_ENDPOINT ?? 'https://iceysoftware.com/api/inbound/website-lead'
+const AUTOCOMPLETE_ENDPOINT = ENDPOINT.replace(/\/website-lead$/, '/address-autocomplete')
 const CONTACT_EMAIL = 'Quotes@northshoresnow.com'
+/** Bias suggestions toward the North Shore / Greater Vancouver. */
+const LOCATION_BIAS = '49.32,-123.07'
+
+interface Suggestion {
+  description: string
+  mainText: string
+  secondaryText: string
+}
+
+/**
+ * Wire Google-Places-backed address suggestions (via the Icey proxy — the
+ * key stays server-side) onto a text input. The input must sit inside a
+ * `position: relative` wrapper containing a `[role="listbox"]` <ul>.
+ * Degrades silently to a plain text input if the endpoint is unreachable.
+ */
+export function attachAddressAutocomplete(input: HTMLInputElement): void {
+  const wrapper = input.closest('[data-address-autocomplete]')
+  const listbox = wrapper?.querySelector<HTMLUListElement>('[role="listbox"]')
+  if (!listbox) return
+
+  // One Places session per address entry — renewed after each selection.
+  let sessionToken = crypto.randomUUID()
+  let debounceTimer: number | undefined
+  let inflight: AbortController | null = null
+  let suggestions: Suggestion[] = []
+  let activeIndex = -1
+
+  function close(): void {
+    listbox.hidden = true
+    listbox.innerHTML = ''
+    input.setAttribute('aria-expanded', 'false')
+    input.removeAttribute('aria-activedescendant')
+    suggestions = []
+    activeIndex = -1
+  }
+
+  function select(index: number): void {
+    const suggestion = suggestions[index]
+    if (!suggestion) return
+    input.value = suggestion.description
+    sessionToken = crypto.randomUUID()
+    close()
+  }
+
+  function highlight(index: number): void {
+    activeIndex = index
+    listbox.querySelectorAll('[role="option"]').forEach((el, i) => {
+      el.setAttribute('aria-selected', String(i === index))
+      el.classList.toggle('is-active', i === index)
+    })
+    const active = listbox.querySelectorAll('[role="option"]')[index]
+    if (active) input.setAttribute('aria-activedescendant', active.id)
+  }
+
+  function render(): void {
+    listbox.innerHTML = ''
+    suggestions.forEach((suggestion, i) => {
+      const li = document.createElement('li')
+      li.id = `${input.id}-option-${i}`
+      li.setAttribute('role', 'option')
+      li.setAttribute('aria-selected', 'false')
+      li.className = 'address-option'
+      const main = document.createElement('span')
+      main.className = 'address-option-main'
+      main.textContent = suggestion.mainText
+      const secondary = document.createElement('span')
+      secondary.className = 'address-option-secondary'
+      secondary.textContent = suggestion.secondaryText
+      li.append(main, secondary)
+      // mousedown beats the input's blur, so the click still lands.
+      li.addEventListener('mousedown', (event) => {
+        event.preventDefault()
+        select(i)
+      })
+      li.addEventListener('mousemove', () => highlight(i))
+      listbox.append(li)
+    })
+    // Required attribution when showing Places suggestions without a map.
+    const footer = document.createElement('li')
+    footer.className = 'address-listbox-footer'
+    footer.setAttribute('aria-hidden', 'true')
+    footer.textContent = 'powered by Google'
+    listbox.append(footer)
+    listbox.hidden = false
+    input.setAttribute('aria-expanded', 'true')
+    activeIndex = -1
+  }
+
+  async function fetchSuggestions(query: string): Promise<void> {
+    inflight?.abort()
+    inflight = new AbortController()
+    try {
+      const url = new URL(AUTOCOMPLETE_ENDPOINT)
+      url.searchParams.set('q', query)
+      url.searchParams.set('session', sessionToken)
+      url.searchParams.set('bias', LOCATION_BIAS)
+      const response = await fetch(url, { signal: inflight.signal })
+      if (!response.ok) throw new Error(`HTTP ${response.status}`)
+      const payload = (await response.json()) as { data?: { suggestions?: Suggestion[] } }
+      suggestions = payload.data?.suggestions ?? []
+      if (suggestions.length && document.activeElement === input) render()
+      else close()
+    } catch (error) {
+      if (!(error instanceof DOMException && error.name === 'AbortError')) close()
+    }
+  }
+
+  input.addEventListener('input', () => {
+    window.clearTimeout(debounceTimer)
+    const query = input.value.trim()
+    if (query.length < 3) {
+      close()
+      return
+    }
+    debounceTimer = window.setTimeout(() => void fetchSuggestions(query), 250)
+  })
+
+  input.addEventListener('keydown', (event) => {
+    if (listbox.hidden) return
+    if (event.key === 'ArrowDown') {
+      event.preventDefault()
+      highlight(Math.min(activeIndex + 1, suggestions.length - 1))
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault()
+      highlight(Math.max(activeIndex - 1, 0))
+    } else if (event.key === 'Enter' && activeIndex >= 0) {
+      event.preventDefault()
+      select(activeIndex)
+    } else if (event.key === 'Escape') {
+      close()
+    }
+  })
+
+  input.addEventListener('blur', () => close())
+}
 
 export function setupQuoteForm(): void {
   const form = document.getElementById('quote-form') as HTMLFormElement | null
   if (!form) return
 
-  const steps = Array.from(form.querySelectorAll<HTMLFieldSetElement>('[data-step]'))
-  const dots = Array.from(document.querySelectorAll<HTMLElement>('[data-step-dot]'))
-  const backButton = document.getElementById('qf-back') as HTMLButtonElement
-  const nextButton = document.getElementById('qf-next') as HTMLButtonElement
   const submitButton = document.getElementById('qf-submit') as HTMLButtonElement
   const spinner = document.getElementById('qf-spinner') as HTMLElement
   const errorPanel = document.getElementById('qf-error') as HTMLElement
   const mailtoLink = document.getElementById('qf-mailto') as HTMLAnchorElement
+  const scopeError = document.getElementById('qf-scope-error') as HTMLElement
+  const addressInput = form.elements.namedItem('address') as HTMLInputElement
 
   const submissionId = crypto.randomUUID()
-  let current = 1
+
+  attachAddressAutocomplete(addressInput)
 
   // QuoteFormMini hands off via /contact#quote?address=…&email=…
   const params = new URLSearchParams(window.location.search)
   const prefillAddress = params.get('address')
   const prefillEmail = params.get('email')
-  if (prefillAddress) {
-    ;(form.elements.namedItem('address') as HTMLInputElement).value = prefillAddress
-  }
+  if (prefillAddress) addressInput.value = prefillAddress
   if (prefillEmail) {
     ;(form.elements.namedItem('email') as HTMLInputElement).value = prefillEmail
   }
 
-  function show(step: number): void {
-    current = step
-    for (const fieldset of steps) {
-      fieldset.hidden = Number(fieldset.dataset.step) !== step
-    }
-    dots.forEach((dot, i) => {
-      if (i < step) dot.setAttribute('data-active', '')
-      else dot.removeAttribute('data-active')
-    })
-    backButton.hidden = step === 1
-    nextButton.hidden = step === 3
-    submitButton.hidden = step !== 3
-  }
-
-  function validateStep(step: number): boolean {
-    const fieldset = steps.find((f) => Number(f.dataset.step) === step)
-    if (!fieldset) return true
-    for (const field of fieldset.querySelectorAll<HTMLInputElement>('input, select, textarea')) {
-      if (!field.checkValidity()) {
-        field.reportValidity()
-        return false
-      }
-    }
-    return true
-  }
-
-  backButton.addEventListener('click', () => show(Math.max(1, current - 1)))
-  nextButton.addEventListener('click', () => {
-    if (validateStep(current)) show(Math.min(3, current + 1))
-  })
-
   function collect() {
     const data = new FormData(form)
-    const services = data.getAll('services').map(String)
     return {
       submissionId,
-      firstName: String(data.get('firstName') ?? '').trim(),
-      lastName: String(data.get('lastName') ?? '').trim(),
       email: String(data.get('email') ?? '').trim(),
-      phone: String(data.get('phone') ?? '').trim(),
-      serviceArea: String(data.get('serviceArea') ?? ''),
-      propertyType: String(data.get('propertyType') ?? ''),
       address: String(data.get('address') ?? '').trim(),
-      serviceType: String(data.get('serviceType') ?? 'seasonal') as 'seasonal' | 'per-event',
-      services,
+      services: data.getAll('services').map(String),
       details: String(data.get('details') ?? '').trim(),
       pageUrl: window.location.origin + window.location.pathname,
       website: String(data.get('website') ?? ''),
     }
   }
 
+  function validate(): boolean {
+    for (const name of ['email', 'address'] as const) {
+      const field = form.elements.namedItem(name) as HTMLInputElement
+      if (!field.checkValidity()) {
+        field.reportValidity()
+        return false
+      }
+    }
+    const hasScope = collect().services.length > 0
+    scopeError.hidden = hasScope
+    return hasScope
+  }
+
   function mailtoFallback(lead: ReturnType<typeof collect>): string {
     const subject = `Quote request — ${lead.address}`
     const body = [
-      `Name: ${[lead.firstName, lead.lastName].filter(Boolean).join(' ')}`,
       `Email: ${lead.email}`,
-      `Phone: ${lead.phone || '—'}`,
       `Property address: ${lead.address}`,
-      `Service area: ${lead.serviceArea}`,
-      `Property type: ${lead.propertyType}`,
-      `Contract type: ${lead.serviceType === 'per-event' ? 'Per-event' : 'Seasonal contract'}`,
-      `Services: ${lead.services.join(', ') || '—'}`,
+      `Scope: ${lead.services.join(', ') || '—'}`,
       '',
       lead.details,
     ].join('\n')
@@ -101,7 +205,7 @@ export function setupQuoteForm(): void {
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault()
-    if (!validateStep(3)) return
+    if (!validate()) return
 
     const lead = collect()
     errorPanel.hidden = true
@@ -127,6 +231,4 @@ export function setupQuoteForm(): void {
       spinner.hidden = true
     }
   })
-
-  show(1)
 }

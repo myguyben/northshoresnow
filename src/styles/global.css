@@ -125,6 +125,31 @@
     @apply mb-1.5 block text-sm font-medium text-ink-900;
   }
 
+  /* Address-autocomplete dropdown (see scripts/quote-form.ts). */
+  .address-listbox {
+    @apply absolute left-0 right-0 top-full z-30 mt-1.5 overflow-hidden rounded-xl border border-frost-200 bg-white py-1 shadow-card;
+  }
+
+  .address-option {
+    @apply flex cursor-pointer flex-col gap-0.5 px-4 py-2.5;
+  }
+
+  .address-option.is-active {
+    background-color: var(--color-frost-100);
+  }
+
+  .address-option-main {
+    @apply text-[15px] font-medium text-ink-950;
+  }
+
+  .address-option-secondary {
+    @apply text-[13px] text-body/80;
+  }
+
+  .address-listbox-footer {
+    @apply px-4 pb-1 pt-1.5 text-right text-[11px] text-body/60;
+  }
+
   /* Dark hero surface: photo overlay gradient + radial ice glow. */
   .hero-dark {
     background-color: var(--color-ink-950);

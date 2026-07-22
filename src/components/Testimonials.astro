@@ -1,41 +1,98 @@
 ---
-const testimonials = [
+/**
+ * Real Google reviews, quoted verbatim from our Google Business Profile
+ * (5.0, 26 reviews). The crew works year-round as Maintenance Masters —
+ * some reviews name that side of the business. Update the count/link
+ * together if the listing changes.
+ */
+
+const GOOGLE_REVIEWS_URL =
+  'https://www.google.com/maps/place/?q=place_id:ChIJWQ-g9MNEf2oRhmrru26SGtc'
+const REVIEW_COUNT = 26
+
+const reviews = [
   {
     quote:
-      'They cleared our three strata buildings before 6am after every snowfall last winter. The photo reports make my council updates effortless.',
-    name: 'Strata property manager',
-    context: 'North Vancouver',
+      'We collaborate with Luke and his team last winter on snow removal and salting projects, and everything was always handled with courtesy and professionalism. Highly recommending their services!',
+    name: "Matt's home services",
   },
   {
     quote:
-      'Switching to a seasonal contract took snow off my budget-variance list entirely. One number, zero surprises, and the lots are always open by store hours.',
-    name: 'Retail operations manager',
-    context: 'Lower Lonsdale',
+      'The Maintenance Masters team was hired by my strata to power-wash the common areas around the building. I approached them to see if they could squeeze in my balcony (paying out of pocket of course) and they were so professional, helpful, polite and quick! Made sure they completed the contracted work first, kept me up to date on their timeline and also did my windows! Thank you Luke!',
+    name: 'Susan Kristiansen',
   },
   {
     quote:
-      'The satellite quote was ready the next morning and matched the site exactly. No walk-through, no back-and-forth — we signed the same week.',
-    name: 'Commercial property owner',
-    context: 'West Vancouver',
+      'Jay, Luke and the team were great to deal with. They were polite and had great attention to detail, and even provided before and after pics. Luke even offered to come by after the weekend in case they missed anything. Great service!',
+    name: 'Sara',
+  },
+  {
+    quote:
+      'The Maintenance Masters team is AMAZING! They came to power wash our fitness studio the other day, and were incredibly efficient, kind, and communicative. Prices were very reasonable, and they did SUCH a great job! We will absolutely be having them back!',
+    name: 'Kaelyn Burgess',
+  },
+  {
+    quote:
+      'Maintenance Masters did an excellent job on our deck at a reasonable price. The two young men who performed the work were courteous, punctual and diligent. My husband and I have no hesitancy in recommending them for future work.',
+    name: 'Gloria Ferrey',
+  },
+  {
+    quote:
+      'Professional service at a very reasonable price. Customer service and communication was on point!',
+    name: 'Stim Citizen',
   },
 ]
 ---
 
 <section class="section bg-frost-50">
   <div class="container-site">
-    <p class="eyebrow">What clients say</p>
-    <h2 class="h2 mt-2 max-w-xl">Trusted through every storm</h2>
-    <div class="mt-12 grid gap-6 md:grid-cols-3">
-      {testimonials.map((t) => (
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <p class="eyebrow">What clients say</p>
+        <h2 class="h2 mt-2 max-w-xl">Trusted through every storm</h2>
+        <p class="mt-3 max-w-2xl text-[15px] text-body">
+          Real reviews from our Google Business Profile. Our crew works year-round as
+          Maintenance Masters — in winter, we're North Shore Snow.
+        </p>
+      </div>
+      <a
+        href={GOOGLE_REVIEWS_URL}
+        target="_blank"
+        rel="noopener"
+        class="group flex items-center gap-3 rounded-2xl border border-frost-200 bg-white px-5 py-3.5 shadow-card transition-colors hover:border-brand-500"
+      >
+        <span class="font-display text-3xl font-bold text-ink-950">5.0</span>
+        <span>
+          <span class="flex gap-0.5" aria-label="Rated 5 out of 5 stars">
+            {[1, 2, 3, 4, 5].map(() => (
+              <svg class="h-4 w-4 text-amber-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9L10 1.5z" />
+              </svg>
+            ))}
+          </span>
+          <span class="mt-0.5 block text-sm text-body group-hover:text-brand-600">
+            {REVIEW_COUNT} Google reviews →
+          </span>
+        </span>
+      </a>
+    </div>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {reviews.map((review) => (
         <figure class="card flex flex-col p-7">
-          <svg class="h-7 w-7 text-ice-400" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M11 6c-3.9.7-6.5 3.7-6.5 8v4h7v-7H8.2C8.5 8.9 9.6 7.7 11.4 7L11 6zm9 0c-3.9.7-6.5 3.7-6.5 8v4h7v-7h-3.3c.3-2.1 1.4-3.3 3.2-3.9L20 6z" />
-          </svg>
+          <span class="flex gap-0.5" aria-label="5 out of 5 stars">
+            {[1, 2, 3, 4, 5].map(() => (
+              <svg class="h-4 w-4 text-amber-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9L10 1.5z" />
+              </svg>
+            ))}
+          </span>
           <blockquote class="mt-4 flex-1 text-[15px] leading-relaxed text-ink-900">
-            “{t.quote}”
+            “{review.quote}”
           </blockquote>
-          <figcaption class="mt-5 text-sm font-semibold text-body">
-            {t.name} <span class="font-normal text-body/80">· {t.context}</span>
+          <figcaption class="mt-5 flex items-center justify-between text-sm">
+            <span class="font-semibold text-body">{review.name}</span>
+            <span class="text-body/70">Google review</span>
           </figcaption>
         </figure>
       ))}

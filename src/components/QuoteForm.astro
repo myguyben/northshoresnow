@@ -1,23 +1,16 @@
 ---
-import { SITE, AREA_LINKS } from '../lib/site'
+import { SITE } from '../lib/site'
 
 /**
- * Three-step quote form. Address first — the AI quoting pipeline measures the
- * property from satellite imagery, so the address is the one field that
- * matters most. Submits JSON to the Icey website-lead endpoint; on failure it
- * degrades to a prefilled mailto (which feeds the same intake via email).
+ * Single-step quote form: work email + property address + scope of the site.
+ * The AI quoting pipeline measures the property from satellite imagery, so
+ * the address is the field that matters most — it autocompletes via the
+ * Icey address-autocomplete proxy (Google Places under the hood). Submits
+ * JSON to the Icey website-lead endpoint; on failure it degrades to a
+ * prefilled mailto (which feeds the same intake via email).
  */
 
-const PROPERTY_TYPES = [
-  'Strata / Multi-family',
-  'Commercial / Office',
-  'Retail / Shopping centre',
-  'Industrial / Warehouse',
-  'Institutional',
-  'Other',
-]
-
-const SERVICES = [
+const SCOPE_OPTIONS = [
   'Snow plowing',
   'Sidewalk & walkway clearing',
   'Salting & de-icing',
@@ -33,22 +26,24 @@ const SERVICES = [
     </p>
   </div>
 
-  <ol class="mb-6 flex items-center gap-2" aria-hidden="true" id="qf-progress">
-    {[1, 2, 3].map((step) => (
-      <li
-        class="h-1.5 flex-1 rounded-full bg-frost-200 transition-colors duration-300 data-[active]:bg-brand-500"
-        data-step-dot={step}
-      ></li>
-    ))}
-  </ol>
-
   <form id="quote-form" novalidate>
-    <!-- Step 1: property -->
-    <fieldset data-step="1">
-      <legend class="sr-only">Property details</legend>
-      <div class="space-y-4">
-        <div>
-          <label class="label" for="qf-address">Property address *</label>
+    <div class="space-y-5">
+      <div>
+        <label class="label" for="qf-email">Work email *</label>
+        <input
+          class="input"
+          id="qf-email"
+          name="email"
+          type="email"
+          required
+          autocomplete="email"
+          placeholder="you@company.com"
+        />
+      </div>
+
+      <div>
+        <label class="label" for="qf-address">Commercial property address *</label>
+        <div class="relative" data-address-autocomplete>
           <input
             class="input"
             id="qf-address"
@@ -56,126 +51,65 @@ const SERVICES = [
             type="text"
             required
             minlength="5"
-            autocomplete="street-address"
-            placeholder="123 Main St, North Vancouver, BC"
+            autocomplete="off"
+            role="combobox"
+            aria-expanded="false"
+            aria-controls="qf-address-listbox"
+            aria-autocomplete="list"
+            placeholder="Start typing the address…"
           />
-        </div>
-        <div class="grid gap-4 sm:grid-cols-2">
-          <div>
-            <label class="label" for="qf-area">Service area *</label>
-            <select class="input" id="qf-area" name="serviceArea" required>
-              <option value="" disabled selected>Select area</option>
-              {AREA_LINKS.map((area) => (
-                <option value={area.name}>{area.name}</option>
-              ))}
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div>
-            <label class="label" for="qf-property-type">Property type *</label>
-            <select class="input" id="qf-property-type" name="propertyType" required>
-              <option value="" disabled selected>Select type</option>
-              {PROPERTY_TYPES.map((type) => (
-                <option value={type}>{type}</option>
-              ))}
-            </select>
-          </div>
+          <ul
+            class="address-listbox"
+            id="qf-address-listbox"
+            role="listbox"
+            aria-label="Address suggestions"
+            hidden
+          ></ul>
         </div>
       </div>
-    </fieldset>
 
-    <!-- Step 2: service -->
-    <fieldset data-step="2" hidden>
-      <legend class="sr-only">Service preferences</legend>
-      <div class="space-y-5">
-        <div>
-          <span class="label">Contract type</span>
-          <div class="grid gap-3 sm:grid-cols-2">
-            <label class="radio-card">
-              <input type="radio" name="serviceType" value="seasonal" checked class="peer sr-only" />
-              <span class="radio-card-body">
-                <span class="flex items-center justify-between font-semibold text-ink-950">
-                  Seasonal contract
-                  <span class="rounded-full bg-badge-amber px-2 py-0.5 text-[11px] font-bold uppercase">Popular</span>
-                </span>
-                <span class="mt-1 block text-sm text-body">One fixed price, unlimited service Oct–Apr</span>
-              </span>
+      <fieldset>
+        <legend class="label">Scope of the site *</legend>
+        <p class="mb-2.5 -mt-0.5 text-sm text-body/80">What should we take care of?</p>
+        <div class="grid gap-2.5 sm:grid-cols-2">
+          {SCOPE_OPTIONS.map((option) => (
+            <label class="flex items-center gap-2.5 text-[15px]">
+              <input
+                type="checkbox"
+                name="services"
+                value={option}
+                class="h-4.5 w-4.5 rounded border-frost-200 text-brand-600 focus:ring-brand-500"
+              />
+              {option}
             </label>
-            <label class="radio-card">
-              <input type="radio" name="serviceType" value="per-event" class="peer sr-only" />
-              <span class="radio-card-body">
-                <span class="font-semibold text-ink-950">Per-event service</span>
-                <span class="mt-1 block text-sm text-body">Pay per storm, no fixed commitment</span>
-              </span>
-            </label>
-          </div>
+          ))}
         </div>
-        <div>
-          <span class="label">Services needed</span>
-          <div class="grid gap-2.5 sm:grid-cols-2">
-            {SERVICES.map((service) => (
-              <label class="flex items-center gap-2.5 text-[15px]">
-                <input
-                  type="checkbox"
-                  name="services"
-                  value={service}
-                  class="h-4.5 w-4.5 rounded border-frost-200 text-brand-600 focus:ring-brand-500"
-                />
-                {service}
-              </label>
-            ))}
-          </div>
-        </div>
-        <div>
-          <label class="label" for="qf-details">Anything else we should know?</label>
-          <textarea
-            class="input"
-            id="qf-details"
-            name="details"
-            rows="3"
-            maxlength="2000"
-            placeholder="Parking levels, priority entrances, access notes…"></textarea>
-        </div>
-      </div>
-    </fieldset>
-
-    <!-- Step 3: contact -->
-    <fieldset data-step="3" hidden>
-      <legend class="sr-only">Contact details</legend>
-      <div class="space-y-4">
-        <div class="grid gap-4 sm:grid-cols-2">
-          <div>
-            <label class="label" for="qf-first-name">First name *</label>
-            <input class="input" id="qf-first-name" name="firstName" type="text" required autocomplete="given-name" />
-          </div>
-          <div>
-            <label class="label" for="qf-last-name">Last name</label>
-            <input class="input" id="qf-last-name" name="lastName" type="text" autocomplete="family-name" />
-          </div>
-        </div>
-        <div class="grid gap-4 sm:grid-cols-2">
-          <div>
-            <label class="label" for="qf-email">Work email *</label>
-            <input class="input" id="qf-email" name="email" type="email" required autocomplete="email" />
-          </div>
-          <div>
-            <label class="label" for="qf-phone">Phone</label>
-            <input class="input" id="qf-phone" name="phone" type="tel" autocomplete="tel" />
-          </div>
-        </div>
-        <!-- Honeypot: humans never see or fill this. -->
-        <div class="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
-          <label for="qf-website">Website</label>
-          <input id="qf-website" name="website" type="text" tabindex="-1" autocomplete="off" />
-        </div>
-        <p class="text-[13px] leading-relaxed text-body/80">
-          By requesting a quote you agree to be contacted about your property. We never share
-          your details.
+        <p id="qf-scope-error" hidden class="mt-2 text-sm font-medium text-red-600">
+          Select at least one so we can scope your quote.
         </p>
-      </div>
-    </fieldset>
+      </fieldset>
 
-    <div id="qf-error" hidden class="mt-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">
+      <div>
+        <label class="label" for="qf-details">
+          Anything else about the site? <span class="font-normal text-body/70">(optional)</span>
+        </label>
+        <textarea
+          class="input"
+          id="qf-details"
+          name="details"
+          rows="2"
+          maxlength="2000"
+          placeholder="Parking levels, priority entrances, access notes…"></textarea>
+      </div>
+
+      <!-- Honeypot: humans never see or fill this. -->
+      <div class="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
+        <label for="qf-website">Website</label>
+        <input id="qf-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+    </div>
+
+    <div id="qf-error" hidden class="mt-5 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">
       <p class="font-semibold">We couldn't send your request automatically.</p>
       <p class="mt-1">
         Email us instead — one click, your details are already filled in:
@@ -187,10 +121,12 @@ const SERVICES = [
       </p>
     </div>
 
-    <div class="mt-6 flex items-center justify-between gap-3">
-      <button type="button" id="qf-back" class="btn-ghost-light !px-5" hidden>Back</button>
-      <button type="button" id="qf-next" class="btn-primary ml-auto !px-8">Continue</button>
-      <button type="submit" id="qf-submit" class="btn-primary ml-auto !px-8" hidden>
+    <div class="mt-6 flex items-center justify-between gap-4">
+      <p class="text-[13px] leading-relaxed text-body/80">
+        By requesting a quote you agree to be contacted about your property. We never share
+        your details.
+      </p>
+      <button type="submit" id="qf-submit" class="btn-primary shrink-0 !px-8">
         <svg
           id="qf-spinner"
           class="h-4 w-4 animate-spin"
@@ -207,26 +143,6 @@ const SERVICES = [
     </div>
   </form>
 </div>
-
-<style>
-  .radio-card-body {
-    display: block;
-    padding: 0.9rem 1rem;
-    border-radius: 0.75rem;
-    border: 1.5px solid var(--color-frost-200);
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-  .peer:checked + .radio-card-body {
-    border-color: var(--color-brand-500);
-    background: rgb(36 120 229 / 0.04);
-    box-shadow: 0 0 0 1px var(--color-brand-500);
-  }
-  .peer:focus-visible + .radio-card-body {
-    outline: 2px solid var(--color-ice-400);
-    outline-offset: 2px;
-  }
-</style>
 
 <script>
   import { setupQuoteForm } from '../scripts/quote-form'
