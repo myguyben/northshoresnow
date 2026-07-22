@@ -61,7 +61,11 @@ const year = new Date().getFullYear()
     <div
       class="mt-14 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 text-sm sm:flex-row sm:items-center"
     >
-      <p>© {year} {SITE.legalName} All rights reserved.</p>
+      <p>
+        © {year} {SITE.legalName} All rights reserved.
+        <span class="mx-1.5 opacity-40">·</span>
+        <a href="https://iceysoftware.com" class="footer-link">Powered by Icey Software</a>
+      </p>
       <nav class="flex gap-6" aria-label="Legal">
         <a href="/privacy" class="footer-link">Privacy</a>
         <a href="/terms" class="footer-link">Terms</a>
