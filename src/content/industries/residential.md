@@ -64,4 +64,4 @@ Residential clients get a short homeowner agreement, not a commercial contract: 
 mapped service area, your rates, the season dates, and a 30-day cancellation clause.
 Salting follows the same triggers we use on commercial sites — temperature and surface
 readings, documented — so your steps are treated before the school run, not after the
-slip. Get a quote from our [contact page](/contact) or call (604) 990-7072.
+slip. Get a quote from our [contact page](/contact?type=residential#quote) or call (604) 990-7072.

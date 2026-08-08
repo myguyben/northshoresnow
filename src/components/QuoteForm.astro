@@ -23,7 +23,7 @@ import { SITE } from '../lib/site'
   <form id="quote-form" novalidate>
     <div class="space-y-5">
       <div>
-        <label class="label" for="qf-email">Work email *</label>
+        <label class="label" for="qf-email">Email *</label>
         <input
           class="input"
           id="qf-email"
@@ -31,12 +31,20 @@ import { SITE } from '../lib/site'
           type="email"
           required
           autocomplete="email"
-          placeholder="you@company.com"
+          placeholder="you@example.com"
         />
       </div>
 
       <div>
-        <label class="label" for="qf-address">Commercial property address *</label>
+        <label class="label" for="qf-property-type">Property type *</label>
+        <select class="input" id="qf-property-type" name="propertyType">
+          <option value="Commercial" selected>Commercial / Strata</option>
+          <option value="Residential">Residential home</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="label" for="qf-address">Property address *</label>
         <div class="relative" data-address-autocomplete>
           <input
             class="input"
@@ -76,7 +84,7 @@ import { SITE } from '../lib/site'
           required
           minlength="10"
           maxlength="2000"
-          placeholder="e.g. Clear and salt the main parking lot, both entrances and the sidewalks around the building…"></textarea>
+          placeholder="e.g. Clear and salt the main parking lot, both entrances and the sidewalks — or for a home: the driveway, front walk and steps…"></textarea>
       </div>
 
       <!-- Honeypot: humans never see or fill this. -->

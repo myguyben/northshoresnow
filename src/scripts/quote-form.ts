@@ -163,6 +163,11 @@ export function setupQuoteForm(): void {
   if (prefillEmail) {
     ;(form.elements.namedItem('email') as HTMLInputElement).value = prefillEmail
   }
+  // The residential page links here with ?type=residential — preselect it.
+  if (params.get('type') === 'residential') {
+    const typeSelect = form.elements.namedItem('propertyType') as HTMLSelectElement | null
+    if (typeSelect) typeSelect.value = 'Residential'
+  }
 
   function collect() {
     const data = new FormData(form)
@@ -170,6 +175,7 @@ export function setupQuoteForm(): void {
       submissionId,
       email: String(data.get('email') ?? '').trim(),
       address: String(data.get('address') ?? '').trim(),
+      propertyType: String(data.get('propertyType') ?? '').trim(),
       scope: String(data.get('scope') ?? '').trim(),
       pageUrl: window.location.origin + window.location.pathname,
       website: String(data.get('website') ?? ''),
@@ -192,6 +198,7 @@ export function setupQuoteForm(): void {
     const body = [
       `Email: ${lead.email}`,
       `Property address: ${lead.address}`,
+      `Property type: ${lead.propertyType || '—'}`,
       '',
       `Scope of the site: ${lead.scope}`,
     ].join('\n')
