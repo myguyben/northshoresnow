@@ -53,6 +53,7 @@ export const SERVICE_LINKS = [
 ] as const
 
 export const INDUSTRY_LINKS = [
+  { slug: 'residential', name: 'Residential Homes' },
   { slug: 'strata', name: 'Strata Properties' },
   { slug: 'strata-councils', name: 'Strata Councils' },
   { slug: 'property-managers', name: 'Property Managers' },
