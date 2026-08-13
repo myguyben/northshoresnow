@@ -7,7 +7,7 @@ painPoints:
   - title: Shovelling a North Shore driveway is a workout you didn't order
     body: Mountain-side streets get more snow than the rest of Metro Vancouver, and steep driveways turn every storm into an hour of heavy lifting. We clear it for you — automatically, every time it snows.
   - title: The sidewalk is legally yours to clear
-    body: North Shore bylaws require the sidewalk bordering your home cleared by 10am — including for houses. We map your frontage into the service area so you're covered without setting an alarm.
+    body: In the District of North Vancouver the sidewalk bordering your home has to be cleared by 10am every day it snows, and West Vancouver allows 24 hours. We map your frontage into the service area so you're covered without setting an alarm.
   - title: Black ice doesn't wait for snowfall
     body: Clear skies and a cold snap can leave your driveway and steps like a rink by morning. We monitor conditions and salt when temperatures call for it — verified with on-site surface readings, not guesswork.
   - title: Away for a week, or done with winter chores for good

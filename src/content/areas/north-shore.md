@@ -28,9 +28,9 @@ faqs:
   - q: Why does snowfall vary so much across the North Shore?
     a: Elevation. A single system can drop rain at the Quay and 15–20 cm at Braemar, Northlands or the British Properties in the same hours. We quote and dispatch on each property's real elevation, never a regional average.
   - q: Do you handle the sidewalk bylaws in both municipalities?
-    a: Yes. West Vancouver and both North Vancouver jurisdictions require owners to clear adjacent sidewalks by 10am after snowfall. Your bylaw frontage is mapped into your service plan by default.
+    a: Yes, and the deadlines differ by municipality — which is the practical argument for one contractor across all of them. The District of North Vancouver gives homes until 10am but sets no grace period at all for commercial, industrial and multi-family property. West Vancouver allows 24 hours. The City of North Vancouver expects it done promptly. Your bylaw frontage is mapped into your service plan by default.
   - q: What kind of properties do you service across the North Shore?
-    a: Commercial only — strata complexes, retail strips, offices, medical buildings, industrial yards and institutional sites. We don't do single-family driveways.
+    a: Commercial and strata is our specialty — strata complexes, retail strips, offices, medical buildings, industrial yards and institutional sites — and those routes are cleared first. We also service residential homes across the North Shore — driveway, walkways, entry steps and your sidewalk frontage.
 siblings:
   - north-vancouver
   - west-vancouver
@@ -47,7 +47,7 @@ North Shore Snow is headquartered in Lower Lonsdale, so we don't treat this as a
 
 Across the North Shore we manage strata complexes, retail frontage, office and medical buildings, and industrial yards. In [North Vancouver](/north-vancouver) that means the Lonsdale corridor, Lynn Valley Centre and the harbourside flats; in [West Vancouver](/west-vancouver) it's Marine Drive retail through Ambleside and Dundarave out to Horseshoe Bay's steep ferry-village approaches. Every program combines [snow clearing](/snow-removal), [plowing](/snow-plowing) and [salting](/salting), dispatched automatically on weather triggers and documented with photos on every visit.
 
-Because we cover two municipalities, we handle two sets of rules without you tracking them. West Vancouver and both North Vancouver jurisdictions require owners to clear the sidewalks bordering their property by 10am the morning after a snowfall — those frontages are built into your service map alongside the parking lot, so compliance happens on the same pass. Our [strata snow removal requirements guide](/blog/strata-snow-removal-requirements-bc) walks through what councils and property managers are actually on the hook for.
+Because we cover two municipalities, we handle several sets of rules without you tracking them. The District of North Vancouver gives homes until 10am the morning after a snowfall and sets no grace period at all for commercial, industrial and multi-family property; West Vancouver allows 24 hours; the City of North Vancouver expects it done promptly. Those frontages are built into your service map alongside the parking lot, so compliance happens on the same pass. Our [strata snow removal requirements guide](/blog/strata-snow-removal-requirements-bc) walks through what councils and property managers are actually on the hook for.
 
 ## Built for how the North Shore actually storms
 

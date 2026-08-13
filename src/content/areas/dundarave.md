@@ -27,7 +27,7 @@ faqs:
   - q: What Dundarave properties do you service?
     a: The village retail strip, medical and dental clinics, professional offices, and nearby strata. Commercial only — we don't service private residential driveways.
   - q: Do you handle the sidewalk bylaw?
-    a: Yes. The District of West Vancouver requires owners to clear adjacent sidewalks by 10am after snowfall. Dundarave's village frontage is mapped into your plan and cleared on the same pass as your lot or entrance.
+    a: Yes. The District of West Vancouver requires owners to clear adjacent sidewalks within 24 hours of a snowfall, and snow can't be pushed onto the road. Dundarave's village frontage is mapped into your plan and cleared on the same pass as your lot or entrance — normally on the first morning run, well inside the deadline.
 siblings:
   - ambleside
   - west-vancouver
@@ -48,6 +48,6 @@ Because much of the village runs decorative and higher-end paving, we favour tar
 
 ## Compliant, on the same pass
 
-The District of West Vancouver requires owners and occupiers to clear the sidewalks bordering their property by 10am after a snowfall. On a pedestrian village strip that's a real, visible obligation, so we map each business's frontage into the service plan and clear it alongside the lot or entrance. Our [strata snow removal requirements guide](/blog/strata-snow-removal-requirements-bc) is a good primer for councils sorting out who owns what.
+The District of West Vancouver requires owners and occupiers to clear the sidewalks bordering their property within 24 hours of a snowfall. On a pedestrian village strip that's a real, visible obligation, so we map each business's frontage into the service plan and clear it alongside the lot or entrance. Our [strata snow removal requirements guide](/blog/strata-snow-removal-requirements-bc) is a good primer for councils sorting out who owns what.
 
 Seasonal contracts run October 1 to April 30. [Request a quote](/contact#quote) or call (604) 990-7072.

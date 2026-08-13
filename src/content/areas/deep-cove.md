@@ -26,7 +26,7 @@ faqs:
   - q: Can your equipment handle the narrow village streets?
     a: Yes. Deep Cove's tight streets and steep driveways don't suit full-size plows everywhere, so we match compact machines to the village core and Panorama grades while running full plows on the larger commercial lots.
   - q: Which Deep Cove properties do you service?
-    a: Commercial and strata — the Gallant Avenue retail strip, village-centre businesses, and multi-building strata complexes on the hillside. We don't service private single-family driveways.
+    a: Commercial and strata is our specialty — the Gallant Avenue retail strip, village-centre businesses, and multi-building strata complexes on the hillside — and those routes are cleared first. We also service Deep Cove homes — driveway, walkways, entry steps and your sidewalk frontage, which matters on the steep Panorama and Cove Cliff grades.
   - q: How quickly do you reach Deep Cove in a storm?
     a: Deep Cove is on our east-end North Vancouver route alongside Seymour, so contracted properties are serviced early and rotated through ongoing freeze-thaw events rather than treated as a distant call.
 siblings:
@@ -49,4 +49,4 @@ We service the Gallant Avenue retail strip, village-centre businesses, and the m
 
 Deep Cove is often described as remote, but for us it's the eastern anchor of our North Vancouver route, worked alongside [Seymour](/seymour) and the Mount Seymour Parkway corridor. Crews reach contracted properties early and rotate back through as freeze-thaw cycles refreeze the shaded grades — which, in this microclimate, they reliably do.
 
-The City and District of North Vancouver both require owners to clear adjacent sidewalks by 10am after a snowfall, and your bylaw frontage is mapped into the service plan by default. Seasonal contracts run October 1 to April 30. [Request a quote](/contact#quote) or call (604) 990-7072.
+The City and District of North Vancouver both require owners to clear adjacent sidewalks after a snowfall — 10am for homes in the District, no grace period at all for commercial and multi-family — and your bylaw frontage is mapped into the service plan by default. Seasonal contracts run October 1 to April 30. [Request a quote](/contact#quote) or call (604) 990-7072.

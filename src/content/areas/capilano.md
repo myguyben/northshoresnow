@@ -28,7 +28,7 @@ faqs:
   - q: Do the wide industrial lots in Norgate need special handling?
     a: Yes. Large flat lots and loading areas pool meltwater that refreezes into broad ice sheets, and they need proper plowing capacity plus targeted de-icing at the low points and dock approaches — not just a pass down the middle.
   - q: Do you clear sidewalk frontage along Marine Drive?
-    a: Yes. The District and City of North Vancouver require owners to clear adjacent sidewalks by 10am after snowfall, and the Marine Drive corridor is a busy arterial. Your bylaw frontage is cleared on the same pass as your lot.
+    a: Yes. In the District of North Vancouver homes have until 10am, while commercial and multi-family property has no grace period at all; the City expects it done promptly. The Marine Drive corridor is a busy arterial, so your bylaw frontage is cleared on the same pass as your lot.
 siblings:
   - north-vancouver
   - edgemont-village
@@ -47,6 +47,6 @@ Norgate's wide flat lots and loading areas are their own challenge: meltwater po
 
 ## A busy arterial with real bylaw frontage
 
-Marine Drive is one of the North Shore's key arterials, and the sidewalk-clearing obligation along it is visible and enforced — the District and City of North Vancouver both require owners to clear adjacent sidewalks by 10am after a snowfall. We map that frontage into your plan and clear it alongside the lot. For strata on the Pemberton Heights slope, our [strata snow removal requirements guide](/blog/strata-snow-removal-requirements-bc) lays out what councils are responsible for.
+Marine Drive is one of the North Shore's key arterials, and the sidewalk-clearing obligation along it is visible and enforced — in the District of North Vancouver homes have until 10am while commercial and multi-family property gets no grace period at all, and the City expects it done promptly. We map that frontage into your plan and clear it alongside the lot. For strata on the Pemberton Heights slope, our [strata snow removal requirements guide](/blog/strata-snow-removal-requirements-bc) lays out what councils are responsible for.
 
 Seasonal contracts run October 1 to April 30, priced to each site's elevation and layout. [Request a quote](/contact#quote) or call (604) 990-7072.

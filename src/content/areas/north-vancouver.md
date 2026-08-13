@@ -27,9 +27,9 @@ faqs:
   - q: How much snow does North Vancouver actually get?
     a: It depends dramatically on elevation. Waterfront Lonsdale might see 5–10 snow days a season, while Upper Lynn Valley and Braemar routinely see two to three times the accumulation. We quote each property on its real location and elevation, not a city-wide average.
   - q: Do you clear City of North Vancouver sidewalk frontage?
-    a: Yes. North Shore municipalities require property owners to clear adjacent sidewalks by 10am after a snowfall, and our service maps include your bylaw frontage so you stay compliant without thinking about it.
+    a: Yes — and the rule is stricter for business than most owners realise. In the District of North Vancouver homes have until 10am, but commercial, industrial and multi-family property must be cleared with no grace period at all; the City expects it done promptly. Our service maps include your bylaw frontage so you stay compliant without thinking about it.
   - q: Which North Vancouver properties do you service?
-    a: Strata complexes, office and retail buildings, medical clinics, industrial yards and institutional sites — anywhere with parking, walkways and people who need to arrive safely. We don't service single-family driveways.
+    a: Strata complexes, office and retail buildings, medical clinics, industrial yards and institutional sites — anywhere with parking, walkways and people who need to arrive safely. Those are our specialty and they get first call on our routes. We also service residential homes here — driveway, walkways, entry steps and your sidewalk frontage.
   - q: How fast do you reach North Vancouver properties in a storm?
     a: North Vancouver is our home base and core route — most contracted properties are cleared before 6:30am on snow days, with continuous rotation during ongoing storms.
 siblings:
@@ -62,7 +62,9 @@ weather triggers, documented with photos on every visit.
 ## Bylaw compliance, handled
 
 The City and District of North Vancouver both require owners and occupiers to clear snow
-and ice from sidewalks bordering their property by 10am the morning after a snowfall.
+and ice from the sidewalks bordering their property. In the District, homes have until
+10am — but commercial, industrial and multi-family property carries the same duty with no
+grace period written into it at all. The City expects it done promptly.
 Our North Vancouver service maps include your bylaw frontage by default — sidewalks,
 transit stops and corner cuts included — so compliance happens automatically at the same
 time as your parking lot. More detail in our

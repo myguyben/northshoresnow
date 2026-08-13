@@ -25,9 +25,9 @@ faqs:
   - q: Do the British Properties really get more snow than Ambleside?
     a: Considerably. The upper British Properties, Chartwell and Cypress-adjacent benches sit far above the waterfront and hold heavy, wet snow when Marine Drive is only getting rain. We monitor elevation-specific conditions and dispatch uphill crews before the snow line drops.
   - q: Which West Vancouver properties do you service?
-    a: Commercial and strata — Marine Drive retail and restaurants, professional and medical offices, strata complexes on the slopes, and Park Royal-area commercial. We don't service private residential driveways.
+    a: Commercial and strata is our specialty — Marine Drive retail and restaurants, professional and medical offices, strata complexes on the slopes, and Park Royal-area commercial — and those routes are cleared first. We also service West Vancouver homes, including the steep British Properties and Caulfeild driveways — walkways, entry steps and sidewalk frontage included.
   - q: Do you clear District of West Vancouver sidewalk frontage?
-    a: Yes. The District requires owners and occupiers to clear adjacent sidewalks by 10am after a snowfall. Your bylaw frontage is mapped into the service plan so it's cleared on the same visit as your lot.
+    a: Yes. The District requires owners and occupiers to clear adjacent sidewalks within 24 hours of a snowfall, and snow can't be shovelled onto the roadway. Your bylaw frontage is mapped into the service plan so it's cleared on the same visit as your lot — normally the first morning pass, well inside the deadline.
   - q: How do you protect premium paving and stonework?
     a: We match de-icing product and technique to the surface, favouring targeted salting and non-corrosive options on decorative and heated paving rather than blanket application.
 siblings:
@@ -48,6 +48,6 @@ We service Marine Drive retail and restaurant frontage, professional and medical
 
 ## Bylaw frontage, handled with the lot
 
-The District of West Vancouver requires owners and occupiers to clear the sidewalks bordering their property by 10am the morning after a snowfall. We map that frontage into your service plan by default, so transit stops, corner cuts and public walkways are cleared on the same pass as your parking lot. For councils weighing what they're actually responsible for, our [strata snow removal requirements guide](/blog/strata-snow-removal-requirements-bc) lays it out.
+The District of West Vancouver requires owners and occupiers to clear the sidewalks bordering their property within 24 hours of a snowfall, and snow may not be shovelled onto the roadway. We map that frontage into your service plan by default, so transit stops, corner cuts and public walkways are cleared on the same pass as your parking lot. For councils weighing what they're actually responsible for, our [strata snow removal requirements guide](/blog/strata-snow-removal-requirements-bc) lays it out.
 
 Seasonal contracts run October 1 to April 30, priced to the property and its elevation rather than a flat rate. Dispatch is weather-triggered, so uphill crews are moving before the snow line drops rather than after the first calls come in, and satellite measurement lets us quote most West Vancouver sites same-day without a site visit. [Request a quote](/contact#quote) or call (604) 990-7072.

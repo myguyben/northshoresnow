@@ -11,7 +11,7 @@ painPoints:
   - title: Complaints hit the council inbox first
     body: When walkways aren't cleared by 7am, owners email council, not the contractor. Automatic weather-triggered dispatch means the work happens before the complaints start.
   - title: Bylaw sidewalk frontage is your job
-    body: North Shore municipalities require sidewalks bordering the property cleared by 10am. We map your bylaw frontage into the service area so compliance is automatic.
+    body: Stricter than most councils expect — in the District of North Vancouver multi-family property must clear its frontage with no grace period at all, where a house gets until 10am. We map your bylaw frontage into the service area so compliance is automatic.
 faqs:
   - q: Can you present a quote to our strata council?
     a: Yes — our quotes come with the property's satellite-measured service map, so council sees exactly which surfaces are included, and we're happy to answer questions at a council meeting or by email.

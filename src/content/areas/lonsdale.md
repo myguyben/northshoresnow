@@ -28,7 +28,7 @@ faqs:
   - q: What Lonsdale properties do you service?
     a: The full mix along the corridor — Shipyards and Quay retail and restaurants, Central Lonsdale office and medical buildings, and the dense strata towers through Lower and Upper Lonsdale. Commercial only, no private driveways.
   - q: Do you clear the sidewalk frontage on Lonsdale?
-    a: Yes. The City of North Vancouver requires owners to clear adjacent sidewalks by 10am after snowfall, and the Lonsdale corridor is heavily walked. Your bylaw frontage is cleared on the same pass as your lot or entrance.
+    a: Yes. The City of North Vancouver requires owners to clear adjacent sidewalks promptly after a snowfall, and the Lonsdale corridor is heavily walked. Your bylaw frontage is cleared on the same pass as your lot or entrance.
 siblings:
   - north-vancouver
   - lynn-valley
@@ -47,6 +47,6 @@ Few streets on the North Shore pack in as much variety. The Shipyards District a
 
 ## Walkable means the sidewalk matters
 
-Lonsdale is one of the most-walked corridors on the North Shore, which puts the City of North Vancouver's 10am sidewalk-clearing bylaw front and centre. We map each property's frontage — sidewalks, transit stops and corner cuts — into the service plan so it's cleared on the same pass as the lot, keeping strata councils and property managers compliant and reducing slip-and-fall exposure on a busy public walkway. Our [strata snow removal requirements guide](/blog/strata-snow-removal-requirements-bc) covers what that responsibility involves.
+Lonsdale is one of the most-walked corridors on the North Shore, which puts the City of North Vancouver's sidewalk-clearing bylaw front and centre. We map each property's frontage — sidewalks, transit stops and corner cuts — into the service plan so it's cleared on the same pass as the lot, keeping strata councils and property managers compliant and reducing slip-and-fall exposure on a busy public walkway. Our [strata snow removal requirements guide](/blog/strata-snow-removal-requirements-bc) covers what that responsibility involves.
 
 Seasonal contracts run October 1 to April 30, and satellite measurement lets us quote most corridor properties same-day. [Request a quote](/contact#quote) or call (604) 990-7072.
