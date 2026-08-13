@@ -7,6 +7,7 @@ import '@fontsource-variable/bricolage-grotesque'
 import Seo from '../components/Seo.astro'
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
+import Analytics from '../components/Analytics.astro'
 
 interface Props {
   title: string
@@ -32,6 +33,7 @@ const { overHero = false, ...seo } = Astro.props
     <link rel="preload" as="font" type="font/woff2" href={interWoff2} crossorigin />
     <link rel="preload" as="font" type="font/woff2" href={bricolageWoff2} crossorigin />
     <Seo {...seo} />
+    <Analytics />
     <slot name="head" />
   </head>
   <body>
@@ -46,5 +48,12 @@ const { overHero = false, ...seo } = Astro.props
       <slot />
     </main>
     <Footer />
+
+    <!-- Runs with or without pixels configured: a lead still has to carry its
+         UTMs and click id into Icey so the sale can be traced back to the ad. -->
+    <script>
+      import { initAnalytics } from '../lib/analytics'
+      initAnalytics()
+    </script>
   </body>
 </html>

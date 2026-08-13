@@ -1,0 +1,107 @@
+---
+/**
+ * Third-party ad + analytics tags (GA4, Google Ads, Meta pixel).
+ *
+ * Every id comes from a PUBLIC_* build variable, so this component renders
+ * nothing at all until the ids are set on the Render static site. Local dev
+ * and preview builds stay tag-free, and an unconfigured deploy ships exactly
+ * the zero-third-party-script page it shipped before.
+ *
+ * Attribution capture deliberately lives outside this component (Base.astro)
+ * so UTMs and click ids still reach the lead even with no pixels configured.
+ *
+ * Consent Mode v2 defaults to granted for the market this business serves
+ * (British Columbia) and denied for the EEA/UK/CH, where a click-through
+ * banner would be required. Nobody in Lynn Valley meets a cookie wall, and an
+ * EEA visitor is measured in the modelled-only mode Google expects without
+ * one. If this business ever advertises into Europe, that region list must be
+ * replaced by a real consent management platform rather than edited.
+ */
+const ga4Id = import.meta.env.PUBLIC_GA4_ID
+const adsId = import.meta.env.PUBLIC_GOOGLE_ADS_ID
+const metaPixelId = import.meta.env.PUBLIC_META_PIXEL_ID
+
+/** Either Google tag can host the loader; prefer GA4. */
+const googleLoaderId = ga4Id || adsId
+
+const CONSENT_DENIED_REGIONS = [
+  'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR',
+  'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK',
+  'SI', 'ES', 'SE', 'IS', 'LI', 'NO', 'GB', 'CH',
+]
+---
+
+{
+  googleLoaderId && (
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${googleLoaderId}`} />
+  )
+}
+
+{
+  googleLoaderId && (
+    <script is:inline define:vars={{ ga4Id, adsId, deniedRegions: CONSENT_DENIED_REGIONS }}>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        window.dataLayer.push(arguments)
+      }
+      window.gtag = gtag
+
+      gtag('consent', 'default', {
+        ad_storage: 'granted',
+        ad_user_data: 'granted',
+        ad_personalization: 'granted',
+        analytics_storage: 'granted',
+      })
+      gtag('consent', 'default', {
+        region: deniedRegions,
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+      })
+
+      gtag('js', new Date())
+      if (ga4Id) gtag('config', ga4Id)
+      // allow_enhanced_conversions stays inert until the conversion action
+      // itself opts in inside the Google Ads UI.
+      if (adsId) gtag('config', adsId, { allow_enhanced_conversions: true })
+    </script>
+  )
+}
+
+{
+  metaPixelId && (
+    <script is:inline define:vars={{ metaPixelId }}>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return
+        n = f.fbq = function () {
+          n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+        }
+        if (!f._fbq) f._fbq = n
+        n.push = n
+        n.loaded = !0
+        n.version = '2.0'
+        n.queue = []
+        t = b.createElement(e)
+        t.async = !0
+        t.src = v
+        s = b.getElementsByTagName(e)[0]
+        s.parentNode.insertBefore(t, s)
+      })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js')
+
+      // Meta has no region-scoped consent mode, so revoke before init for
+      // European visitors and let the served market through. Timezone is a
+      // proxy rather than a geo lookup: imprecise, but it fails safe.
+      try {
+        if (/^Europe\//.test(Intl.DateTimeFormat().resolvedOptions().timeZone || '')) {
+          window.fbq('consent', 'revoke')
+        }
+      } catch (error) {
+        /* no Intl support — leave the default granted state */
+      }
+
+      window.fbq('init', metaPixelId)
+      window.fbq('track', 'PageView')
+    </script>
+  )
+}

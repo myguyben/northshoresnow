@@ -1,6 +1,8 @@
 /** Client logic for the quote form (QuoteForm.astro) and the address
  * autocomplete shared with QuoteFormMini.astro. */
 
+import { attributionFields, stashPendingLead } from '../lib/analytics'
+
 const ENDPOINT =
   import.meta.env.PUBLIC_QUOTE_ENDPOINT ?? 'https://iceysoftware.com/api/inbound/website-lead'
 const AUTOCOMPLETE_ENDPOINT = ENDPOINT.replace(/\/website-lead$/, '/address-autocomplete')
@@ -179,6 +181,9 @@ export function setupQuoteForm(): void {
       scope: String(data.get('scope') ?? '').trim(),
       pageUrl: window.location.origin + window.location.pathname,
       website: String(data.get('website') ?? ''),
+      // Which ad produced this lead. Icey renders it on the request so a
+      // signed contract can be traced back to the campaign that paid for it.
+      ...attributionFields(),
     }
   }
 
@@ -225,6 +230,14 @@ export function setupQuoteForm(): void {
       })
       clearTimeout(timeout)
       if (!response.ok) throw new Error(`HTTP ${response.status}`)
+      // The conversion fires on /thank-you rather than here: a tag racing a
+      // page navigation is the classic way to under-count leads. Reaching
+      // that page is itself the proof the POST succeeded.
+      stashPendingLead({
+        submissionId: lead.submissionId,
+        propertyType: lead.propertyType,
+        email: lead.email,
+      })
       window.location.assign('/thank-you')
     } catch {
       mailtoLink.href = mailtoFallback(lead)

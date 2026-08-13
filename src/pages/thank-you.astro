@@ -45,4 +45,22 @@ import { SITE } from '../lib/site'
       </p>
     </div>
   </section>
+
+  <script>
+    import { consumePendingLead, trackLead, LEAD_VALUE } from '../lib/analytics'
+
+    // Only a real submission leaves a pending lead behind, so someone who
+    // lands here by any other route is not counted as a conversion.
+    const lead = consumePendingLead()
+    if (lead) {
+      const value =
+        lead.propertyType === 'Residential' ? LEAD_VALUE.residential : LEAD_VALUE.commercial
+      void trackLead({
+        eventId: lead.submissionId,
+        value,
+        propertyType: lead.propertyType,
+        email: lead.email,
+      })
+    }
+  </script>
 </Base>
