@@ -20,6 +20,27 @@ import { SITE } from '../lib/site'
         Our system is already measuring your property from satellite imagery. You'll get a
         confirmation email within minutes, and your quote is usually ready the same day.
       </p>
+      <div
+        id="ballpark"
+        hidden
+        class="mx-auto mt-8 max-w-xl rounded-2xl border border-ice-400/40 bg-white/5 p-6"
+      >
+        <p class="text-sm font-semibold uppercase tracking-wide text-ice-400">
+          Your ballpark range
+        </p>
+        <p class="mt-2 text-2xl font-bold text-white">
+          <span id="ballpark-visit"></span>
+          <span class="font-normal text-body-dark"> per visit</span>
+        </p>
+        <p class="mt-1 text-lg font-semibold text-white">
+          <span id="ballpark-season"></span>
+          <span class="font-normal text-body-dark"> per season</span>
+        </p>
+        <p class="mt-3 text-sm text-body-dark">
+          Based on your property type and lot records — your exact quote, measured from
+          satellite imagery, arrives by email.
+        </p>
+      </div>
       <div class="mx-auto mt-10 grid max-w-lg gap-3 text-left">
         {[
           ['Check your inbox', 'A confirmation from our team is on its way (check spam the first time).'],
@@ -61,6 +82,22 @@ import { SITE } from '../lib/site'
         propertyType: lead.propertyType,
         email: lead.email,
       })
+
+      // Instant ballpark from the submit response (absent = server declined
+      // to price; the panel just stays hidden and the promise stays "by email").
+      const est = lead.estimate
+      if (est && est.perVisit && est.seasonal) {
+        const money = (n: number) => '$' + Math.round(n).toLocaleString('en-CA')
+        const range = (r: { low: number; high: number }) => `${money(r.low)}–${money(r.high)}`
+        const visit = document.getElementById('ballpark-visit')
+        const season = document.getElementById('ballpark-season')
+        const panel = document.getElementById('ballpark')
+        if (visit && season && panel) {
+          visit.textContent = range(est.perVisit)
+          season.textContent = range(est.seasonal)
+          panel.hidden = false
+        }
+      }
     }
   </script>
 </Base>

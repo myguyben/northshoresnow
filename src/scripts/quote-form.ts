@@ -3,9 +3,16 @@
 
 import { attributionFields, stashPendingLead } from '../lib/analytics'
 
+// website-estimate = website-lead (same pipeline, same dedupe, same AI quote
+// by email) PLUS an instant price range in the response, rendered on
+// /thank-you. Falling back to website-lead just means no instant number.
 const ENDPOINT =
-  import.meta.env.PUBLIC_QUOTE_ENDPOINT ?? 'https://iceysoftware.com/api/inbound/website-lead'
-const AUTOCOMPLETE_ENDPOINT = ENDPOINT.replace(/\/website-lead$/, '/address-autocomplete')
+  import.meta.env.PUBLIC_QUOTE_ENDPOINT ?? 'https://iceysoftware.com/api/inbound/website-estimate'
+const AUTOCOMPLETE_ENDPOINT = ENDPOINT.replace(
+  /\/website-(lead|estimate)$/,
+  '/address-autocomplete'
+)
+const PARTIAL_ENDPOINT = ENDPOINT.replace(/\/website-(lead|estimate)$/, '/website-partial')
 const CONTACT_EMAIL = 'Quotes@northshoresnow.com'
 /** Bias suggestions toward the North Shore / Greater Vancouver. */
 const LOCATION_BIAS = '49.32,-123.07'
@@ -172,6 +179,71 @@ export function setupQuoteForm(): void {
     if (typeSelect) typeSelect.value = 'Residential'
   }
 
+  // ——— Abandoned-form beacon ———
+  // The moment there's a valid email, save what's typed so far: a visitor who
+  // sees the ballpark and bails (or never hits submit) is still someone the
+  // team can reach out to. Same submissionId as the real submit, so the
+  // server upgrades the saved row in place if they do finish. Fire-and-forget
+  // by design: a beacon failure must never affect the form.
+  let submitted = false
+  let lastPartialPayload = ''
+  let partialTimer: number | undefined
+
+  function partialBody(): string | null {
+    const emailField = form.elements.namedItem('email') as HTMLInputElement
+    const email = emailField.value.trim()
+    if (!email || !emailField.checkValidity()) return null
+    const data = new FormData(form)
+    const fullName = String(data.get('name') ?? '').trim()
+    const [firstName = '', ...rest] = fullName.split(/\s+/)
+    return JSON.stringify({
+      submissionId,
+      firstName,
+      lastName: rest.join(' '),
+      email,
+      phone: String(data.get('phone') ?? '').trim(),
+      address: String(data.get('address') ?? '').trim(),
+      propertyType: String(data.get('propertyType') ?? '').trim(),
+      scope: String(data.get('scope') ?? '').trim(),
+      website: String(data.get('website') ?? ''),
+      pageUrl: window.location.origin + window.location.pathname,
+      ...attributionFields(),
+    })
+  }
+
+  function sendPartial(viaBeacon = false): void {
+    if (submitted) return
+    const body = partialBody()
+    if (!body || body === lastPartialPayload) return
+    lastPartialPayload = body
+    if (viaBeacon && navigator.sendBeacon) {
+      // text/plain keeps the beacon CORS-safelisted (no preflight during
+      // unload); the endpoint parses the body as JSON regardless.
+      navigator.sendBeacon(PARTIAL_ENDPOINT, new Blob([body], { type: 'text/plain' }))
+      return
+    }
+    void fetch(PARTIAL_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body,
+      keepalive: true,
+    }).catch(() => {
+      /* silent — reach-out data is best-effort */
+    })
+  }
+
+  function queuePartial(): void {
+    window.clearTimeout(partialTimer)
+    partialTimer = window.setTimeout(() => sendPartial(), 2000)
+  }
+
+  const emailField = form.elements.namedItem('email') as HTMLInputElement
+  emailField.addEventListener('blur', () => sendPartial())
+  addressInput.addEventListener('input', queuePartial)
+  const propertyTypeSelect = form.elements.namedItem('propertyType') as HTMLSelectElement | null
+  propertyTypeSelect?.addEventListener('change', queuePartial)
+  window.addEventListener('pagehide', () => sendPartial(true))
+
   function collect() {
     const data = new FormData(form)
     // Optional single "Your name" field, split for Icey's firstName/lastName
@@ -243,6 +315,20 @@ export function setupQuoteForm(): void {
       })
       clearTimeout(timeout)
       if (!response.ok) throw new Error(`HTTP ${response.status}`)
+      // The real submission is in — stop the abandoned-form beacons for good.
+      submitted = true
+      window.clearTimeout(partialTimer)
+      // Instant ballpark rides back on the submit response; a missing or
+      // malformed body must never fail a submission the server accepted.
+      let estimate = null
+      try {
+        const payload = (await response.json()) as {
+          data?: { estimate?: import('../lib/analytics').BallparkEstimate | null }
+        }
+        estimate = payload.data?.estimate ?? null
+      } catch {
+        /* body unreadable — lead landed, just no instant number */
+      }
       // The conversion fires on /thank-you rather than here: a tag racing a
       // page navigation is the classic way to under-count leads. Reaching
       // that page is itself the proof the POST succeeded.
@@ -250,6 +336,7 @@ export function setupQuoteForm(): void {
         submissionId: lead.submissionId,
         propertyType: lead.propertyType,
         email: lead.email,
+        estimate,
       })
       window.location.assign('/thank-you')
     } catch {
