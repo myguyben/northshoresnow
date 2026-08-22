@@ -22,6 +22,33 @@ import { SITE } from '../lib/site'
 
   <form id="quote-form" novalidate>
     <div class="space-y-5">
+      <div class="grid gap-5 sm:grid-cols-2">
+        <div>
+          <label class="label" for="qf-name">Your name</label>
+          <input
+            class="input"
+            id="qf-name"
+            name="name"
+            type="text"
+            maxlength="150"
+            autocomplete="name"
+            placeholder="Jane Smith"
+          />
+        </div>
+        <div>
+          <label class="label" for="qf-phone">Phone</label>
+          <input
+            class="input"
+            id="qf-phone"
+            name="phone"
+            type="tel"
+            maxlength="30"
+            autocomplete="tel"
+            placeholder="604-555-0100"
+          />
+        </div>
+      </div>
+
       <div>
         <label class="label" for="qf-email">Email *</label>
         <input

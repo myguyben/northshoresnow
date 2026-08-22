@@ -173,9 +173,17 @@ export function setupQuoteForm(): void {
 
   function collect() {
     const data = new FormData(form)
+    // Optional single "Your name" field, split for Icey's firstName/lastName
+    // pair — first word / rest. The pipeline greets by name in the auto-reply
+    // and stores it on the client record; empty stays empty (both optional).
+    const fullName = String(data.get('name') ?? '').trim()
+    const [firstName = '', ...rest] = fullName.split(/\s+/)
     return {
       submissionId,
+      firstName,
+      lastName: rest.join(' '),
       email: String(data.get('email') ?? '').trim(),
+      phone: String(data.get('phone') ?? '').trim(),
       address: String(data.get('address') ?? '').trim(),
       propertyType: String(data.get('propertyType') ?? '').trim(),
       scope: String(data.get('scope') ?? '').trim(),
@@ -200,8 +208,11 @@ export function setupQuoteForm(): void {
 
   function mailtoFallback(lead: ReturnType<typeof collect>): string {
     const subject = `Quote request — ${lead.address}`
+    const name = [lead.firstName, lead.lastName].filter(Boolean).join(' ')
     const body = [
+      ...(name ? [`Name: ${name}`] : []),
       `Email: ${lead.email}`,
+      ...(lead.phone ? [`Phone: ${lead.phone}`] : []),
       `Property address: ${lead.address}`,
       `Property type: ${lead.propertyType || '—'}`,
       '',
