@@ -148,6 +148,7 @@ export function setupQuoteForm(): void {
   if (!form) return
 
   const submitButton = document.getElementById('qf-submit') as HTMLButtonElement
+  const submitLabel = document.getElementById('qf-submit-label') as HTMLElement
   const spinner = document.getElementById('qf-spinner') as HTMLElement
   const errorPanel = document.getElementById('qf-error') as HTMLElement
   const mailtoLink = document.getElementById('qf-mailto') as HTMLAnchorElement
@@ -229,6 +230,7 @@ export function setupQuoteForm(): void {
     errorPanel.hidden = true
     submitButton.disabled = true
     spinner.hidden = false
+    submitLabel.textContent = 'Sending…'
 
     try {
       const controller = new AbortController()
@@ -255,6 +257,7 @@ export function setupQuoteForm(): void {
       errorPanel.hidden = false
       submitButton.disabled = false
       spinner.hidden = true
+      submitLabel.textContent = 'Get my quote'
     }
   })
 }
