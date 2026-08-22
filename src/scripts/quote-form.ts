@@ -3,9 +3,15 @@
 
 import { attributionFields, stashPendingLead } from '../lib/analytics'
 
+// website-estimate = website-lead (same pipeline, same dedupe, same AI quote
+// by email) PLUS an instant price range in the response, rendered on
+// /thank-you. Falling back to website-lead just means no instant number.
 const ENDPOINT =
-  import.meta.env.PUBLIC_QUOTE_ENDPOINT ?? 'https://iceysoftware.com/api/inbound/website-lead'
-const AUTOCOMPLETE_ENDPOINT = ENDPOINT.replace(/\/website-lead$/, '/address-autocomplete')
+  import.meta.env.PUBLIC_QUOTE_ENDPOINT ?? 'https://iceysoftware.com/api/inbound/website-estimate'
+const AUTOCOMPLETE_ENDPOINT = ENDPOINT.replace(
+  /\/website-(lead|estimate)$/,
+  '/address-autocomplete'
+)
 const CONTACT_EMAIL = 'Quotes@northshoresnow.com'
 /** Bias suggestions toward the North Shore / Greater Vancouver. */
 const LOCATION_BIAS = '49.32,-123.07'
@@ -243,6 +249,17 @@ export function setupQuoteForm(): void {
       })
       clearTimeout(timeout)
       if (!response.ok) throw new Error(`HTTP ${response.status}`)
+      // Instant ballpark rides back on the submit response; a missing or
+      // malformed body must never fail a submission the server accepted.
+      let estimate = null
+      try {
+        const payload = (await response.json()) as {
+          data?: { estimate?: import('../lib/analytics').BallparkEstimate | null }
+        }
+        estimate = payload.data?.estimate ?? null
+      } catch {
+        /* body unreadable — lead landed, just no instant number */
+      }
       // The conversion fires on /thank-you rather than here: a tag racing a
       // page navigation is the classic way to under-count leads. Reaching
       // that page is itself the proof the POST succeeded.
@@ -250,6 +267,7 @@ export function setupQuoteForm(): void {
         submissionId: lead.submissionId,
         propertyType: lead.propertyType,
         email: lead.email,
+        estimate,
       })
       window.location.assign('/thank-you')
     } catch {

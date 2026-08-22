@@ -147,10 +147,19 @@ export const LEAD_VALUE = { commercial: 400, residential: 60, unknown: 120 } as 
  */
 const PENDING_LEAD_KEY = 'nss_pending_lead'
 
+/** Rounded price band returned by the estimate endpoint — display-only. */
+export interface BallparkEstimate {
+  perVisit: { low: number; high: number }
+  seasonal: { low: number; high: number }
+  currency: string
+}
+
 export interface PendingLead {
   submissionId: string
   propertyType?: string
   email?: string
+  /** Instant ballpark from the submit response; shown once on /thank-you. */
+  estimate?: BallparkEstimate | null
 }
 
 export function stashPendingLead(lead: PendingLead): void {
