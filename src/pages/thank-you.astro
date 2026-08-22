@@ -30,7 +30,11 @@ import { SITE } from '../lib/site'
         </p>
         <p class="mt-2 text-2xl font-bold text-white">
           <span id="ballpark-visit"></span>
-          <span class="font-normal text-body-dark"> per visit</span>
+          <span class="font-normal text-body-dark"> per snow clearing</span>
+        </p>
+        <p id="ballpark-deice-row" hidden class="mt-1 text-lg font-semibold text-white">
+          <span id="ballpark-deice"></span>
+          <span class="font-normal text-body-dark"> per salting visit</span>
         </p>
         <p class="mt-1 text-lg font-semibold text-white">
           <span id="ballpark-season"></span>
@@ -95,6 +99,14 @@ import { SITE } from '../lib/site'
         if (visit && season && panel) {
           visit.textContent = range(est.perVisit)
           season.textContent = range(est.seasonal)
+          // Salting is its own per-visit line (a visit is snow OR salt).
+          const deice = est.deicingPerVisit
+          const deiceRow = document.getElementById('ballpark-deice-row')
+          const deiceEl = document.getElementById('ballpark-deice')
+          if (deice && deiceRow && deiceEl) {
+            deiceEl.textContent = range(deice)
+            deiceRow.hidden = false
+          }
           panel.hidden = false
         }
       }

@@ -149,7 +149,10 @@ const PENDING_LEAD_KEY = 'nss_pending_lead'
 
 /** Rounded price band returned by the estimate endpoint — display-only. */
 export interface BallparkEstimate {
+  /** Per-visit snow clearing (a visit is snow OR salting, never both). */
   perVisit: { low: number; high: number }
+  /** Per-visit salting/de-icing; absent when the company prices none. */
+  deicingPerVisit?: { low: number; high: number } | null
   seasonal: { low: number; high: number }
   currency: string
 }
