@@ -114,6 +114,23 @@ import { SITE } from '../lib/site'
           placeholder="e.g. Clear and salt the main parking lot, both entrances and the sidewalks — or for a home: the driveway, front walk and steps…"></textarea>
       </div>
 
+      <div>
+        <label class="label" for="qf-attachment">Site map or scope document (optional)</label>
+        <p class="mb-2 -mt-0.5 text-sm text-body/80">
+          A photo, plan, or marked-up map of what you'd like cleared — our system will
+          follow it exactly.
+        </p>
+        <input
+          class="input !py-2.5 file:mr-3 file:rounded-lg file:border-0 file:bg-ink-950/5 file:px-3 file:py-1.5 file:text-sm file:font-semibold"
+          id="qf-attachment"
+          name="attachment"
+          type="file"
+          accept="image/*,.pdf"
+          multiple
+        />
+        <p id="qf-attachment-status" class="mt-1.5 text-sm text-body/80" hidden></p>
+      </div>
+
       <!-- Honeypot: humans never see or fill this. -->
       <div class="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
         <label for="qf-website">Website</label>

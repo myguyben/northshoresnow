@@ -13,6 +13,10 @@ const AUTOCOMPLETE_ENDPOINT = ENDPOINT.replace(
   '/address-autocomplete'
 )
 const PARTIAL_ENDPOINT = ENDPOINT.replace(/\/website-(lead|estimate)$/, '/website-partial')
+const ATTACHMENT_ENDPOINT = ENDPOINT.replace(/\/website-(lead|estimate)$/, '/website-attachment')
+/** Server enforces the same cap; checking here saves a doomed upload. */
+const MAX_ATTACHMENT_BYTES = 10 * 1024 * 1024
+const MAX_ATTACHMENTS = 2
 const CONTACT_EMAIL = 'Quotes@northshoresnow.com'
 /** Bias suggestions toward the North Shore / Greater Vancouver. */
 const LOCATION_BIAS = '49.32,-123.07'
@@ -177,6 +181,73 @@ export function setupQuoteForm(): void {
   if (params.get('type') === 'residential') {
     const typeSelect = form.elements.namedItem('propertyType') as HTMLSelectElement | null
     if (typeSelect) typeSelect.value = 'Residential'
+  }
+
+  // ——— Optional site map / scope document upload ———
+  // Files upload the moment they're picked (multipart to the attachment
+  // endpoint, same submissionId — the server joins them to this form
+  // instance). The AI pipeline reads them for scope and follows a marked-up
+  // site map exactly. Failures are silent and never block the submit.
+  const attachmentInput = document.getElementById('qf-attachment') as HTMLInputElement | null
+  const attachmentStatus = document.getElementById('qf-attachment-status') as HTMLElement | null
+  if (attachmentInput) {
+    let attachedCount = 0
+    const uploadedKeys = new Set<string>()
+
+    async function uploadAttachment(file: File): Promise<boolean> {
+      const fd = new FormData()
+      fd.set('submissionId', submissionId)
+      fd.set('pageUrl', window.location.origin + window.location.pathname)
+      fd.set('file', file, file.name)
+      try {
+        // No keepalive: browsers cap keepalive bodies at ~64KB, and these
+        // uploads happen while the page is alive anyway.
+        const response = await fetch(ATTACHMENT_ENDPOINT, { method: 'POST', body: fd })
+        if (!response.ok) return false
+        const payload = (await response.json().catch(() => null)) as {
+          data?: { accepted?: boolean }
+        } | null
+        return payload?.data?.accepted === true
+      } catch {
+        return false
+      }
+    }
+
+    attachmentInput.addEventListener('change', () => {
+      const files = Array.from(attachmentInput.files ?? [])
+      void (async () => {
+        for (const file of files) {
+          const key = `${file.name}:${file.size}`
+          if (uploadedKeys.has(key)) continue
+          if (attachedCount >= MAX_ATTACHMENTS) break
+          if (file.size === 0 || file.size > MAX_ATTACHMENT_BYTES) {
+            if (attachmentStatus) {
+              attachmentStatus.textContent = `"${file.name}" is over 10 MB — please attach a smaller file.`
+              attachmentStatus.hidden = false
+            }
+            continue
+          }
+          uploadedKeys.add(key)
+          if (attachmentStatus) {
+            attachmentStatus.textContent = `Uploading ${file.name}…`
+            attachmentStatus.hidden = false
+          }
+          const ok = await uploadAttachment(file)
+          if (ok) {
+            attachedCount += 1
+            if (attachmentStatus) {
+              attachmentStatus.textContent = `Attached ✓ (${attachedCount} file${attachedCount === 1 ? '' : 's'})`
+              attachmentStatus.hidden = false
+            }
+          } else {
+            // Silent failure by design: the quote still goes out from the
+            // written description; a scary upload error loses the lead.
+            uploadedKeys.delete(key)
+            if (attachmentStatus && attachedCount === 0) attachmentStatus.hidden = true
+          }
+        }
+      })()
+    })
   }
 
   // ——— Abandoned-form beacon ———
