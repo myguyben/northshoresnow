@@ -6,7 +6,8 @@ import HeroPage from '../HeroPage.astro'
 import CtaBand from '../CtaBand.astro'
 import FaqAccordion from '../FaqAccordion.astro'
 import ServiceSchema from '../schema/ServiceSchema.astro'
-import { SERVICE_LINKS, INDUSTRY_LINKS } from '../../lib/site'
+import QuoteFormMini from '../QuoteFormMini.astro'
+import { SERVICE_LINKS, INDUSTRY_LINKS, SITE } from '../../lib/site'
 
 interface Props {
   entry: CollectionEntry<'industries'>
@@ -46,6 +47,9 @@ const others = INDUSTRY_LINKS.filter((i) => i.slug !== entry.id)
         <Content />
       </article>
       <aside class="space-y-6">
+        {/* /strata and /property-managers are both paid-search landing pages and
+            had no quote CTA at all — the ad click had nowhere to convert. */}
+        <QuoteFormMini />
         <div class="card p-6">
           <h2 class="font-display text-lg font-bold">Our services</h2>
           <ul class="mt-4 space-y-2.5">
@@ -69,6 +73,13 @@ const others = INDUSTRY_LINKS.filter((i) => i.slug !== entry.id)
               </li>
             ))}
           </ul>
+        </div>
+        <div class="card bg-ink-950 p-6 text-white">
+          <h2 class="font-display text-lg font-bold">Storm in the forecast?</h2>
+          <p class="mt-2 text-sm text-body-dark">
+            Crews dispatch around the clock. Talk to us directly.
+          </p>
+          <a href={SITE.phoneHref} class="btn-primary mt-4 w-full text-sm">Call {SITE.phone}</a>
         </div>
       </aside>
     </div>

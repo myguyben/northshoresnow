@@ -6,14 +6,29 @@ const logoModules = import.meta.glob<{ default: ImageMetadata }>(
   '../assets/logos/*.{png,jpg,webp}',
   { eager: true }
 )
+/**
+ * Title-casing the filename mangles the acronyms — "Kpmg", "Ymca", "Awm",
+ * "Plh" — and these alts are the only text Google and a screen reader get for
+ * the social proof under "Trusted by leading businesses". Everything else
+ * title-cases correctly and falls through.
+ */
+const DISPLAY_NAMES: Record<string, string> = {
+  awm: 'AWM',
+  kpmg: 'KPMG',
+  plh: 'PLH',
+  ymca: 'YMCA',
+}
+
 const logos = Object.entries(logoModules)
-  .map(([path, mod]) => ({
-    image: mod.default,
-    alt: (path.split('/').pop() ?? '')
-      .replace(/\.(png|jpg|webp)$/, '')
-      .replace(/-/g, ' ')
-      .replace(/\b\w/g, (c) => c.toUpperCase()),
-  }))
+  .map(([path, mod]) => {
+    const slug = (path.split('/').pop() ?? '').replace(/\.(png|jpg|webp)$/, '')
+    return {
+      image: mod.default,
+      alt:
+        DISPLAY_NAMES[slug] ??
+        slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
+    }
+  })
   .sort((a, b) => a.alt.localeCompare(b.alt))
 ---
 

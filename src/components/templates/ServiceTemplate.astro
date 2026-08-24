@@ -6,7 +6,8 @@ import HeroPage from '../HeroPage.astro'
 import CtaBand from '../CtaBand.astro'
 import FaqAccordion from '../FaqAccordion.astro'
 import ServiceSchema from '../schema/ServiceSchema.astro'
-import { AREA_LINKS, SERVICE_LINKS } from '../../lib/site'
+import QuoteFormMini from '../QuoteFormMini.astro'
+import { AREA_LINKS, SERVICE_LINKS, SITE } from '../../lib/site'
 
 interface Props {
   entry: CollectionEntry<'services'>
@@ -36,6 +37,9 @@ const topAreas = AREA_LINKS.slice(0, 6)
         <Content />
       </article>
       <aside class="space-y-6 lg:pt-2">
+        {/* Paid search lands here. Capture on the page — sending an ad click to
+            /contact first costs a click and most of the visitors with it. */}
+        <QuoteFormMini />
         <div class="card p-6">
           <h2 class="font-display text-lg font-bold">Other services</h2>
           <ul class="mt-4 space-y-2.5">
@@ -66,11 +70,11 @@ const topAreas = AREA_LINKS.slice(0, 6)
           </ul>
         </div>
         <div class="card bg-ink-950 p-6 text-white">
-          <h2 class="font-display text-lg font-bold">Get a fast quote</h2>
+          <h2 class="font-display text-lg font-bold">Storm in the forecast?</h2>
           <p class="mt-2 text-sm text-body-dark">
-            Satellite-measured pricing, usually same-day.
+            Crews dispatch around the clock. Talk to us directly.
           </p>
-          <a href="/contact#quote" class="btn-primary mt-4 w-full text-sm">Get a Free Quote</a>
+          <a href={SITE.phoneHref} class="btn-primary mt-4 w-full text-sm">Call {SITE.phone}</a>
         </div>
       </aside>
     </div>

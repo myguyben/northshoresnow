@@ -1,0 +1,31 @@
+---
+/**
+ * Sticky call / quote bar, mobile only.
+ *
+ * On phones the header collapses to a hamburger, so the phone number and the
+ * quote CTA were both hidden behind a tap. Most paid clicks are mobile, and
+ * during a storm the highest-intent visitors phone rather than fill in a form —
+ * so the number has to be on screen the whole time, not one tap away.
+ *
+ * The call link needs no tracking code of its own: initAnalytics() delegates on
+ * `a[href^="tel:"]`, so this fires the click_to_call conversion automatically.
+ */
+import { SITE } from '../lib/site'
+---
+
+<div
+  class="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-ink-950/95 backdrop-blur-md lg:hidden"
+  style="padding-bottom: env(safe-area-inset-bottom)"
+>
+  <div class="container-site flex items-center gap-3 py-3">
+    <a href={SITE.phoneHref} class="btn-primary flex-1 !py-3 text-center text-sm">
+      Call {SITE.phone}
+    </a>
+    <a href="/contact#quote" class="btn-ghost-dark flex-1 !py-3 text-center text-sm">
+      Free Quote
+    </a>
+  </div>
+</div>
+
+{/* Keeps the bar from covering the last of the footer. */}
+<div class="h-[68px] lg:hidden" aria-hidden="true"></div>

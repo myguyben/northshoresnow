@@ -6,7 +6,8 @@ import HeroPage from '../HeroPage.astro'
 import CtaBand from '../CtaBand.astro'
 import FaqAccordion from '../FaqAccordion.astro'
 import ServiceSchema from '../schema/ServiceSchema.astro'
-import { SERVICE_LINKS, AREA_LINKS } from '../../lib/site'
+import QuoteFormMini from '../QuoteFormMini.astro'
+import { SERVICE_LINKS, AREA_LINKS, SITE } from '../../lib/site'
 
 interface Props {
   entry: CollectionEntry<'areas'>
@@ -35,6 +36,8 @@ const siblings = AREA_LINKS.filter((a) => data.siblings.includes(a.slug)).slice(
         <Content />
       </article>
       <aside class="space-y-6 lg:pt-2">
+        {/* Area pages carry both organic and paid traffic — capture on the page. */}
+        <QuoteFormMini />
         <div class="card p-6">
           <h2 class="font-display text-lg font-bold">Services in {data.name}</h2>
           <ul class="mt-4 space-y-2.5">
@@ -64,7 +67,7 @@ const siblings = AREA_LINKS.filter((a) => data.siblings.includes(a.slug)).slice(
         <div class="card bg-ink-950 p-6 text-white">
           <h2 class="font-display text-lg font-bold">Local crews, local knowledge</h2>
           <p class="mt-2 text-sm text-body-dark">{data.terrainNote}</p>
-          <a href="/contact#quote" class="btn-primary mt-4 w-full text-sm">Get a Free Quote</a>
+          <a href={SITE.phoneHref} class="btn-primary mt-4 w-full text-sm">Call {SITE.phone}</a>
         </div>
       </aside>
     </div>
