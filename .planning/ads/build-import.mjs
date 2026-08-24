@@ -261,6 +261,36 @@ const GLOBAL_NEGATIVES = [
   'roof snow removal', 'roof raking', 'ice dam',
   'software', 'app', 'crm', 'dispatch software',
   'free', 'cheap', 'volunteer', 'snow angel',
+
+  // ── Added 2026-08-24 from the account's own search-terms report ──────────
+  // 3,815 terms / 2,362 clicks from the 2025/26 season. CA$417 of the
+  // CA$1,603 in visible clicked spend (26%) went to searches that could never
+  // have become a customer, and the largest single bucket was neighbouring
+  // Metro Vancouver municipalities — which the original list did not guard
+  // against at all. It blocked Washington and Whistler but happily paid for
+  // "snow removal burnaby".
+  //
+  // Ambiguous names are qualified on purpose: bare "delta" would block Delta
+  // Hotels (a real commercial prospect with North Shore properties) and bare
+  // "mission" collides with "our mission".
+  'burnaby', 'coquitlam', 'port coquitlam', 'port moody', 'maple ridge',
+  'pitt meadows', 'surrey', 'white rock', 'langley', 'aldergrove',
+  'abbotsford', 'chilliwack', 'new westminster', 'richmond', 'delta bc',
+  'tsawwassen', 'ladner', 'mission bc', 'squamish', 'sechelt', 'gibsons',
+  'bowen island', 'anmore', 'belcarra',
+
+  // Presence-vs-interest leakage the geo settings should stop, but negatives
+  // are the second line of defence: the account paid for Edmonton three times.
+  'edmonton', 'kitchener', 'winnipeg', 'ottawa', 'montreal', 'saskatoon',
+  'regina', 'halifax', 'nanaimo', 'kamloops', 'victoria bc',
+
+  // Equipment shopping — brand names the generic 'snowblower' negative missed.
+  'john deere', 'orec', 'snow rhino', 'western blade', 'toro', 'ariens',
+  'honda snow', 'electric snow shovel', 'snow shovel', 'shovel for',
+
+  // People researching how to run a snow business, not buy the service.
+  'business', 'start a', 'contract template', 'invoice template',
+  'how much to charge', 'per hour rate',
 ]
 
 /** Keeps the commercial and residential campaigns from cannibalising each other. */
