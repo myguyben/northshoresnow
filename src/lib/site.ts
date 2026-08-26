@@ -21,6 +21,17 @@ export const SITE = {
     'https://iceysoftware.com/api/inbound/website-lead',
 } as const
 
+/**
+ * Google Business Profile rating, shown next to the quote form as well as in
+ * the testimonials section — one constant so the two can never disagree.
+ * Update the count together with the reviews in Testimonials.astro.
+ */
+export const GOOGLE_REVIEWS = {
+  rating: '5.0',
+  count: 26,
+  url: 'https://www.google.com/maps/place/?q=place_id:ChIJWQ-g9MNEf2oRhmrru26SGtc',
+} as const
+
 export const STATS = [
   { value: '98%', label: 'On-time response rate' },
   { value: '24/7', label: 'Active weather monitoring' },

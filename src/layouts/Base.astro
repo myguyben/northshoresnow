@@ -22,6 +22,47 @@ interface Props {
 }
 
 const { overHero = false, ...seo } = Astro.props
+
+/**
+ * Prerender the quote page from every other page.
+ *
+ * "Get a Quote" is the only click on this site that makes money, and it was
+ * paying full freight: a Cloudflare round-trip, then a parse, then a paint,
+ * on a phone in a parking lot. The speculation rule builds /contact#quote in
+ * the background as soon as this page loads, so the click swaps to a page
+ * that is already painted.
+ *
+ * The URL carries the #quote fragment because every CTA on the site links
+ * there (Header, Footer, CtaBand, MobileCallBar, HeroPage, PricingCards) and
+ * the hero mini form now navigates there too — one URL, so it matches
+ * whether or not the browser ignores fragments when matching a speculation.
+ *
+ * Everything else gets a plain `prefetch` on hover ("moderate"), which is
+ * document-only and costs nothing until intent is shown.
+ *
+ * Prerendering runs the target page's scripts before the click, so anything
+ * that counts a visit has to wait for activation — see lib/prerender.ts,
+ * Analytics.astro and scripts/quote-form.ts.
+ */
+// build.format 'file' means pathname is '/contact.html'.
+const path = Astro.url.pathname.replace(/index\.html$/, '').replace(/\.html$/, '')
+const speculate = path !== '/contact' && path !== '/thank-you'
+const SPECULATION_RULES = JSON.stringify({
+  prerender: [{ source: 'list', urls: ['/contact#quote'], eagerness: 'immediate' }],
+  prefetch: [
+    // Belt and braces: the same URL as a plain prefetch. Prerender is the
+    // better experience but is the first thing a browser drops (data saver,
+    // low memory, an extension holding the request pipeline); a prefetch
+    // still removes the whole network round-trip from the click, and a
+    // browser that does both uses the prerender and ignores this.
+    { source: 'list', urls: ['/contact#quote'], eagerness: 'immediate' },
+    {
+      source: 'document',
+      where: { and: [{ href_matches: '/*' }, { not: { href_matches: '/contact*' } }] },
+      eagerness: 'moderate',
+    },
+  ],
+})
 ---
 
 <!doctype html>
@@ -35,6 +76,31 @@ const { overHero = false, ...seo } = Astro.props
     <link rel="preload" as="font" type="font/woff2" href={bricolageWoff2} crossorigin />
     <Seo {...seo} />
     <Analytics />
+    {
+      speculate && (
+        <Fragment>
+          <script type="speculationrules" is:inline set:html={SPECULATION_RULES} />
+          {/* Firefox has no speculation rules but does honour rel=prefetch;
+              only injected where the rules were ignored, so Chromium never
+              fetches the quote page twice. Safari supports neither and is
+              left with the normal navigation. */}
+          <script is:inline>
+            if (
+              !(
+                window.HTMLScriptElement &&
+                HTMLScriptElement.supports &&
+                HTMLScriptElement.supports('speculationrules')
+              )
+            ) {
+              var link = document.createElement('link')
+              link.rel = 'prefetch'
+              link.href = '/contact'
+              document.head.appendChild(link)
+            }
+          </script>
+        </Fragment>
+      )
+    }
     <slot name="head" />
   </head>
   <body>

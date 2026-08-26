@@ -6,9 +6,10 @@
  * together if the listing changes.
  */
 
-const GOOGLE_REVIEWS_URL =
-  'https://www.google.com/maps/place/?q=place_id:ChIJWQ-g9MNEf2oRhmrru26SGtc'
-const REVIEW_COUNT = 26
+import { GOOGLE_REVIEWS } from '../lib/site'
+
+const GOOGLE_REVIEWS_URL = GOOGLE_REVIEWS.url
+const REVIEW_COUNT = GOOGLE_REVIEWS.count
 
 const reviews = [
   {
@@ -57,7 +58,7 @@ const reviews = [
         rel="noopener"
         class="group flex items-center gap-3 rounded-2xl border border-frost-200 bg-white px-5 py-3.5 shadow-card transition-colors hover:border-brand-500"
       >
-        <span class="font-display text-3xl font-bold text-ink-950">5.0</span>
+        <span class="font-display text-3xl font-bold text-ink-950">{GOOGLE_REVIEWS.rating}</span>
         <span>
           <span class="flex gap-0.5" aria-label="Rated 5 out of 5 stars">
             {[1, 2, 3, 4, 5].map(() => (

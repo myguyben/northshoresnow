@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro'
 import Breadcrumbs from '../components/Breadcrumbs.astro'
 import QuoteForm from '../components/QuoteForm.astro'
 import LocalBusinessSchema from '../components/schema/LocalBusinessSchema.astro'
-import { SITE } from '../lib/site'
+import { SITE, GOOGLE_REVIEWS } from '../lib/site'
 ---
 
 <Base
@@ -26,6 +26,42 @@ import { SITE } from '../lib/site'
       <QuoteForm />
 
       <aside class="space-y-6">
+        {/* Proof sits beside the form, not three sections down the page — by
+            the time someone is deciding whether to type their address, the
+            testimonials section is long scrolled past. */}
+        <a
+          href={GOOGLE_REVIEWS.url}
+          target="_blank"
+          rel="noopener"
+          class="card card-hover block p-7"
+        >
+          <div class="flex items-center gap-3">
+            <span class="font-display text-3xl font-bold text-ink-950">
+              {GOOGLE_REVIEWS.rating}
+            </span>
+            <span>
+              <span
+                class="flex gap-0.5"
+                aria-label={`Rated ${GOOGLE_REVIEWS.rating} out of 5 stars`}
+              >
+                {[1, 2, 3, 4, 5].map(() => (
+                  <svg class="h-4 w-4 text-amber-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9L10 1.5z" />
+                  </svg>
+                ))}
+              </span>
+              <span class="mt-0.5 block text-sm text-body">
+                {GOOGLE_REVIEWS.count} Google reviews →
+              </span>
+            </span>
+          </div>
+          <blockquote class="mt-4 text-[15px] leading-relaxed text-body">
+            “Professional service at a very reasonable price. Customer service and
+            communication was on point!”
+          </blockquote>
+          <p class="mt-2 text-sm font-semibold text-ink-950">Stim Citizen</p>
+        </a>
+
         <div class="card p-7">
           <h2 class="font-display text-lg font-bold">Prefer to talk?</h2>
           <div class="mt-4 space-y-4 text-[15px]">
@@ -53,7 +89,7 @@ import { SITE } from '../lib/site'
           <h2 class="font-display text-lg font-bold">What happens next</h2>
           <ol class="mt-4 space-y-4">
             {[
-              ['We confirm your request', 'You get an acknowledgment within minutes.'],
+              ['You see a ballpark right away', 'Most requests get an instant price range on the confirmation screen.'],
               ['We measure your property', 'Satellite imagery + local knowledge — no walk-through needed for most sites.'],
               ['You receive your quote', 'Usually the same day, with clear per-event and seasonal options.'],
             ].map(([title, body], i) => (

@@ -16,6 +16,15 @@
  * EEA visitor is measured in the modelled-only mode Google expects without
  * one. If this business ever advertises into Europe, that region list must be
  * replaced by a real consent management platform rather than edited.
+ *
+ * PRERENDER: /contact is prerendered from every other page (Base.astro), so
+ * this file runs in documents the visitor may never open. Loading the tag
+ * libraries early is fine — they send nothing on their own — but the calls
+ * that report a pageview wait for `prerenderingchange`. Without that gate,
+ * every visitor would count as a contact-page view and both GA4 sessions and
+ * the Google Ads landing-page report would be fiction. These are inline
+ * `is:inline` scripts and cannot import lib/prerender.ts, so the same
+ * two-line gate is written out by hand.
  */
 const ga4Id = import.meta.env.PUBLIC_GA4_ID
 const adsId = import.meta.env.PUBLIC_GOOGLE_ADS_ID
@@ -60,11 +69,21 @@ const CONSENT_DENIED_REGIONS = [
         analytics_storage: 'denied',
       })
 
-      gtag('js', new Date())
-      if (ga4Id) gtag('config', ga4Id)
-      // allow_enhanced_conversions stays inert until the conversion action
-      // itself opts in inside the Google Ads UI.
-      if (adsId) gtag('config', adsId, { allow_enhanced_conversions: true })
+      function bootGoogleTags() {
+        gtag('js', new Date())
+        if (ga4Id) gtag('config', ga4Id)
+        // allow_enhanced_conversions stays inert until the conversion action
+        // itself opts in inside the Google Ads UI.
+        if (adsId) gtag('config', adsId, { allow_enhanced_conversions: true })
+      }
+
+      // Consent defaults above are pure state and are set immediately; the
+      // pageview hits below wait until this document is really being viewed.
+      if (document.prerendering) {
+        document.addEventListener('prerenderingchange', bootGoogleTags, { once: true })
+      } else {
+        bootGoogleTags()
+      }
     </script>
   )
 }
@@ -89,19 +108,29 @@ const CONSENT_DENIED_REGIONS = [
         s.parentNode.insertBefore(t, s)
       })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js')
 
-      // Meta has no region-scoped consent mode, so revoke before init for
-      // European visitors and let the served market through. Timezone is a
-      // proxy rather than a geo lookup: imprecise, but it fails safe.
-      try {
-        if (/^Europe\//.test(Intl.DateTimeFormat().resolvedOptions().timeZone || '')) {
-          window.fbq('consent', 'revoke')
+      function bootMetaPixel() {
+        // Meta has no region-scoped consent mode, so revoke before init for
+        // European visitors and let the served market through. Timezone is a
+        // proxy rather than a geo lookup: imprecise, but it fails safe.
+        try {
+          if (/^Europe\//.test(Intl.DateTimeFormat().resolvedOptions().timeZone || '')) {
+            window.fbq('consent', 'revoke')
+          }
+        } catch (error) {
+          /* no Intl support — leave the default granted state */
         }
-      } catch (error) {
-        /* no Intl support — leave the default granted state */
+
+        window.fbq('init', metaPixelId)
+        window.fbq('track', 'PageView')
       }
 
-      window.fbq('init', metaPixelId)
-      window.fbq('track', 'PageView')
+      // Same prerender gate as the Google tags: init and PageView describe a
+      // visit, and a prerendered page is not one until it is activated.
+      if (document.prerendering) {
+        document.addEventListener('prerenderingchange', bootMetaPixel, { once: true })
+      } else {
+        bootMetaPixel()
+      }
     </script>
   )
 }

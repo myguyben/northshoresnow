@@ -125,6 +125,16 @@
     @apply mb-1.5 block text-sm font-medium text-ink-900;
   }
 
+  /* Inline field validation (see scripts/quote-form.ts). Native bubbles show
+     one field at a time and disappear on the next tap; these stay put. */
+  .input[aria-invalid='true'] {
+    @apply border-red-400 focus:border-red-500 focus:ring-red-500/20;
+  }
+
+  .field-error {
+    @apply mt-1.5 text-sm font-medium text-red-700;
+  }
+
   /* Address-autocomplete dropdown (see scripts/quote-form.ts). */
   .address-listbox {
     @apply absolute left-0 right-0 top-full z-30 mt-1.5 overflow-hidden rounded-xl border border-frost-200 bg-white py-1 shadow-card;
