@@ -73,8 +73,8 @@ get the deepest snow on the North Shore, and our routing is built around that gr
 
 ## Documented plowing, from quote to cleanup
 
-Your quote comes back the same day from satellite lot measurements — no site visit, no
-waiting for a rep to walk your property with a measuring wheel. Once you're on contract
+Your quote comes back the same day from satellite lot measurements, priced on the actual
+square metres of lot and walkway rather than a rounded-up guess. Once you're on contract
 (seasonal, Oct 1–Apr 30), every visit generates GPS-stamped, timestamped photos filed to
 your property record: proof the lot was plowed and salted, and the slip-and-fall defence
 file that builds itself. Curious what commercial plowing runs on the North Shore? See our

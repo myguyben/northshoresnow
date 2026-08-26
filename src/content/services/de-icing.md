@@ -77,4 +77,4 @@ entrances were treated at 5:40am is. Every de-icing visit we run files exactly t
 your property record automatically. It's also how you meet the municipal bylaws that require
 walkways cleared and safe by 10am after a snowfall. Read our guide to
 [slip-and-fall liability for BC commercial property](/blog/slip-and-fall-liability-commercial-property-bc),
-then [get a same-day quote](/contact#quote) — measured by satellite, no site visit needed.
+then [get a same-day quote](/contact#quote) — measured by satellite and priced on your actual serviceable area.
