@@ -128,6 +128,7 @@ export function attributionFields(): Record<string, string> {
 const ADS_ID = import.meta.env.PUBLIC_GOOGLE_ADS_ID as string | undefined
 const LEAD_LABEL = import.meta.env.PUBLIC_GOOGLE_ADS_LEAD_LABEL as string | undefined
 const CALL_LABEL = import.meta.env.PUBLIC_GOOGLE_ADS_CALL_LABEL as string | undefined
+const EMAIL_LABEL = import.meta.env.PUBLIC_GOOGLE_ADS_EMAIL_LABEL as string | undefined
 const ENHANCED = import.meta.env.PUBLIC_GOOGLE_ADS_ENHANCED === 'true'
 
 /**
@@ -256,16 +257,41 @@ export function trackCallClick(): void {
 }
 
 /**
+ * Fire the email-click conversion.
+ *
+ * Same reasoning as the call: a visitor who mails the address directly never
+ * touches the quote form, so without this the channel reports zero and looks
+ * worthless next to the form. The Ads conversion needs its own action and
+ * label (PUBLIC_GOOGLE_ADS_EMAIL_LABEL); until one exists the GA4 event still
+ * records the click and, with it, whether that visit was organic or paid.
+ */
+export function trackEmailClick(): void {
+  window.gtag?.('event', 'email_click', { currency: 'CAD', value: LEAD_VALUE.unknown })
+  if (window.gtag && ADS_ID && EMAIL_LABEL) {
+    window.gtag('event', 'conversion', { send_to: `${ADS_ID}/${EMAIL_LABEL}` })
+  }
+  window.fbq?.('track', 'Contact')
+}
+
+/**
  * Wire the page-level listeners.
  *
- * Phone numbers appear in the header, footer, hero, CTA bands, contact page
- * and the form's error panel — a delegated listener keeps all of them tracked
- * without eight call sites drifting out of sync.
+ * Phone numbers and the quotes@ address appear in the header, footer, hero,
+ * CTA bands, contact page, the sticky mobile bar and the form's error panel —
+ * delegated listeners keep every one of them tracked without a dozen call
+ * sites drifting out of sync.
+ *
+ * These fire on EVERY click, not just ad traffic: an organic or direct
+ * visitor who phones is exactly as real as one who arrived on a gclid, and
+ * the GA4 event carries its own traffic source. (Google Ads only reports the
+ * ones it can attribute to a click of its own, which is why GA4 has to be
+ * configured for the organic half to be countable at all.)
  */
 export function initAnalytics(): void {
   captureAttribution()
   document.addEventListener('click', (event) => {
     const target = event.target as Element | null
     if (target?.closest('a[href^="tel:"]')) trackCallClick()
+    else if (target?.closest('a[href^="mailto:"]')) trackEmailClick()
   })
 }

@@ -1,41 +1,65 @@
 ---
 /**
- * Sticky call / quote bar, mobile only.
+ * Sticky call / email / quote bar, mobile only.
  *
- * On phones the header collapses to a hamburger, so the phone number and the
- * quote CTA were both hidden behind a tap. Most paid clicks are mobile, and
- * during a storm the highest-intent visitors phone rather than fill in a form —
- * so the number has to be on screen the whole time, not one tap away.
+ * On phones the header collapses to a hamburger, so every way of reaching us
+ * was hidden behind a tap. Most paid clicks are mobile, and during a storm the
+ * highest-intent visitors phone rather than fill in a form — so the ways to
+ * make contact have to be on screen the whole time, not one tap away.
  *
- * The call link needs no tracking code of its own: initAnalytics() delegates on
- * `a[href^="tel:"]`, so this fires the click_to_call conversion automatically.
+ * None of these links need tracking code of their own: initAnalytics()
+ * delegates on `a[href^="tel:"]` and `a[href^="mailto:"]`, so the call and
+ * email conversions fire wherever those links appear, here included.
+ *
+ * Layout notes, all of them load-bearing at 320px (the narrowest screen this
+ * site sees) — verified by measuring scrollWidth against clientWidth rather
+ * than by eye:
+ *
+ * - Its own px-3 rather than `container-site`, whose px-6 spent 48px of a
+ *   320px screen on margins that three buttons cannot afford.
+ * - The phone number appears from 420px up. Below that the button says
+ *   "Call", because the number cannot share a row with two other buttons
+ *   without wrapping, and a wrapped sticky bar looks broken.
+ * - safe-area insets on all three sides: with viewport-fit=cover (Base.astro)
+ *   the page now extends under the home indicator, so the bar paints to the
+ *   bottom edge while its contents stay above the indicator.
  */
 import { SITE } from '../lib/site'
 ---
 
 <div
   class="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-ink-950/95 backdrop-blur-md lg:hidden"
-  style="padding-bottom: env(safe-area-inset-bottom)"
+  style="padding-bottom: env(safe-area-inset-bottom); padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right)"
 >
-  {/* Tight horizontal padding and nowrap: the default btn px-6 left about
-      150px of usable width per button on a 320px phone, which wrapped the
-      phone number onto three lines. Both labels have to hold one line at the
-      narrowest screen this site sees. */}
-  <div class="container-site flex items-center gap-2 py-3">
+  <div class="flex items-center gap-2 px-3 py-3">
     <a
       href={SITE.phoneHref}
       class="btn-primary flex-1 !px-2 !py-3 text-center text-xs whitespace-nowrap"
     >
-      Call {SITE.phone}
+      Call <span class="hidden min-[420px]:inline">{SITE.phone}</span>
+    </a>
+    <a
+      href={`mailto:${SITE.email}`}
+      class="btn-ghost-dark flex-1 !px-2 !py-3 text-center text-xs whitespace-nowrap"
+      aria-label={`Email ${SITE.email}`}
+    >
+      Email
     </a>
     <a
       href="/contact#quote"
-      class="btn-ghost-dark flex-1 !px-2 !py-3 text-center text-xs whitespace-nowrap"
+      class="btn-ghost-dark flex-[1.6] !px-2 !py-3 text-center text-xs whitespace-nowrap"
     >
-      Complimentary Quote
+      Get a Quote
     </a>
   </div>
 </div>
 
-{/* Keeps the bar from covering the last of the footer. */}
-<div class="h-[68px] lg:hidden" aria-hidden="true"></div>
+{/* Keeps the bar from covering the last of the footer. Has to grow by the
+    safe-area inset too, or the bar's own bottom padding eats into the footer
+    on a phone with a home indicator. */}
+<div
+  class="lg:hidden"
+  style="height: calc(68px + env(safe-area-inset-bottom))"
+  aria-hidden="true"
+>
+</div>

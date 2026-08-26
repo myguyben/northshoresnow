@@ -69,7 +69,16 @@ const SPECULATION_RULES = JSON.stringify({
 <html lang="en-CA">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- viewport-fit=cover is what lets the sticky bottom bar reach the
+         bottom of the screen. Without it iOS lays the page out INSIDE the
+         safe area and fills the home-indicator strip with the page
+         background — a visible gap under a `fixed bottom-0` element — and
+         env(safe-area-inset-*) all evaluate to 0, so padding meant to sit
+         above the indicator does nothing. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
     <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="preload" as="font" type="font/woff2" href={interWoff2} crossorigin />
