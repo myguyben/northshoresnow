@@ -78,6 +78,6 @@ a slip-and-fall claim and keeps a portfolio audit-ready. Standalone salting disp
 automatically whenever temperatures reach 0°C, and it's built into every plow visit as well.
 Not sure when your lot actually needs salt? Read
 [when to salt a parking lot](/blog/when-to-salt-parking-lot), or
-[request a same-day quote](/contact#quote) — measured by satellite and priced on your actual serviceable area.
+[request a complimentary quote](/contact#quote) — measured by satellite and priced on your actual serviceable area.
 Seasonal contracts run Oct 1–Apr 30 across [North Vancouver](/north-vancouver) and the North
 Shore.

@@ -85,7 +85,15 @@ const navAreas = AREA_LINKS.slice(0, 8)
   aria-label="Menu"
 >
   <div class="container-site flex h-[72px] items-center justify-between">
-    <span class="font-display text-lg font-bold">North Shore Snow</span>
+    {/* Same lockup as the header bar. The sheet covers the whole screen, so
+        without the mark the only branded thing on a phone disappears the
+        moment the menu opens. */}
+    <span class="flex items-center gap-2.5">
+      <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/95">
+        <Image src={brandLogo} alt="" width={80} class="h-9 w-9 object-contain" loading="eager" />
+      </span>
+      <span class="font-display text-lg font-bold">North Shore Snow</span>
+    </span>
     <button
       id="mobile-menu-close"
       class="inline-flex h-11 w-11 items-center justify-center rounded-xl text-white"
@@ -108,7 +116,7 @@ const navAreas = AREA_LINKS.slice(0, 8)
     <a href="/contact" class="mobile-link">Contact</a>
   </nav>
   <div class="container-site space-y-3 border-t border-white/10 py-5">
-    <a href="/contact#quote" class="btn-primary w-full">Get a Free Quote</a>
+    <a href="/contact#quote" class="btn-primary w-full">Get a Complimentary Quote</a>
     <a href={SITE.phoneHref} class="btn-ghost-dark w-full">Call {SITE.phone}</a>
   </div>
 </div>

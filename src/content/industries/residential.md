@@ -36,7 +36,7 @@ get photo confirmation of the finished work — so even if you're away, you know
 
 **Quoted from satellite, not a sales visit.** Send us your address and we map your
 driveway, walkways, steps and sidewalk frontage from satellite imagery, then price the
-work from the measured area. Most homes get a quote the same day, with a map showing
+work from the measured area. Most homes get a quote within one business day, with a map showing
 exactly what's included.
 
 **Priced the way you prefer.** Pay per visit, or take a seasonal plan that turns winter

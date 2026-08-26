@@ -17,12 +17,22 @@ import { SITE } from '../lib/site'
   class="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-ink-950/95 backdrop-blur-md lg:hidden"
   style="padding-bottom: env(safe-area-inset-bottom)"
 >
-  <div class="container-site flex items-center gap-3 py-3">
-    <a href={SITE.phoneHref} class="btn-primary flex-1 !py-3 text-center text-sm">
+  {/* Tight horizontal padding and nowrap: the default btn px-6 left about
+      150px of usable width per button on a 320px phone, which wrapped the
+      phone number onto three lines. Both labels have to hold one line at the
+      narrowest screen this site sees. */}
+  <div class="container-site flex items-center gap-2 py-3">
+    <a
+      href={SITE.phoneHref}
+      class="btn-primary flex-1 !px-2 !py-3 text-center text-xs whitespace-nowrap"
+    >
       Call {SITE.phone}
     </a>
-    <a href="/contact#quote" class="btn-ghost-dark flex-1 !py-3 text-center text-sm">
-      Free Quote
+    <a
+      href="/contact#quote"
+      class="btn-ghost-dark flex-1 !px-2 !py-3 text-center text-xs whitespace-nowrap"
+    >
+      Complimentary Quote
     </a>
   </div>
 </div>
