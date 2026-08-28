@@ -6,10 +6,16 @@ const plans = [
     popular: false,
     features: [
       'Dispatched automatically on snowfall triggers',
-      'Plowing, shoveling, salting and de-icing per visit',
+      'De-icing dispatched whenever temperatures reach 0°C',
+      // A visit is snow OR de-icing, never both, so the per-event plan is a
+      // rate card with a price for each — saying "plowing, shoveling,
+      // salting and de-icing per visit" read as one all-in visit fee.
+      'Snow clearing and de-icing each priced per visit',
       'Photo-verified service reports after every visit',
       'Priority response for contracted clients',
-      'No charge in snow-free months',
+      // Not "snow-free months": de-icing runs on a temperature trigger, so a
+      // month with no snowfall can still have billable visits.
+      'No charge in months without a service visit',
     ],
     note: 'Best for properties with flexible budgets that want to pay per storm.',
   },
