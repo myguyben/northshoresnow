@@ -1,7 +1,12 @@
 /** Client logic for the quote form (QuoteForm.astro) and the address
  * autocomplete shared with QuoteFormMini.astro. */
 
-import { attributionFields, stashPendingLead } from '../lib/analytics'
+import {
+  attributionFields,
+  stashPendingLead,
+  trackPartialLead,
+  trackQuoteSubmitFailed,
+} from '../lib/analytics'
 import { onActivated } from '../lib/prerender'
 import {
   clearQuoteDraft,
@@ -507,6 +512,10 @@ export function setupQuoteForm(): void {
   let submitted = false
   let lastPartialPayload = ''
   let partialTimer: number | undefined
+  // One GA4 event per visit, not per keystroke: the beacon re-sends on every
+  // meaningful edit, but the thing worth counting is "we can reach this
+  // person", which happens exactly once.
+  let partialTracked = false
 
   function partialBody(): string | null {
     const email = emailField.value.trim()
@@ -534,6 +543,10 @@ export function setupQuoteForm(): void {
     const body = partialBody()
     if (!body || body === lastPartialPayload) return
     lastPartialPayload = body
+    if (!partialTracked) {
+      partialTracked = true
+      trackPartialLead()
+    }
     if (viaBeacon && navigator.sendBeacon) {
       // text/plain keeps the beacon CORS-safelisted (no preflight during
       // unload); the endpoint parses the body as JSON regardless.
@@ -615,6 +628,13 @@ export function setupQuoteForm(): void {
     return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
   }
 
+  /** Bucket a submit failure so GA4 gets a handful of names, not a long tail. */
+  function failureReason(error: unknown): string {
+    if (error instanceof DOMException && error.name === 'AbortError') return 'timeout'
+    const status = /^HTTP (\d{3})$/.exec(error instanceof Error ? error.message : '')
+    return status ? `http_${status[1]}` : 'network'
+  }
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault()
     if (!validate()) return
@@ -664,7 +684,8 @@ export function setupQuoteForm(): void {
         estimate,
       })
       window.location.assign('/thank-you')
-    } catch {
+    } catch (error) {
+      trackQuoteSubmitFailed(failureReason(error))
       mailtoLink.href = mailtoFallback(lead)
       errorPanel.hidden = false
       submitButton.disabled = false

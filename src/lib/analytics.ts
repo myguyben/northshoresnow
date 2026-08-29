@@ -274,6 +274,34 @@ export function trackEmailClick(): void {
 }
 
 /**
+ * Fire when contact details are captured but the quote is not submitted.
+ *
+ * The abandoned-form beacon already saves this row server-side so the team can
+ * phone the visitor back, so it is real reach — it is just invisible in GA4,
+ * which makes the form read as though those people never existed. Fires once
+ * per visit (the caller holds the latch) so it counts people, not keystrokes.
+ *
+ * Deliberately NOT a lead and never a Google Ads conversion: mark this a key
+ * event and everyone who goes on to finish is counted twice.
+ */
+export function trackPartialLead(): void {
+  window.gtag?.('event', 'quote_lead_partial')
+}
+
+/**
+ * Fire when a submission the visitor completed did NOT reach the server and
+ * they were shown the mailto fallback instead.
+ *
+ * `generate_lead` only ever fires on /thank-you, so without this a bad deploy,
+ * an origin-allowlist slip or a 10-second timeout looks exactly like a quiet
+ * week — the funnel loses leads with no trace. `reason` is bucketed
+ * (`timeout` / `http_500` / `network`) to keep cardinality bounded.
+ */
+export function trackQuoteSubmitFailed(reason: string): void {
+  window.gtag?.('event', 'quote_submit_failed', { reason })
+}
+
+/**
  * Wire the page-level listeners.
  *
  * Phone numbers and the quotes@ address appear in the header, footer, hero,
