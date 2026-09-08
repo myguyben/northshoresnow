@@ -12,6 +12,11 @@ const schema = {
   email: SITE.email,
   image: `${SITE.url}${SITE.defaultOgImage}`,
   priceRange: '$$',
+  // Ties the site to the Google Business Profile that carries the reviews and
+  // map pin. No aggregateRating here on purpose: self-served review markup is
+  // ineligible for rich results and risks a manual action.
+  sameAs: [SITE.googleBusinessProfile],
+  hasMap: SITE.googleBusinessProfile,
   address: {
     '@type': 'PostalAddress',
     streetAddress: SITE.address.street,

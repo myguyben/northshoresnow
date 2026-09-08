@@ -16,6 +16,9 @@ export const SITE = {
   geo: { lat: 49.310278, lng: -123.069166 },
   hours: '24/7 during snow events · Office Mon–Fri 8am–5pm',
   defaultOgImage: '/og/default.jpg',
+  /** Google Business Profile — used for the reviews link and LocalBusiness sameAs/hasMap. */
+  googleBusinessProfile:
+    'https://www.google.com/maps/place/?q=place_id:ChIJWQ-g9MNEf2oRhmrru26SGtc',
   quoteEndpoint:
     import.meta.env.PUBLIC_QUOTE_ENDPOINT ??
     'https://iceysoftware.com/api/inbound/website-lead',
@@ -28,8 +31,8 @@ export const SITE = {
  */
 export const GOOGLE_REVIEWS = {
   rating: '5.0',
-  count: 26,
-  url: 'https://www.google.com/maps/place/?q=place_id:ChIJWQ-g9MNEf2oRhmrru26SGtc',
+  count: 27,
+  url: SITE.googleBusinessProfile,
 } as const
 
 export const STATS = [
