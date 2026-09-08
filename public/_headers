@@ -1,3 +1,19 @@
+# NOT READ BY RENDER. Render serves static sites without Netlify-style
+# _headers support, so for four months this file declared headers that were
+# never sent: hashed assets revalidated on every page load and the three
+# security headers below were never live.
+#
+# The rules that ARE live are configured on the Render service itself
+# (northshoresnow, srv-d6ktcmk50q8c73ecs1l0) under
+# Redirects/Rewrites & Headers, set 2026-09-08 to match this file exactly.
+# EDITING THIS FILE ALONE CHANGES NOTHING — mirror any change there, or the
+# two drift apart silently.
+#
+# Kept in the repo because it documents the intended policy and works as-is
+# on Netlify or Cloudflare Pages if the site ever moves. Content-Type rules
+# for /sitemap.xml and /robots.txt are deliberately not mirrored: Render
+# already serves both with the correct type.
+
 /*
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff
