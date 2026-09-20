@@ -29,12 +29,24 @@ const canonicalUrl = path.startsWith('http')
   ? path
   : new URL(path === '/' || path === '' ? '/' : path.replace(/\/$/, ''), SITE.url).href
 const ogImageUrl = ogImage.startsWith('http') ? ogImage : new URL(ogImage, SITE.url).href
+
+/**
+ * Staging kill-switch. The preview site on Render builds this same repo from
+ * a branch, and without this it would serve a byte-identical copy of the
+ * whole site on a second hostname — duplicate content Google is free to index
+ * and rank against northshoresnow.com.
+ *
+ * Driven by an env var rather than a committed file so it can never reach
+ * production by being merged: PUBLIC_NOINDEX is set ONLY on the preview
+ * service. Unset everywhere else, so main is unaffected.
+ */
+const forceNoindex = import.meta.env.PUBLIC_NOINDEX === '1'
 ---
 
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonicalUrl} />
-{noindex && <meta name="robots" content="noindex, nofollow" />}
+{(noindex || forceNoindex) && <meta name="robots" content="noindex, nofollow" />}
 
 <meta property="og:type" content={ogType} />
 <meta property="og:site_name" content={SITE.name} />
