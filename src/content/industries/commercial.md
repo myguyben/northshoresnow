@@ -58,6 +58,7 @@ record. Every North Shore Snow visit is GPS-stamped with time-stamped photos, fi
 so your winter-maintenance history exists before anyone needs it.
 
 We serve commercial properties across [North Vancouver](/north-vancouver),
-[West Vancouver](/west-vancouver) and [Downtown Vancouver](/downtown-vancouver), including
+[West Vancouver](/west-vancouver), [Downtown Vancouver](/downtown-vancouver),
+[Burnaby](/burnaby) and [Richmond](/richmond), including
 [retail and shopping centres](/retail) and [industrial and warehouse sites](/industrial). To
 get a plan for your property, [request a quote](/contact#quote).

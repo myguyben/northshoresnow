@@ -47,6 +47,8 @@ export const AREA_LINKS = [
   { slug: 'north-vancouver', name: 'North Vancouver' },
   { slug: 'west-vancouver', name: 'West Vancouver' },
   { slug: 'downtown-vancouver', name: 'Downtown Vancouver' },
+  { slug: 'burnaby', name: 'Burnaby' },
+  { slug: 'richmond', name: 'Richmond' },
   { slug: 'north-shore', name: 'North Shore' },
   { slug: 'lonsdale', name: 'Lonsdale' },
   { slug: 'lynn-valley', name: 'Lynn Valley' },

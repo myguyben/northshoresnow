@@ -61,6 +61,7 @@ Our guide to
 explains why documented, timely service is the strongest protection you can hand an owner.
 
 We serve portfolios across [North Vancouver](/north-vancouver),
-[West Vancouver](/west-vancouver) and [Downtown Vancouver](/downtown-vancouver), from
+[West Vancouver](/west-vancouver), [Downtown Vancouver](/downtown-vancouver),
+[Burnaby](/burnaby) and [Richmond](/richmond), from
 strata communities to [commercial properties](/commercial). To scope your portfolio,
 [request a quote](/contact#quote).

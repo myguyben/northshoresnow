@@ -60,6 +60,7 @@ the property if a claim is filed. Our overview of
 explains what actually holds up.
 
 We serve retail and shopping centres across [North Vancouver](/north-vancouver),
-[West Vancouver](/west-vancouver) and [Downtown Vancouver](/downtown-vancouver), and handle
+[West Vancouver](/west-vancouver), [Downtown Vancouver](/downtown-vancouver),
+[Burnaby](/burnaby) and [Richmond](/richmond), and handle
 mixed-use and [commercial properties](/commercial) of every size. To get a plan for your
 centre, [request a quote](/contact#quote).

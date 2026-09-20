@@ -70,7 +70,8 @@ North Shore Snow visit generates one automatically. Read more in our guide to
 ## Where we plow
 
 Our snow removal crews cover [North Vancouver](/north-vancouver),
-[West Vancouver](/west-vancouver), [Downtown Vancouver](/downtown-vancouver) and every
+[West Vancouver](/west-vancouver), [Downtown Vancouver](/downtown-vancouver),
+[Burnaby](/burnaby), [Richmond](/richmond) and every
 North Shore neighborhood from [Deep Cove](/deep-cove) to [Horseshoe Bay](/horseshoe-bay).
 Higher-elevation areas like [Lynn Valley](/lynn-valley) get the heaviest snow on the North
 Shore — and our routing reflects that.

@@ -59,6 +59,7 @@ trailer parking, and priority zones, then bring equipment sized to the job. A bi
 cleared to a plan, not by improvisation.
 
 We serve industrial and warehouse operations across [North Vancouver](/north-vancouver),
-[West Vancouver](/west-vancouver) and [Downtown Vancouver](/downtown-vancouver), alongside
+[West Vancouver](/west-vancouver), [Downtown Vancouver](/downtown-vancouver),
+[Burnaby](/burnaby) and [Richmond](/richmond), alongside
 [commercial properties](/commercial) of every kind. To scope your yard,
 [request a quote](/contact#quote).
