@@ -1,0 +1,120 @@
+---
+/**
+ * /faq — reclaiming a URL Google already holds.
+ *
+ * Search Console lists https://www.northshoresnow.com/faq under "Not found
+ * (404)", first detected 2025-08-30: the Webflow site had this page, the 2026
+ * Astro rebuild did not, and Google has been knocking on a closed door for a
+ * year. A 301 to /services would have wasted it, because the query behind
+ * that URL is a real one people type.
+ *
+ * Nothing here is newly written. Every answer already lives on a service,
+ * industry or area page; this assembles them into the one place a person
+ * looking for "snow removal FAQ" expects to land, and links each group back
+ * to the page it came from so the page feeds the rest of the site rather
+ * than competing with it.
+ */
+import { getCollection } from 'astro:content'
+import Base from '../layouts/Base.astro'
+import HeroPage from '../components/HeroPage.astro'
+import CtaBand from '../components/CtaBand.astro'
+import FaqSchema from '../components/schema/FaqSchema.astro'
+import { SERVICE_LINKS, INDUSTRY_LINKS, SITE } from '../lib/site'
+
+const [services, industries, areas] = await Promise.all([
+  getCollection('services'),
+  getCollection('industries'),
+  getCollection('areas'),
+])
+
+const bySlug = (list, slug) => list.find((entry) => entry.id === slug)
+
+/** Ordered the way a buyer asks: what you do, who for, then where. */
+const groups = [
+  ...SERVICE_LINKS.map(({ slug, name }) => ({ slug, name, entry: bySlug(services, slug) })),
+  ...INDUSTRY_LINKS.map(({ slug, name }) => ({ slug, name, entry: bySlug(industries, slug) })),
+  // Areas carry municipal bylaw answers, which are the questions people
+  // actually search. Only the municipalities, not every neighbourhood, or the
+  // page turns into a wall of near-duplicates.
+  ...['north-vancouver', 'west-vancouver', 'downtown-vancouver', 'burnaby', 'richmond'].map(
+    (slug) => {
+      const entry = bySlug(areas, slug)
+      return { slug, name: entry?.data.name ?? slug, entry }
+    }
+  ),
+]
+  .filter((group) => group.entry && group.entry.data.faqs?.length)
+  .map((group) => ({ ...group, faqs: group.entry.data.faqs }))
+
+const allFaqs = groups.flatMap((group) => group.faqs)
+---
+
+<Base
+  title="Snow Removal FAQ | North Shore Snow"
+  description="Answers on commercial snow removal in Metro Vancouver: sidewalk bylaw deadlines, seasonal versus per-event pricing, salting triggers, insurance and response times. Call (604) 990-7072."
+>
+  <HeroPage
+    eyebrow="Questions"
+    heading="Snow removal, answered"
+    lede="What property managers, strata councils and business owners ask us most — on pricing, bylaw deadlines, response times and what happens when the snow actually arrives."
+    trail={[{ name: 'FAQ', path: '/faq' }]}
+  />
+
+  <section class="section bg-white">
+    <div class="container-site max-w-4xl">
+      <nav aria-label="Jump to a topic" class="card p-6">
+        <p class="font-display text-lg font-bold">Jump to a topic</p>
+        <ul class="mt-4 flex flex-wrap gap-x-5 gap-y-2.5">
+          {groups.map((group) => (
+            <li>
+              <a href={`#${group.slug}`} class="text-[15px] font-medium text-brand-600 hover:underline">
+                {group.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      {groups.map((group) => (
+        <div id={group.slug} class="mt-14 scroll-mt-28">
+          <div class="flex flex-wrap items-baseline justify-between gap-3">
+            <h2 class="h2">{group.name}</h2>
+            <a href={`/${group.slug}`} class="text-[15px] font-medium text-brand-600 hover:underline">
+              Full {group.name.toLowerCase()} page →
+            </a>
+          </div>
+          <div class="mt-6 space-y-3">
+            {group.faqs.map((faq) => (
+              <details class="group card overflow-hidden">
+                <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 font-display text-lg font-semibold text-ink-950 [&::-webkit-details-marker]:hidden">
+                  {faq.q}
+                  <svg
+                    class="h-5 w-5 shrink-0 text-brand-500 transition-transform duration-200 group-open:rotate-45"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path stroke-linecap="round" d="M10 4v12M4 10h12" />
+                  </svg>
+                </summary>
+                <div class="border-t border-frost-200 px-6 py-5 text-[15px] leading-relaxed">
+                  {faq.a}
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <p class="mt-14 text-[15px]">
+        Not covered here? Call <a href={SITE.phoneHref} class="font-medium text-brand-600 hover:underline">{SITE.phone}</a>
+        or <a href="/contact#quote" class="font-medium text-brand-600 hover:underline">request a complimentary quote</a> and ask.
+      </p>
+    </div>
+  </section>
+
+  <CtaBand />
+  <FaqSchema faqs={allFaqs} />
+</Base>

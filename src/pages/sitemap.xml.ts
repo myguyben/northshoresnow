@@ -15,6 +15,7 @@ const STATIC_ROUTES = [
   'areas',
   'service-areas',
   'blog',
+  'faq',
   'sitemap',
   'privacy',
   'terms',
