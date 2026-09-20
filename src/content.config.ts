@@ -42,6 +42,12 @@ const industries = defineCollection({
     hero: z.string(),
     painPoints: z.array(z.object({ title: z.string(), body: z.string() })),
     faqs: z.array(faq).default([]),
+    /**
+     * Google reviews are homeowner proof. Ben, 2026-09-20: a commercial
+     * buyer is persuaded by the client logos in the marquee, not by consumer
+     * star ratings, so the review wall appears on /residential only.
+     */
+    showTestimonials: z.boolean().default(false),
   }),
 })
 

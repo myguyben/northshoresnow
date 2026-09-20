@@ -13,7 +13,7 @@
  * The plain GET form action is the no-JS fallback and still works: the full
  * form reads query params too.
  */
-import { GOOGLE_REVIEWS } from '../lib/site'
+import { INSURANCE } from '../lib/site'
 ---
 
 <div class="card p-6 md:p-7">
@@ -63,23 +63,24 @@ import { GOOGLE_REVIEWS } from '../lib/site'
     <button type="submit" class="btn-primary w-full">Start my quote</button>
   </form>
   <p class="mt-3 text-center text-[13px] text-body/80">
-    Takes about a minute · No obligation · Fully insured
+    Takes about a minute · No obligation
   </p>
-  <a
-    href={GOOGLE_REVIEWS.url}
-    target="_blank"
-    rel="noopener"
-    class="mt-3 flex items-center justify-center gap-2 text-[13px] font-medium text-body hover:text-brand-600"
-  >
-    <span class="flex gap-0.5" aria-hidden="true">
-      {[1, 2, 3, 4, 5].map(() => (
-        <svg class="h-3.5 w-3.5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
-          <path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9L10 1.5z" />
-        </svg>
-      ))}
-    </span>
-    <span>{GOOGLE_REVIEWS.rating} from {GOOGLE_REVIEWS.count} Google reviews</span>
-  </a>
+  {/* Ben, 2026-09-20: the star rating came off the commercial surfaces — a
+      property manager is reassured by the coverage limit, not by consumer
+      reviews. The review wall lives on /residential now. */}
+  <p class="mt-3 flex items-center justify-center gap-1.5 text-[13px] font-medium text-body">
+    <svg
+      class="h-4 w-4 shrink-0 text-brand-600"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      aria-hidden="true"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.5l5 5 10-11" />
+    </svg>
+    <span>{INSURANCE.short}</span>
+  </p>
 </div>
 
 <script>

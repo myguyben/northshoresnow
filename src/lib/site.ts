@@ -35,6 +35,22 @@ export const GOOGLE_REVIEWS = {
   url: SITE.googleBusinessProfile,
 } as const
 
+/**
+ * The coverage we actually carry. Quoted from our own signed contract terms
+ * (LIABILITY & INSURANCE: "We carry Commercial General Liability insurance of
+ * not less than CAD $5,000,000 per occurrence"). Six of the competitors
+ * publish a $5M figure and we were the only one saying "fully insured" with
+ * no number, which reads as the weakest claim on the page.
+ *
+ * NEVER state a limit here that the contract does not. If the policy changes,
+ * this and `lib/pdf/contract-static-content.ts` in Icey change together.
+ */
+export const INSURANCE = {
+  limit: 'CAD $5,000,000',
+  short: '$5M liability insured · WorkSafeBC registered',
+  long: 'Commercial General Liability insurance of not less than CAD $5,000,000 per occurrence, plus WorkSafeBC registration. Certificates of insurance are available on request with your quote.',
+} as const
+
 export const STATS = [
   { value: '98%', label: 'On-time response rate' },
   { value: '24/7', label: 'Active weather monitoring' },

@@ -3,7 +3,6 @@ import { getCollection } from 'astro:content'
 import Base from '../layouts/Base.astro'
 import HeroPage from '../components/HeroPage.astro'
 import CtaBand from '../components/CtaBand.astro'
-import Testimonials from '../components/Testimonials.astro'
 
 const areas = await getCollection('areas')
 const order = [
@@ -65,6 +64,5 @@ const sorted = [...areas].sort((a, b) => order.indexOf(a.id) - order.indexOf(b.i
     </div>
   </section>
 
-  <Testimonials />
   <CtaBand />
 </Base>

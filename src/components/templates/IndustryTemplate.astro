@@ -7,6 +7,7 @@ import CtaBand from '../CtaBand.astro'
 import FaqAccordion from '../FaqAccordion.astro'
 import ServiceSchema from '../schema/ServiceSchema.astro'
 import QuoteFormMini from '../QuoteFormMini.astro'
+import Testimonials from '../Testimonials.astro'
 import { SERVICE_LINKS, INDUSTRY_LINKS, SITE } from '../../lib/site'
 
 interface Props {
@@ -84,6 +85,8 @@ const others = INDUSTRY_LINKS.filter((i) => i.slug !== entry.id)
       </aside>
     </div>
   </section>
+
+  {data.showTestimonials && <Testimonials />}
 
   <FaqAccordion faqs={data.faqs} heading={`${data.name} — common questions`} />
   <CtaBand />
