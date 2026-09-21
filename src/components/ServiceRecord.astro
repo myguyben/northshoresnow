@@ -86,7 +86,10 @@ const photos = [
           </span>
         </div>
 
-        <dl class="grid grid-cols-2 gap-px bg-frost-200">
+        {/* Two columns give each value ~120px of text at 390px, which wraps
+            "Snow clearing — plow + walkways" to four lines. One column until
+            there is room for two. */}
+        <dl class="grid grid-cols-1 gap-px bg-frost-200 sm:grid-cols-2">
           {fields.map((field) => (
             <div class="bg-white px-6 py-4">
               <dt class="text-[10.5px] font-semibold tracking-[0.14em] text-body/60 uppercase">
