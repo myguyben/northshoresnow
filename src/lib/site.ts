@@ -51,12 +51,40 @@ export const INSURANCE = {
   long: 'Commercial General Liability insurance of not less than CAD $5,000,000 per occurrence, plus WorkSafeBC registration. Certificates of insurance are available on request with your quote.',
 } as const
 
+/**
+ * LAST SEASON, AS THE JOB RECORD ACTUALLY HAS IT.
+ *
+ * What was here before — "98% on-time response rate", "95% client retention
+ * rate", "100+ commercial sites managed", "24/7 monitoring" — was four
+ * figures that trace to nothing. They are the first thing a property manager
+ * reads, and a buyer who discounts them discounts the rest of the page with
+ * them. Every competitor publishes the same shape of number, which is
+ * precisely why none of them are believed.
+ *
+ * These are counted from production on 2026-09-21 for the 2025-10-01 →
+ * 2026-04-30 season (company e3a4e921-e1de-43ba-9040-fc63504fe1de):
+ *   visits     completed jobs with check_out_at inside the window
+ *   properties distinct site_id on those jobs
+ *   photos     job_photos rows joined to those jobs
+ *   documented 746 of those 766 jobs carry at least one photo
+ *
+ * 97.4% is published as 97.4%, NOT rounded up to "every visit". The
+ * guarantee in ResponseCommitment.astro is worded to exactly that gap: if we
+ * cannot show the record, the visit is not charged. Rounding this to 100%
+ * would make the guarantee a liability instead of a promise.
+ *
+ * RE-COUNT THESE EACH SEASON. A stale figure is the same problem as an
+ * invented one.
+ */
 export const STATS = [
-  { value: '98%', label: 'On-time response rate' },
-  { value: '24/7', label: 'Active weather monitoring' },
-  { value: '100+', label: 'Commercial sites managed' },
-  { value: '95%', label: 'Client retention rate' },
+  { value: '766', label: 'Service visits last season' },
+  { value: '61', label: 'Properties under contract' },
+  { value: '5,445', label: 'Photos logged to service records' },
+  { value: '97.4%', label: 'Of visits photo-documented' },
 ] as const
+
+/** Names the season the figures above were counted over. */
+export const STATS_PERIOD = '2025/26 season · North Shore Snow operating record'
 
 /** Areas shown in nav/footer/form dropdowns — slugs match content collection. */
 export const AREA_LINKS = [

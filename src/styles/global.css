@@ -13,6 +13,20 @@
   --color-brand-700: #154e9c;
   --color-brand-600: #1b63c4;
   --color-brand-500: #2478e5;
+  /*
+   * The rung that was missing. brand-600 is the brand blue for WHITE
+   * surfaces; on ink-950 it lands at 3.2:1, under AA for the 13px uppercase
+   * eyebrow it was being used for. Worse, four declarations in
+   * ResponseCommitment.astro already referenced `brand-400` before it
+   * existed — and Tailwind v4 emits NOTHING for an undefined token rather
+   * than failing, so the tier labels inherited body grey on near-black and
+   * the guarantee's border and tint never painted at all. Confirmed against
+   * the deployed stylesheet: zero occurrences of brand-400.
+   *
+   * 7.5:1 on ink-950. This is the blue for dark surfaces; keep brand-600 for
+   * light ones.
+   */
+  --color-brand-400: #5fa8ff;
 
   --color-ice-400: #63c9f5;
   --color-ice-300: #a5e3ff;
@@ -78,6 +92,25 @@
 
   .eyebrow {
     @apply text-[13px] font-semibold uppercase tracking-[0.14em] text-brand-600;
+  }
+
+  /* The same eyebrow for ink surfaces. brand-600 on ink-950 is 3.2:1. */
+  .eyebrow-dark {
+    @apply text-[13px] font-semibold uppercase tracking-[0.14em] text-brand-400;
+  }
+
+  /*
+   * Any figure a reader might compare against another figure. Tabular
+   * digits keep the columns of the record strip from shifting as the
+   * numbers change width, and -0.03em stops the display face from setting
+   * large numerals too loosely.
+   */
+  .figure {
+    font-family: var(--font-display);
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
   }
 
   .h1 {

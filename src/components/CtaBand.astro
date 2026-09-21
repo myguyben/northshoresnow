@@ -6,7 +6,9 @@ interface Props {
 
 const {
   heading = 'Ready to protect your property this winter?',
-  body = 'Get a satellite-measured quote — priced on the actual serviceable area of your property. Most quotes are ready in one business day.',
+  // Same promise as the hero and the contact page: the range comes first,
+  // the measured quote follows. Three surfaces, one claim.
+  body = 'Enter the address and most properties get a price range on the next screen — priced on the actual serviceable area, measured from satellite imagery. Your exact quote follows by email.',
 } = Astro.props
 ---
 

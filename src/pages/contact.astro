@@ -14,9 +14,12 @@ import { SITE, GOOGLE_REVIEWS } from '../lib/site'
     <div class="container-site">
       <Breadcrumbs trail={[{ name: 'Contact', path: '/contact' }]} />
       <h1 class="h1 mt-6 max-w-3xl !text-white">Let's get your property winter-ready</h1>
+      {/* Leads with the range, same as the homepage — this is the page the
+          hero hands off to, and the two promises have to be the same one. */}
       <p class="mt-5 max-w-2xl text-lg text-body-dark">
-        Tell us the address and we'll measure the property from satellite imagery — most
-        quotes are ready in one business day.
+        Tell us the address and we'll measure the property from satellite imagery. Most
+        addresses get a price range on the next screen; your exact quote follows by email,
+        usually within one business day.
       </p>
     </div>
   </section>

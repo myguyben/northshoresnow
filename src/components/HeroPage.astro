@@ -15,7 +15,9 @@ const { eyebrow, heading, lede, trail = [], cta = true } = Astro.props
 <section class="hero-dark pt-[104px] pb-14 md:pt-[128px] md:pb-20">
   <div class="container-site">
     {trail.length > 0 && <Breadcrumbs trail={trail} />}
-    {eyebrow && <p class="eyebrow mt-6">{eyebrow}</p>}
+    {/* eyebrow-dark, not eyebrow: this hero is ink-950 and brand-600 lands
+        at 3.2:1 on it, under AA for 13px uppercase. */}
+    {eyebrow && <p class="eyebrow-dark mt-6">{eyebrow}</p>}
     <h1 class="h1 mt-3 max-w-3xl !text-white">{heading}</h1>
     {lede && <p class="mt-5 max-w-2xl text-lg leading-relaxed text-body-dark">{lede}</p>}
     {cta && (

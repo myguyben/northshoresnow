@@ -16,10 +16,21 @@
 import { INSURANCE } from '../lib/site'
 ---
 
+{/*
+  The header promises the range, because the range is what the next screen
+  actually shows. It previously read "most quotes are ready in one business
+  day", which describes the email that follows and is a weaker promise than
+  Only Strata's four business hours — while the thing we do that none of the
+  thirteen competitors can went unmentioned on the one element they were
+  looking at.
+
+  "Most", not "every": the estimator declines to price some addresses and the
+  panel on /thank-you stays hidden when it does.
+*/}
 <div class="card p-6 md:p-7">
-  <h2 class="font-display text-xl font-bold">Get a complimentary quote</h2>
+  <h2 class="font-display text-xl font-bold">What will my property cost?</h2>
   <p class="mt-1.5 text-sm text-body">
-    Most quotes are ready in one business day.
+    Most addresses get a price range on the next screen. Free, no obligation.
   </p>
   <form class="mt-5 space-y-3" method="get" action="/contact" id="quote-mini">
     <div>
@@ -60,10 +71,10 @@ import { INSURANCE } from '../lib/site'
         placeholder="you@example.com"
       />
     </div>
-    <button type="submit" class="btn-primary w-full">Start my quote</button>
+    <button type="submit" class="btn-primary w-full">Show me my price range</button>
   </form>
   <p class="mt-3 text-center text-[13px] text-body/80">
-    Takes about a minute · No obligation
+    Takes about a minute · Your address stays with us
   </p>
   {/* Ben, 2026-09-20: the star rating came off the commercial surfaces — a
       property manager is reassured by the coverage limit, not by consumer
