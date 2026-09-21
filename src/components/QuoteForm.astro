@@ -27,9 +27,16 @@ import { SITE, GOOGLE_REVIEWS, INSURANCE } from '../lib/site'
 <div class="card p-6 md:p-8" id="quote">
   <div class="mb-6">
     <h3 class="font-display text-2xl font-bold">Get your complimentary quote</h3>
+    {/* The coverage figure sits in the OPENING LINE, not only in the chip row
+        below it. Competitive teardown 2026-09-21: Pro Snow is the only one of
+        seven rivals that puts an insurance number inside the form itself
+        ("Start with a free quote and rest easy with $5 million in insurance
+        coverage"), and inside the form is where the hesitation actually
+        happens. Same fact we already published, better placed. */}
     <p class="mt-1.5 text-[15px] text-body">
       Three questions, about a minute. We measure the property from satellite imagery and
-      price it on the actual serviceable area — most quotes go out within one business day.
+      price it on the actual serviceable area — most quotes go out within one business day,
+      from a contractor carrying {INSURANCE.limit} in commercial general liability.
     </p>
     <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] font-medium text-body">
       <a
@@ -218,8 +225,7 @@ import { SITE, GOOGLE_REVIEWS, INSURANCE } from '../lib/site'
 
     <div class="mt-6 flex flex-wrap items-center justify-between gap-4">
       <p class="max-w-xs text-[13px] leading-relaxed text-body/80">
-        By requesting a quote you agree to be contacted about your property. We never share
-        your details.
+        By requesting a quote you agree to be contacted about your property.
       </p>
       <button type="submit" id="qf-submit" class="btn-primary shrink-0 !px-8">
         <svg
@@ -238,14 +244,20 @@ import { SITE, GOOGLE_REVIEWS, INSURANCE } from '../lib/site'
       </button>
     </div>
 
+    {/* The reassurance row. Three of these were already here and they are
+        better than the field's: "a ballpark on the spot" is something no
+        competitor offers. The fourth was the gap — Only Strata closes with
+        "Your information stays private" and a property manager handing over
+        a client's address does hesitate on exactly that. */}
     <div
-      class="mt-5 grid gap-2 border-t border-frost-200 pt-5 text-[13px] text-body sm:grid-cols-3"
+      class="mt-5 grid gap-2 border-t border-frost-200 pt-5 text-[13px] text-body sm:grid-cols-2 lg:grid-cols-4"
     >
       {
         [
           'Complimentary, with no obligation',
           'Usually a ballpark range on the spot',
           'Full quote by email in one business day',
+          'Your address stays with us, never shared',
         ].map((line) => (
           <p class="flex items-start gap-1.5">
             <svg

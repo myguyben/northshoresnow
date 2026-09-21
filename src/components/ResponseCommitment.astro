@@ -63,9 +63,31 @@ const tiers = [
       ))}
     </div>
 
+    {/*
+      THE GUARANTEE. Ben authorised this on 2026-09-21 after the conversion
+      teardown: two competitors turned photo documentation into a named
+      promise — Only Strata's "No Proof of Service? It's Free" and Pro Snow's
+      "No record, no bill. It's that simple." — while we did more of the work
+      and said none of it.
+
+      Worded to EXACTLY what the system already does and nothing more: every
+      visit writes timestamped photos into the job record automatically, so
+      the promise is one we can always keep. Do not broaden this to cover
+      service quality, timing or outcomes — it covers the RECORD only.
+    */}
+    <div class="mt-10 rounded-xl border border-brand-400/30 bg-brand-400/10 p-6">
+      <p class="font-display text-lg font-bold text-white">
+        Photographed, or you don't pay for it
+      </p>
+      <p class="mt-2 max-w-3xl text-[15px] leading-relaxed text-body-dark">
+        Every visit is photographed and timestamped into your service record automatically,
+        not written up afterwards from memory. If we cannot show you the record for a visit,
+        you are not charged for that visit. That record is also what protects you when a
+        slip-and-fall claim arrives months later.
+      </p>
+    </div>
+
     <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-body-dark">
-      <span>Every visit documented with timestamped photos.</span>
-      <span aria-hidden="true" class="hidden text-white/20 sm:inline">·</span>
       <span>{INSURANCE.short}.</span>
       <a href="/service-areas" class="font-semibold text-brand-400 hover:underline">
         See the full coverage map →
