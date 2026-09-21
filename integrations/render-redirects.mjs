@@ -12,6 +12,20 @@ import { join } from 'node:path'
  * soft-404'd every bad URL. Unmatched paths now fall through to 404.html.
  */
 /**
+ * ⚠️ RENDER DOES NOT READ THIS FILE. Proven on production 2026-09-20: the
+ * built `_redirects` deploys and serves as plain text at /_redirects with a
+ * 200, and every rule in it is ignored — /privacy-policy still returned 404
+ * with its 301 sitting right there in the file. Same trap as `_headers`,
+ * which turned out to be configured on the SERVICE, not from the repo.
+ * Render serves clean URLs (/about → about.html) natively, which is why the
+ * 200 rules below appeared to work and nobody noticed.
+ *
+ * The file is kept because it documents intent and would work unchanged on
+ * Netlify or Cloudflare Pages. The redirects that ACTUALLY run are static
+ * stub pages — see src/components/LegacyRedirect.astro. Fix properly by
+ * setting Redirect/Rewrite rules on the Render service (the Render MCP has
+ * no tool for it; needs the dashboard or the REST API).
+ *
  * Dead URLs Google still has in its index, and where they should land.
  *
  * Source: Search Console ▸ Page indexing ▸ "Not found (404)", 2026-09-20 —

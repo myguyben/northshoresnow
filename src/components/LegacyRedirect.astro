@@ -1,0 +1,59 @@
+---
+/**
+ * A real page at a dead URL, whose only job is to move you to the live one.
+ *
+ * WHY THIS EXISTS INSTEAD OF A 301. Render does NOT read Netlify-style
+ * `_redirects` — exactly the same trap as `_headers` (see the comment at the
+ * top of public/_headers). Proven on production 2026-09-20: the file deploys,
+ * serves as plain text at /_redirects with a 200, and every rule in it is
+ * ignored. /privacy-policy still returned 404 with the rule sitting right
+ * there. Render's real redirect rules live on the SERVICE, and the Render MCP
+ * has no tool for them, so they cannot be set from here.
+ *
+ * A static page with an instant meta refresh plus a canonical is Google's own
+ * documented fallback for exactly this case — a host that cannot issue a
+ * server-side redirect. It is weaker than a 301 and should be replaced by
+ * real service-level rules if those ever get configured, but it beats the
+ * 404 these URLs have served since 2025-08-30.
+ *
+ * The canonical is what consolidates the old URL's signals into the new page,
+ * so it must point at the TARGET, never at the stub itself.
+ */
+interface Props {
+  /** Absolute site path to send people to, e.g. '/privacy'. */
+  to: string
+  /** What the reader was looking for, used in the visible line of copy. */
+  label: string
+}
+
+import { SITE } from '../lib/site'
+
+const { to, label } = Astro.props
+const target = new URL(to, SITE.url).href
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="refresh" content={`0; url=${to}`} />
+    <link rel="canonical" href={target} />
+    <title>Moved — North Shore Snow</title>
+    <meta name="description" content={`This page has moved to ${to} on northshoresnow.com.`} />
+  </head>
+  <body
+    style="margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:#f8fafc;color:#0f172a"
+  >
+    <main style="max-width:32rem;text-align:center">
+      <h1 style="font-size:1.35rem;line-height:1.3;margin:0 0 12px">This page has moved</h1>
+      <p style="margin:0 0 20px;line-height:1.6;color:#475569">
+        {label} now lives at a new address. You should be sent there automatically.
+      </p>
+      <a
+        href={to}
+        style="display:inline-block;padding:12px 22px;border-radius:8px;background:#0284c7;color:#fff;text-decoration:none;font-weight:600"
+        >Continue to {label}</a
+      >
+    </main>
+  </body>
+</html>

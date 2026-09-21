@@ -1,0 +1,48 @@
+---
+/**
+ * The Webflow blog lived at /post/<slug>; the 2026 Astro rebuild moved it to
+ * /blog/<slug> and left nothing behind. These four are the ones Search
+ * Console still lists under "Not found (404)", first detected 2025-08-30 —
+ * they are real entry points Google has kept knocking on for a year.
+ *
+ * Only the four known slugs are generated. A static build cannot answer an
+ * arbitrary /post/* wildcard, and inventing stubs for URLs nobody requests
+ * would just be thin pages.
+ */
+import LegacyRedirect from '../../components/LegacyRedirect.astro'
+
+export function getStaticPaths() {
+  return [
+    {
+      params: {
+        slug: 'comprehensive-snow-removal-and-de-icing-ensuring-safety-and-accessibility-throughout-winter-on-vancouvers-north-shore',
+      },
+      props: {
+        to: '/blog/commercial-snow-removal-north-vancouver',
+        label: 'commercial snow removal in North Vancouver',
+      },
+    },
+    {
+      params: {
+        slug: 'winter-ready-your-comprehensive-guide-to-snow-removal-and-ice-management-on-the-north-shore',
+      },
+      props: {
+        to: '/blog/commercial-snow-response-plan-checklist',
+        label: 'the commercial snow response plan checklist',
+      },
+    },
+    {
+      params: { slug: 'vancouver-snow-removal-black-ice-protocol-north-shore-snow' },
+      props: { to: '/de-icing', label: 'de-icing and anti-icing' },
+    },
+    {
+      params: { slug: 'expert-snow-removal-de-icing-services-for-vancouvers-north-shore' },
+      props: { to: '/services', label: 'our services' },
+    },
+  ]
+}
+
+const { to, label } = Astro.props
+---
+
+<LegacyRedirect to={to} label={label} />
