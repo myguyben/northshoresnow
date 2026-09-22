@@ -1,0 +1,80 @@
+---
+/**
+ * The cover we carry, as three checkable facts.
+ *
+ * With volume statistics off the site for good (see lib/site.ts), this and
+ * the client logos are what credibility rests on — so it gets the treatment
+ * a buyer's due-diligence checklist deserves rather than a centred run of
+ * text separated by pipes, which is what it replaced.
+ *
+ * ONE object with three cells, not three cards: hairline-divided inside a
+ * single rounded border. The page already spends its card treatment on the
+ * services grid and the pricing plans, and a fourth set of floating cards
+ * flattens the hierarchy.
+ *
+ * NEVER STATE A LIMIT THE CONTRACT DOES NOT. The figure comes from
+ * INSURANCE in lib/site.ts, quoted from NSS's own signed liability clause;
+ * if the policy changes, that constant and the contract clause change
+ * together.
+ */
+import { INSURANCE } from '../lib/site'
+
+const credentials = [
+  {
+    value: INSURANCE.limit,
+    label: 'Commercial general liability, per occurrence',
+    // Shield with a check — cover.
+    icon: 'M12 3l7.5 2.8v5.4c0 4.6-3.2 7.9-7.5 10.1-4.3-2.2-7.5-5.5-7.5-10.1V5.8L12 3z',
+    tick: 'M8.8 12.2l2.2 2.2 4.4-4.6',
+  },
+  {
+    value: 'WorkSafeBC',
+    label: 'Registered employer, clearance letter on request',
+    icon: 'M12 3.2l2.5 1.7 3-.3 1 2.8 2.4 1.8-1.2 2.8 1.2 2.8-2.4 1.8-1 2.8-3-.3L12 20.8l-2.5-1.7-3 .3-1-2.8L3.1 14.8l1.2-2.8L3.1 9.2l2.4-1.8 1-2.8 3 .3L12 3.2z',
+    tick: 'M8.9 12.1l2.1 2.1 4.1-4.3',
+  },
+  {
+    value: 'Certificates on request',
+    label: 'Issued with your quote, addressed to your strata or ownership',
+    // Document.
+    icon: 'M6.5 3.2h7l4 4v13.6h-11V3.2z',
+    tick: 'M9 13h6M9 16.4h4',
+  },
+]
+---
+
+<section class="border-y border-frost-100 bg-frost-50 py-12 md:py-14">
+  <div class="container-site">
+    <ul
+      class="grid gap-px overflow-hidden rounded-2xl border border-frost-200 bg-frost-200 sm:grid-cols-3"
+    >
+      {credentials.map((item) => (
+        <li class="flex items-start gap-4 bg-white p-6 md:p-7">
+          <span
+            class="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-600/8 text-brand-600"
+          >
+            <svg
+              class="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d={item.icon} />
+              <path d={item.tick} />
+            </svg>
+          </span>
+          <div>
+            {/* Tabular figures so the dollar amount does not shift against
+                the two word-based cells beside it. */}
+            <p class="figure text-[1.35rem] text-ink-950">{item.value}</p>
+            <p class="mt-1.5 text-sm leading-relaxed text-body">{item.label}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
