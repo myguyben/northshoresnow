@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content'
-import { render } from 'astro:content'
+import { render, getCollection } from 'astro:content'
 import Base from '../../layouts/Base.astro'
 import HeroPage from '../HeroPage.astro'
 import CtaBand from '../CtaBand.astro'
@@ -18,6 +18,11 @@ const { entry } = Astro.props
 const { Content } = await render(entry)
 const data = entry.data
 const siblings = AREA_LINKS.filter((a) => data.siblings.includes(a.slug)).slice(0, 3)
+
+/** Service × location pages for this city, strata first. */
+const segmentPages = (await getCollection('locations'))
+  .filter((p) => p.data.citySlug === entry.id)
+  .sort((a, b) => a.data.segment.localeCompare(b.data.segment))
 ---
 
 <Base title={data.title} description={data.description} ogImage="/og/area.jpg">
@@ -51,6 +56,27 @@ const siblings = AREA_LINKS.filter((a) => data.siblings.includes(a.slug)).slice(
             ))}
           </ul>
         </div>
+        {/*
+          Contextual links down to the service × location pages for this
+          city, where they exist. These are the only non-boilerplate internal
+          links those pages get, and boilerplate footer links are heavily
+          discounted — so this is what gives the new cluster any internal
+          equity at all.
+        */}
+        {segmentPages.length > 0 && (
+          <div class="card p-6">
+            <h2 class="font-display text-lg font-bold">By property type</h2>
+            <ul class="mt-4 space-y-2.5">
+              {segmentPages.map((p) => (
+                <li>
+                  <a href={`/${p.id}`} class="text-[15px] font-medium text-brand-600 hover:underline">
+                    {p.data.segment === 'strata' ? 'Strata' : 'Commercial'} snow removal in {p.data.city}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         {siblings.length > 0 && (
           <div class="card p-6">
             <h2 class="font-display text-lg font-bold">Nearby areas</h2>

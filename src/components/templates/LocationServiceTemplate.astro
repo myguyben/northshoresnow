@@ -1,0 +1,133 @@
+---
+/**
+ * Service × location page — "strata snow removal in Burnaby".
+ *
+ * Deliberately a DIFFERENT shape from AreaTemplate. An area page opens on
+ * the local winter; this opens on the buyer's obligation, because someone
+ * searching "strata snow removal burnaby" is not browsing — they are
+ * usually a council member or a manager who has been asked to sort winter
+ * out, and the first thing they need to know is what the municipality
+ * requires of them and by when.
+ *
+ * Order: obligation → what is hard here → what we do about it → proof →
+ * quote. The bylaw goes above the fold because it is the one fact on the
+ * page they cannot get from a competitor's identical-looking page.
+ */
+import type { CollectionEntry } from 'astro:content'
+import { render } from 'astro:content'
+import Base from '../../layouts/Base.astro'
+import Breadcrumbs from '../Breadcrumbs.astro'
+import QuoteFormMini from '../QuoteFormMini.astro'
+import FaqAccordion from '../FaqAccordion.astro'
+import CtaBand from '../CtaBand.astro'
+import LogoMarquee from '../LogoMarquee.astro'
+import ServiceSchema from '../schema/ServiceSchema.astro'
+import LocalBusinessSchema from '../schema/LocalBusinessSchema.astro'
+import { SERVICE_LINKS, INSURANCE } from '../../lib/site'
+
+interface Props {
+  entry: CollectionEntry<'locations'>
+}
+
+const { entry } = Astro.props
+const { Content } = await render(entry)
+const data = entry.data
+
+const segmentLabel = data.segment === 'strata' ? 'Strata' : 'Commercial'
+const segmentHub = data.segment === 'strata' ? '/strata' : '/commercial'
+---
+
+<Base title={data.title} description={data.description} ogImage="/og/area.jpg">
+  <section class="hero-dark pt-[104px] pb-12 md:pt-[128px] md:pb-16">
+    <div class="container-site">
+      <Breadcrumbs
+        trail={[
+          { name: 'Areas', path: '/areas' },
+          { name: data.city, path: `/${data.citySlug}` },
+          { name: `${segmentLabel} snow removal`, path: `/${entry.id}` },
+        ]}
+      />
+      <div class="mt-6 grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
+        <div>
+          <p class="eyebrow-dark">{segmentLabel} snow &amp; ice · {data.city}</p>
+          <h1 class="h1 mt-3 !text-white">{data.hero}</h1>
+          <p class="mt-5 max-w-2xl text-lg leading-relaxed text-body-dark">{data.description}</p>
+
+          {/* The obligation, above the fold. This is the fact a competitor's
+              templated city page almost never carries, and it is the reason
+              the visitor searched. */}
+          <div class="mt-8 border-l-2 border-brand-400 pl-5">
+            <p class="text-[13px] font-semibold tracking-[0.14em] text-brand-400 uppercase">
+              What {data.city} requires
+            </p>
+            <p class="mt-2 max-w-2xl text-[15px] leading-relaxed text-white">{data.bylaw.rule}</p>
+            <p class="mt-1.5 text-sm text-body-dark">{data.bylaw.source}</p>
+          </div>
+        </div>
+        <div class="lg:justify-self-end lg:w-full lg:max-w-md">
+          <QuoteFormMini />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container-site grid gap-12 lg:grid-cols-[1fr_320px]">
+      <div class="prose-site">
+        <Content />
+      </div>
+
+      <aside class="space-y-6 lg:pt-2">
+        <div class="card p-6">
+          <h2 class="font-display text-lg font-bold">What makes it hard here</h2>
+          <ul class="mt-4 space-y-4">
+            {data.challenges.map((c) => (
+              <li>
+                <p class="font-semibold text-ink-950">{c.title}</p>
+                <p class="mt-1 text-sm leading-relaxed">{c.body}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="card bg-frost-50 p-6">
+          <h2 class="font-display text-lg font-bold">Every visit, documented</h2>
+          <p class="mt-2.5 text-sm leading-relaxed">
+            Clock-in and clock-out, GPS at both ends, what was applied and photographs of the
+            surface — written into the service record as the work happens. If we cannot show you
+            the record for a visit, you are not charged for it.
+          </p>
+          <p class="mt-3 text-sm font-medium text-ink-950">{INSURANCE.short}</p>
+        </div>
+
+        <div class="card p-6">
+          <h2 class="font-display text-lg font-bold">Services on this property</h2>
+          <ul class="mt-3 space-y-2">
+            {SERVICE_LINKS.map((s) => (
+              <li>
+                <a href={`/${s.slug}`} class="text-[15px] font-medium text-brand-600 hover:underline">
+                  {s.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p class="mt-4 border-t border-frost-100 pt-4 text-sm">
+            Also see <a href={`/${data.citySlug}`} class="font-semibold text-brand-600 hover:underline">snow removal across {data.city}</a>
+            and our <a href={segmentHub} class="font-semibold text-brand-600 hover:underline">{segmentLabel.toLowerCase()} programme</a>.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <LogoMarquee />
+  <FaqAccordion faqs={data.faqs} heading={`${segmentLabel} snow removal in ${data.city} — common questions`} />
+  <CtaBand heading={`Ready for winter in ${data.city}?`} />
+
+  <ServiceSchema
+    name={`${segmentLabel} snow removal in ${data.city}`}
+    description={data.description}
+    areaName={`${data.city}, BC`}
+  />
+  <LocalBusinessSchema />
+</Base>

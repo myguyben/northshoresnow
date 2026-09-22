@@ -22,10 +22,11 @@ const STATIC_ROUTES = [
 ]
 
 export const GET: APIRoute = async () => {
-  const [services, areas, industries, blog] = await Promise.all([
+  const [services, areas, industries, locations, blog] = await Promise.all([
     getCollection('services'),
     getCollection('areas'),
     getCollection('industries'),
+    getCollection('locations'),
     getCollection('blog'),
   ])
 
@@ -35,6 +36,7 @@ export const GET: APIRoute = async () => {
     ...services.map((entry) => ({ path: `/${entry.id}`, lastmod: buildDate })),
     ...areas.map((entry) => ({ path: `/${entry.id}`, lastmod: buildDate })),
     ...industries.map((entry) => ({ path: `/${entry.id}`, lastmod: buildDate })),
+    ...locations.map((entry) => ({ path: `/${entry.id}`, lastmod: buildDate })),
     ...blog.map((entry) => ({
       path: `/blog/${entry.id}`,
       lastmod: entry.data.updated.toISOString().slice(0, 10),
