@@ -1,7 +1,7 @@
 ---
 name: Strata Properties
 title: Strata Snow Removal in Vancouver | North Shore Snow
-description: Winter maintenance for strata corporations — common property clearing, bylaw sidewalk compliance, photo-documented service for council records. Call (604) 990-7072.
+description: Winter maintenance for strata corporations — common property clearing, bylaw sidewalk compliance and photo-documented service for council records.
 hero: Snow removal that keeps your strata safe — and your council covered
 painPoints:
   - title: Liability lands on the corporation

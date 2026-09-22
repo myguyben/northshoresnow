@@ -1,7 +1,7 @@
 ---
 name: Richmond
 title: Snow Removal in Richmond BC | North Shore Snow
-description: Commercial snow & ice management in Richmond — big-box retail lots, Bridgeport and Ironwood warehouses, YVR-area industrial. Anti-icing crews. Call (604) 990-7072.
+description: Commercial snow and ice management in Richmond — big-box retail lots, Bridgeport and Ironwood warehouses, YVR-area industrial. Anti-icing crews.
 hero: Snow & ice management across Richmond
 neighborhoods:
   - City Centre

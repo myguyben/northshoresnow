@@ -1,7 +1,7 @@
 ---
 name: Commercial Snow Removal
 title: Commercial Snow Removal in North Vancouver | North Shore Snow
-description: Full-service commercial snow removal for parking lots, sidewalks and strata common areas across the North Shore — automatic dispatch, photo-verified visits. Call (604) 990-7072.
+description: Full-service commercial snow removal for parking lots, sidewalks and strata common areas across the North Shore — automatic dispatch, photo-verified.
 hero: Commercial snow removal that clears before business hours
 order: 1
 features:

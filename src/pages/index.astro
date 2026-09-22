@@ -12,7 +12,6 @@ import LocalBusinessSchema from '../components/schema/LocalBusinessSchema.astro'
 import { AREA_LINKS } from '../lib/site'
 import heroPhoto from '../assets/photos/nss-01.jpg'
 import plowPhoto from '../assets/photos/nss-04.jpg'
-import saltPhoto from '../assets/photos/nss-06.jpg'
 import sidewalkPhoto from '../assets/photos/nss-07.jpg'
 
 const heroBg = await getImage({ src: heroPhoto, format: 'webp', width: 1600, quality: 70 })
@@ -32,27 +31,47 @@ const heroBg = await getImage({ src: heroPhoto, format: 'webp', width: 1600, qua
  * would both read it as written for them. "Before business hours",
  * "parking lots", "loading zones", "your council" are all for /commercial.
  */
+/**
+ * TWO SERVICES, BECAUSE THERE ARE TWO. Ben, 2026-09-22: "you have salting
+ * section twice."
+ *
+ * He is right, and it was worse than a repeated card. The grid showed
+ * "De-Icing & Anti-Icing" and "Salting & Ice Melt" as separate offerings
+ * when they are one operation described twice — and that misrepresents how
+ * the business actually works. A visit is snow OR de-icing, each at its own
+ * rate; that is the rule the whole pricing engine is built on, and the
+ * homepage was contradicting it.
+ *
+ * The four service PAGES stay as they are — people search "snow plowing"
+ * and "salting" separately and those pages target those phrases. They are
+ * now reached as sub-services from the card they belong under, which also
+ * gives the homepage its first contextual internal links with descriptive
+ * anchors instead of nav boilerplate.
+ */
 const services = [
   {
     href: '/snow-removal',
-    title: 'Snow Removal',
-    body: 'Plowing, shovelling and hauling on automatic snowfall triggers — lots, driveways, walkways and entrances cleared before you need them.',
+    title: 'Snow clearing',
+    body: 'Plowing, shovelling and hauling the moment accumulation hits your trigger depth — lots, driveways, walkways and entrances cleared before you need them.',
     photo: plowPhoto,
     alt: 'North Shore Snow plow truck pushing snow across a parking lot during a snowfall',
+    includes: [
+      { href: '/snow-removal', label: 'Full snow removal' },
+      { href: '/snow-plowing', label: 'Parking lot plowing' },
+    ],
   },
   {
     href: '/de-icing',
-    title: 'De-Icing & Anti-Icing',
-    body: 'Proactive liquid and granular treatment whenever temperatures reach 0°C — preventing ice before it forms, not after someone slips.',
-    photo: saltPhoto,
-    alt: 'North Shore Snow plow truck on a lot cleared and treated with ice melt',
-  },
-  {
-    href: '/salting',
-    title: 'Salting & Ice Melt',
-    body: 'Calibrated salt application on the surfaces people actually walk and drive on, with a per-visit record of where it went.',
+    title: 'Ice control',
+    body: 'Liquid brine before a freeze and granular melt after one, whenever temperatures reach 0°C — stopping ice forming rather than treating it once someone has slipped.',
+    // The spreader, not a plough. The ice-control card was showing a plough
+    // truck on a cleared lot, which is a picture of the OTHER service.
     photo: sidewalkPhoto,
-    alt: 'North Shore Snow crew member pushing a walk-behind spreader along a cleared walkway',
+    alt: 'North Shore Snow crew member spreading ice melt along a cleared walkway',
+    includes: [
+      { href: '/de-icing', label: 'De-icing & anti-icing' },
+      { href: '/salting', label: 'Salting & ice melt' },
+    ],
   },
 ]
 
@@ -123,7 +142,7 @@ const homeFaqs = [
     keyword can match.
   */}
   title="North Shore Snow | Snow Removal & Ice Management, Greater Vancouver"
-  description="Snow clearing, salting and de-icing for commercial properties, strata and homes across Greater Vancouver. Most addresses get a satellite-measured price range instantly. Call (604) 990-7072."
+  description="Snow clearing, salting and de-icing for commercial, strata and residential property across Greater Vancouver. Most addresses priced instantly."
   overHero
 >
   <link slot="head" rel="preload" as="image" href={heroBg.src} fetchpriority="high" />
@@ -273,42 +292,58 @@ const homeFaqs = [
     <div class="container-site">
       <div class="max-w-2xl">
         <p class="eyebrow">What we do</p>
-        <h2 class="h2 mt-2">Everything winter throws at a property</h2>
+        <h2 class="h2 mt-2">Two services, and a visit is one or the other</h2>
         <p class="mt-4 text-lg">
-          One contractor, one contract, zero gaps — from the first flurry in October to the
-          last refreeze in April.
+          Snow clearing and ice control are dispatched on their own triggers and priced at
+          their own rates — because a cold, clear morning needs salt and no plough, and you
+          should not be billed as though it needed both.
         </p>
       </div>
-      <div class="mt-12 grid gap-6 lg:grid-cols-3">
+      <div class="mt-12 grid gap-6 md:grid-cols-2">
         {services.map((service) => (
-          <a href={service.href} class="card card-hover group overflow-hidden">
-            <div class="aspect-[3/2] overflow-hidden">
-              <Image
-                src={service.photo}
-                alt={service.alt}
-                width={640}
-                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                loading="lazy"
-              />
-            </div>
-            <div class="p-7">
-              <h3 class="font-display text-xl font-bold group-hover:text-brand-600">
-                {service.title}
+          <div class="card group overflow-hidden">
+            <a href={service.href} class="block overflow-hidden" tabindex="-1" aria-hidden="true">
+              <div class="aspect-[16/9] overflow-hidden">
+                <Image
+                  src={service.photo}
+                  alt={service.alt}
+                  width={880}
+                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  loading="lazy"
+                />
+              </div>
+            </a>
+            <div class="p-7 md:p-8">
+              <h3 class="font-display text-2xl font-bold">
+                <a href={service.href} class="hover:text-brand-600">{service.title}</a>
               </h3>
               <p class="mt-3 text-[15px] leading-relaxed">{service.body}</p>
-              <span class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-600">
-                Learn more
-                <svg class="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 8h10M9 4l4 4-4 4" />
-                </svg>
-              </span>
+              {/* Contextual links with descriptive anchors — the sub-service
+                  pages still target "snow plowing" and "salting" in search,
+                  and this is the only place on the homepage they are linked
+                  from anything other than nav boilerplate. */}
+              <ul class="mt-6 flex flex-wrap gap-2.5 border-t border-frost-100 pt-5">
+                {service.includes.map((item) => (
+                  <li>
+                    <a
+                      href={item.href}
+                      class="inline-flex items-center gap-1.5 rounded-full border border-frost-200 px-3.5 py-1.5 text-sm font-medium text-ink-900 transition-colors hover:border-brand-500 hover:text-brand-600"
+                    >
+                      {item.label}
+                      <svg class="h-3 w-3" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8h10M9 4l4 4-4 4" />
+                      </svg>
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </a>
+          </div>
         ))}
       </div>
       <p class="mt-8 text-[15px]">
-        Also see <a href="/snow-plowing" class="font-semibold text-brand-600 hover:underline">parking lot snow plowing</a> —
-        or view <a href="/services" class="font-semibold text-brand-600 hover:underline">all services</a>.
+        Salt is inside the price, not added to your invoice afterwards —
+        <a href="/services" class="font-semibold text-brand-600 hover:underline">see how both services are priced</a>.
       </p>
     </div>
   </section>

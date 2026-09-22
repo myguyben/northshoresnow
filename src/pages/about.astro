@@ -31,7 +31,7 @@ const values = [
 
 <Base
   title="About Us | North Shore Snow"
-  description="North Vancouver's commercial snow & ice management company — local crews, modern dispatch technology and photo-verified service across the North Shore. Call (604) 990-7072."
+  description="North Vancouver's snow and ice management company — local crews, automatic weather-triggered dispatch and photo-verified service across the region."
 >
   <HeroPage
     eyebrow="About us"
@@ -59,11 +59,18 @@ const values = [
           before the crew leaves. Your property file shows every visit, every photo, every
           timestamp — all season.
         </p>
+        {/*
+          "100+ sites" and "95% client retention" were still in this paragraph
+          after the stat bar came off the site. Both are the same kind of
+          unsourced volume figure Ben killed on 2026-09-21 — removing the bar
+          and leaving them in prose would have been a cosmetic fix. See the
+          note on STATS in lib/site.ts: do not reintroduce volume claims in
+          body copy either.
+        */}
         <p>
-          Today we manage 100+ commercial, strata and institutional sites across the North
-          Shore, Downtown Vancouver, Burnaby and Richmond, with a 95% client retention rate
-          we're genuinely proud of. Winters here are unpredictable. Your snow contractor
-          shouldn't be.
+          We work across the North Shore, Downtown Vancouver, Burnaby and Richmond, for
+          strata corporations, property managers, businesses and homeowners. Winters here
+          are unpredictable. Your snow contractor shouldn't be.
         </p>
       </div>
       <div class="grid gap-5">

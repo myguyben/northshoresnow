@@ -1,7 +1,7 @@
 ---
 name: North Vancouver
 title: Snow Removal in North Vancouver | North Shore Snow
-description: Commercial snow removal & salting across North Vancouver — Lonsdale to Deep Cove, sea level to mountainside. Local crews, satellite-measured quotes. Call (604) 990-7072.
+description: Commercial snow removal and salting across North Vancouver — Lonsdale to Deep Cove, sea level to mountainside. Satellite-measured quotes.
 hero: Snow & ice management in North Vancouver
 neighborhoods:
   - Lower Lonsdale

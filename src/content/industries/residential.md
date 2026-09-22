@@ -1,7 +1,7 @@
 ---
 name: Residential Homes
 title: Residential Snow Removal North & West Vancouver | North Shore Snow
-description: Driveway, walkway and sidewalk snow clearing for North Shore homes — automatic service when it snows, salting on icy mornings, simple per-visit or seasonal pricing. Call (604) 990-7072.
+description: Driveway, walkway and sidewalk clearing for North Shore homes. Automatic service when it snows, salting on icy mornings, per-visit or seasonal.
 hero: Your driveway, cleared before your day starts
 showTestimonials: true
 painPoints:

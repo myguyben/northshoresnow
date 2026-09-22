@@ -6,6 +6,7 @@ import HeroPage from '../HeroPage.astro'
 import CtaBand from '../CtaBand.astro'
 import FaqAccordion from '../FaqAccordion.astro'
 import ServiceSchema from '../schema/ServiceSchema.astro'
+import LocalBusinessSchema from '../schema/LocalBusinessSchema.astro'
 import QuoteFormMini from '../QuoteFormMini.astro'
 import { SERVICE_LINKS, AREA_LINKS, SITE } from '../../lib/site'
 
@@ -101,4 +102,15 @@ const siblings = AREA_LINKS.filter((a) => data.siblings.includes(a.slug)).slice(
     description={data.description}
     areaName={`${data.name}, BC`}
   />
+  {/*
+    LocalBusiness on every area page, not just the homepage and /contact.
+    These 15 pages are exactly where local search intent lands, and they
+    were the only local-intent pages on the site carrying no business
+    entity — no NAP, no geo, no opening hours, nothing tying the page to
+    the Google Business Profile that holds the map pin and the reviews.
+
+    Same @id across the site on purpose: it is one business, so every page
+    references the same node rather than declaring fifteen businesses.
+  */}
+  <LocalBusinessSchema />
 </Base>
