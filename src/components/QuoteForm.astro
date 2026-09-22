@@ -131,17 +131,23 @@ import { SITE, GOOGLE_REVIEWS, INSURANCE } from '../lib/site'
       </div>
 
       <div>
-        <label class="label" for="qf-scope">What should we clear?</label>
+        {/* Optional on Ben's call, 2026-09-21. It was the only field on the
+            form asking the visitor to compose a sentence, sitting between
+            them and a quote — and the pipeline does not need it: the scope
+            falls back to the satellite outline of the whole property when it
+            is blank, and the server schema already defaults it to ''. */}
+        <label class="label" for="qf-scope">
+          What should we clear? <span class="font-normal text-body/70">(optional)</span>
+        </label>
         <p class="mb-2 -mt-0.5 text-sm text-body/80" id="qf-scope-help">
           One sentence is plenty — we'll outline exactly those areas on satellite imagery.
+          Leave it blank and we'll quote the whole property.
         </p>
         <textarea
           class="input"
           id="qf-scope"
           name="scope"
           rows="3"
-          required
-          minlength="10"
           maxlength="2000"
           aria-describedby="qf-scope-help qf-scope-error"
           placeholder="e.g. Clear and salt the main parking lot, both entrances and the sidewalks — or for a home: the driveway, front walk and steps…"

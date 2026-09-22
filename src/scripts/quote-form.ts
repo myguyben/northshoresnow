@@ -174,21 +174,28 @@ export function attachAddressAutocomplete(input: HTMLInputElement): void {
  * Inline validation
  * ------------------------------------------------------------------ */
 
-const REQUIRED_FIELDS = ['address', 'email', 'scope'] as const
+/**
+ * Only the two fields a quote cannot be produced without.
+ *
+ * `scope` was here and came off on Ben's call (2026-09-21). It was the one
+ * field asking the visitor to compose a sentence before they could get a
+ * price, and it is not needed: blank scope means quote the whole property,
+ * and the server schema already defaults it to ''. Anything typed is still
+ * sent and still feeds the extractor's scope_description.
+ */
+const REQUIRED_FIELDS = ['address', 'email'] as const
 type RequiredField = (typeof REQUIRED_FIELDS)[number]
 
 /** Shown when the field is empty. */
 const EMPTY_MESSAGE: Record<RequiredField, string> = {
   address: 'Enter the property address — that address is what we measure.',
   email: 'Enter an email so we can send the quote.',
-  scope: 'Tell us what to clear — one sentence is plenty.',
 }
 
 /** Shown when there is something in the field but it can't be used. */
 const INVALID_MESSAGE: Record<RequiredField, string> = {
   address: 'That looks too short — include the street number.',
   email: "That email doesn't look right — check for a typo.",
-  scope: 'A few more words, please — "the driveway and front walk" is enough.',
 }
 
 /**
@@ -622,8 +629,9 @@ export function setupQuoteForm(): void {
       ...(lead.phone ? [`Phone: ${lead.phone}`] : []),
       `Property address: ${lead.address}`,
       `Property type: ${lead.propertyType || '—'}`,
-      '',
-      `Scope of the site: ${lead.scope}`,
+      // Scope is optional now, so an unfilled one leaves no empty heading
+      // behind in the email a visitor is about to send by hand.
+      ...(lead.scope ? ['', `Scope of the site: ${lead.scope}`] : []),
     ].join('\n')
     return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
   }
