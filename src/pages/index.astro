@@ -17,27 +17,76 @@ import sidewalkPhoto from '../assets/photos/nss-07.jpg'
 
 const heroBg = await getImage({ src: heroPhoto, format: 'webp', width: 1600, quality: 70 })
 
+/**
+ * THIS PAGE IS NEUTRAL. Ben, 2026-09-21: "the home page is commercial
+ * focussed — homepage should be neutral and then we should have a
+ * commercial and residential page."
+ *
+ * The two audiences want different things and neither is served by a page
+ * that addresses the other. So the homepage sells only what is true for
+ * both — the instant price, the response windows, the record, the cover —
+ * and forks to /commercial and /residential, which are where the specifics
+ * live and are already written for their own reader.
+ *
+ * WHEN EDITING ANYTHING HERE, ask whether a homeowner and a strata manager
+ * would both read it as written for them. "Before business hours",
+ * "parking lots", "loading zones", "your council" are all for /commercial.
+ */
 const services = [
   {
     href: '/snow-removal',
-    title: 'Commercial Snow Removal',
-    body: 'Complete winter management — plowing, shoveling, hauling and de-icing on automatic snowfall triggers, so your property is clear before business hours.',
+    title: 'Snow Removal',
+    body: 'Plowing, shovelling and hauling on automatic snowfall triggers — lots, driveways, walkways and entrances cleared before you need them.',
     photo: plowPhoto,
-    alt: 'North Shore Snow plow truck pushing snow across a commercial parking lot during a snowfall',
+    alt: 'North Shore Snow plow truck pushing snow across a parking lot during a snowfall',
   },
   {
     href: '/de-icing',
     title: 'De-Icing & Anti-Icing',
     body: 'Proactive liquid and granular treatment whenever temperatures reach 0°C — preventing ice before it forms, not after someone slips.',
     photo: saltPhoto,
-    alt: 'North Shore Snow plow truck on a commercial lot cleared and treated with ice melt',
+    alt: 'North Shore Snow plow truck on a lot cleared and treated with ice melt',
   },
   {
     href: '/salting',
     title: 'Salting & Ice Melt',
-    body: 'Calibrated salt application for parking lots, sidewalks and loading zones, with per-visit records that document your duty of care.',
+    body: 'Calibrated salt application on the surfaces people actually walk and drive on, with a per-visit record of where it went.',
     photo: sidewalkPhoto,
-    alt: 'North Shore Snow crew member pushing a walk-behind spreader along a cleared commercial walkway',
+    alt: 'North Shore Snow crew member pushing a walk-behind spreader along a cleared walkway',
+  },
+]
+
+/**
+ * The fork. It sits directly under the hero, before the client logos —
+ * a homeowner should be told there is a path for them BEFORE they scroll
+ * past a strip of corporate logos and conclude they are on the wrong site.
+ */
+const audiences = [
+  {
+    href: '/commercial',
+    eyebrow: 'For businesses, strata & property managers',
+    title: 'Commercial & strata',
+    // Its own label rather than one derived from the title — "See how
+    // homes & driveways works" does not agree with itself.
+    cta: 'See how commercial service works',
+    body: 'Parking lots, walkways, loading docks and common areas, on a documented plan your council or owners can hold us to.',
+    points: [
+      'Bylaw sidewalk frontage built into the plan',
+      'Photo-verified records for every visit',
+      'Seasonal contracts with a stated response window',
+    ],
+  },
+  {
+    href: '/residential',
+    eyebrow: 'For homeowners',
+    title: 'Homes & driveways',
+    cta: 'See how home service works',
+    body: 'Your driveway, walkways, steps and sidewalk frontage — cleared automatically when it snows, whether you are home or not.',
+    points: [
+      'No call needed — we dispatch on the forecast',
+      'Photo of the finished work after each visit',
+      'Per-visit or a fixed seasonal plan, cancel on 30 days',
+    ],
   },
 ]
 
@@ -47,8 +96,8 @@ const homeFaqs = [
     a: 'Most addresses get a price range immediately — enter the property address and the range appears on the confirmation screen, before anyone contacts you. The exact quote, measured from satellite imagery and priced on your actual serviceable area, follows by email usually within one business day.',
   },
   {
-    q: 'Do you only serve commercial properties?',
-    a: 'Commercial, strata and multi-family is what we specialize in — parking lots, sidewalks, loading zones and common areas — and those routes are cleared first. We do serve residential homes across the North Shore as well: driveway, walkways, steps and your sidewalk frontage, on the same automatic dispatch. See our residential page for how home service works.',
+    q: 'Do you work on homes as well as commercial properties?',
+    a: 'Both, on the same crews and the same weather triggers. Commercial, strata and multi-family covers parking lots, sidewalks, loading zones and common areas; home service covers the driveway, walkways, steps and your sidewalk frontage. The agreements differ because the two need different things written down — see the commercial page or the residential page for how each works.',
   },
   {
     q: 'What triggers a service visit?',
@@ -66,8 +115,15 @@ const homeFaqs = [
 ---
 
 <Base
-  title="North Shore Snow | Commercial Snow Removal North Vancouver"
-  description="Commercial snow removal, salting & de-icing for strata, property managers and businesses across North Vancouver, West Vancouver and Downtown. Satellite-measured quotes. Call (604) 990-7072."
+  {/*
+    The homepage no longer targets "commercial snow removal" — /commercial
+    does, with its own title and its own copy, which is the better place for
+    it anyway: one page per intent beats one page hedging two. This one
+    names both audiences and leads with the thing neither competitor nor
+    keyword can match.
+  */}
+  title="North Shore Snow | Snow Removal & Ice Management, Greater Vancouver"
+  description="Snow clearing, salting and de-icing for commercial properties, strata and homes across Greater Vancouver. Most addresses get a satellite-measured price range instantly. Call (604) 990-7072."
   overHero
 >
   <link slot="head" rel="preload" as="image" href={heroBg.src} fetchpriority="high" />
@@ -91,8 +147,8 @@ const homeFaqs = [
           <span class="text-gradient-ice">before anyone calls you back.</span>
         </h1>
         <p class="mt-6 max-w-xl text-lg leading-relaxed text-body-dark">
-          Type the address. We measure the lot from satellite imagery and show you a price
-          range on the next screen — no site visit, no sales call first. Your exact,
+          Type the address. We measure the property from satellite imagery and show you a
+          price range on the next screen — no site visit, no sales call first. Your exact,
           measured quote follows by email.
         </p>
         <ul class="mt-8 flex flex-wrap gap-x-7 gap-y-3 text-[15px] text-body-dark">
@@ -132,6 +188,62 @@ const homeFaqs = [
     </div>
   </section>
 
+  {/* THE FORK — see the `audiences` comment above for why it is here. */}
+  <section class="section bg-white">
+    <div class="container-site">
+      <div class="max-w-2xl">
+        <p class="eyebrow">Who we work for</p>
+        <h2 class="h2 mt-2">Two kinds of property, two ways we work</h2>
+        <p class="mt-4 text-lg">
+          The same crews, the same weather triggers and the same records — but a strata
+          council and a homeowner need different things written down, so each has its own
+          plan and its own agreement.
+        </p>
+      </div>
+      <div class="mt-12 grid gap-6 lg:grid-cols-2">
+        {audiences.map((audience) => (
+          <a href={audience.href} class="card card-hover group flex flex-col p-8">
+            <p class="eyebrow">{audience.eyebrow}</p>
+            <h3 class="mt-2 font-display text-2xl font-bold group-hover:text-brand-600">
+              {audience.title}
+            </h3>
+            <p class="mt-3 text-[15px] leading-relaxed">{audience.body}</p>
+            <ul class="mt-6 flex-1 space-y-2.5">
+              {audience.points.map((point) => (
+                <li class="flex gap-3 text-[15px]">
+                  <svg
+                    class="mt-1 h-4 w-4 shrink-0 text-brand-500"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.2"
+                    aria-hidden="true"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.5 8.5l3.5 3.5 7.5-8" />
+                  </svg>
+                  {point}
+                </li>
+              ))}
+            </ul>
+            <span class="mt-7 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-600">
+              {audience.cta}
+              <svg
+                class="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8h10M9 4l4 4-4 4" />
+              </svg>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
   {/*
     WHO, NOT HOW MANY.
 
@@ -152,7 +264,7 @@ const homeFaqs = [
     <div class="container-site">
       <div class="max-w-2xl">
         <p class="eyebrow">What we do</p>
-        <h2 class="h2 mt-2">Complete winter coverage for commercial properties</h2>
+        <h2 class="h2 mt-2">Everything winter throws at a property</h2>
         <p class="mt-4 text-lg">
           One contractor, one contract, zero gaps — from the first flurry in October to the
           last refreeze in April.

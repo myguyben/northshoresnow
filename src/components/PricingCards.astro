@@ -29,9 +29,12 @@ const plans = [
       '24/7 weather monitoring and automatic dispatch',
       'Photo-verified service reports after every visit',
       'Guaranteed capacity — you are never in a queue',
-      'Predictable budgeting for strata and property managers',
+      'One predictable number to budget against all winter',
     ],
-    note: 'Most popular with strata councils and commercial property managers.',
+    // The homepage is neutral (see the comment at the top of index.astro),
+    // and this section runs on it — so the note names both readers rather
+    // than telling a homeowner this plan is for somebody else.
+    note: 'Most popular with strata councils, property managers and homeowners who would rather not think about it.',
   },
 ]
 ---
@@ -42,8 +45,8 @@ const plans = [
       <p class="eyebrow">Simple pricing</p>
       <h2 class="h2 mt-2">Two ways to buy winter peace of mind</h2>
       <p class="mt-4 text-lg">
-        Every property is measured by satellite and priced on its actual serviceable area —
-        no guesswork, no padding.
+        A driveway or a distribution centre — every property is measured by satellite and
+        priced on its actual serviceable area. No guesswork, no padding.
       </p>
     </div>
     <div class="mt-12 grid gap-6 lg:grid-cols-2">

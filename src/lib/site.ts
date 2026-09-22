@@ -91,8 +91,15 @@ export const AREA_LINKS = [
   { slug: 'horseshoe-bay', name: 'Horseshoe Bay' },
 ] as const
 
+/**
+ * Nav and cross-link labels ONLY. These never reach a page's <title>, <h1>
+ * or breadcrumb — those come from each content file's own `title`, `hero`
+ * and `name`. So /snow-removal still targets "commercial snow removal" in
+ * search while the menu reads neutrally, which is what a site serving both
+ * homes and commercial properties needs.
+ */
 export const SERVICE_LINKS = [
-  { slug: 'snow-removal', name: 'Commercial Snow Removal' },
+  { slug: 'snow-removal', name: 'Snow Removal' },
   { slug: 'snow-plowing', name: 'Snow Plowing' },
   { slug: 'de-icing', name: 'De-Icing & Anti-Icing' },
   { slug: 'salting', name: 'Salting & Ice Melt' },
