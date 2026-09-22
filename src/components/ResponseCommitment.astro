@@ -17,6 +17,24 @@
  * THE TIMES HERE ARE THE ONES ALREADY PUBLISHED on /service-areas. Do not
  * invent a tighter number to make the section look better — this is the page
  * a property manager will hold us to.
+ *
+ * ⚠️ THAT ALREADY HAPPENED ONCE. This section originally copied the tiers
+ * from /service-areas but dropped their qualifiers: "typically by 8am"
+ * became a flat "By 8am", "priority rotation" became "full coverage", and
+ * "(contract-dependent)" was dropped from the extended tier. That produced a
+ * published contradiction — Horseshoe Bay is in West Vancouver and therefore
+ * on the North Shore, so "full North Shore coverage by 8am" and "Horseshoe
+ * Bay is extended dispatch" cannot both be true. Restored 2026-09-22.
+ *
+ * COPY THE QUALIFIERS, NOT JUST THE NUMBERS. An unqualified time on a public
+ * page is the standard of care we have assigned ourselves, and it is what
+ * gets read back to us if someone falls at 7:15am.
+ *
+ * STILL OUTSTANDING, needs Ben + the contract wording: these times have no
+ * stated clock start (industry practice measures from snowfall ENDING, not
+ * from a wall-clock hour) and no event-size bound, so read literally they
+ * promise cleared pavement at 6:30am during an active storm. The agreement
+ * should govern and the page should say so.
  */
 import { INSURANCE } from '../lib/site'
 
@@ -27,14 +45,14 @@ const tiers = [
     body: 'North Vancouver, Lynn Valley, Edgemont, Capilano and the Marine Drive corridor are cleared before the working day starts, on every snow day.',
   },
   {
-    window: 'By 8am',
-    name: 'North Shore full coverage',
-    body: 'Deep Cove, Seymour, Blueridge, Dollarton and West Vancouver run on priority rotation behind the core routes.',
+    window: 'Typically by 8am',
+    name: 'Wider North Shore',
+    body: 'Deep Cove, Seymour, Blueridge, Dollarton and most of West Vancouver run on priority rotation behind the core routes.',
   },
   {
     window: 'Storm dispatch',
     name: 'Extended coverage',
-    body: 'Downtown Vancouver, Burnaby, Richmond and Horseshoe Bay are scheduled and dispatched on the same weather triggers.',
+    body: 'Downtown Vancouver, Burnaby, Richmond, Horseshoe Bay and Lions Bay are scheduled and dispatched on the same weather triggers, contract-dependent.',
   },
 ]
 ---
