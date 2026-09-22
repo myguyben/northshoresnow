@@ -52,39 +52,25 @@ export const INSURANCE = {
 } as const
 
 /**
- * LAST SEASON, AS THE JOB RECORD ACTUALLY HAS IT.
+ * NO VOLUME STATISTICS ON THIS SITE. Do not add them back.
  *
- * What was here before — "98% on-time response rate", "95% client retention
- * rate", "100+ commercial sites managed", "24/7 monitoring" — was four
- * figures that trace to nothing. They are the first thing a property manager
- * reads, and a buyer who discounts them discounts the rest of the page with
- * them. Every competitor publishes the same shape of number, which is
- * precisely why none of them are believed.
+ * There used to be a four-figure stat bar. First it was invented — "98%
+ * on-time response rate", "95% client retention", "100+ sites" — which traces
+ * to nothing and gets discounted along with everything near it. Then it was
+ * replaced with real counted figures from the job record, and Ben killed that
+ * too (2026-09-21): "our numbers aren't high enough to advertise them, 60
+ * sites is nothing."
  *
- * These are counted from production on 2026-09-21 for the 2025-10-01 →
- * 2026-04-30 season (company e3a4e921-e1de-43ba-9040-fc63504fe1de):
- *   visits     completed jobs with check_out_at inside the window
- *   properties distinct site_id on those jobs
- *   photos     job_photos rows joined to those jobs
- *   documented 746 of those 766 jobs carry at least one photo
+ * He is right, and the second version was the worse mistake: an accurate
+ * number that loses the comparison is worse than no number, because it
+ * invites the buyer to make the comparison. A property manager reading "61
+ * properties" learns we are small.
  *
- * 97.4% is published as 97.4%, NOT rounded up to "every visit". The
- * guarantee in ResponseCommitment.astro is worded to exactly that gap: if we
- * cannot show the record, the visit is not charged. Rounding this to 100%
- * would make the guarantee a liability instead of a promise.
- *
- * RE-COUNT THESE EACH SEASON. A stale figure is the same problem as an
- * invented one.
+ * Credibility on this site is carried by WHO, not HOW MANY: the client logos
+ * (KPMG, London Drugs, YMCA, Hollyburn, Tribe, Mosaic — names that settle the
+ * question on sight) and the INSURANCE constant below. Both are things a
+ * larger competitor cannot simply out-number us on.
  */
-export const STATS = [
-  { value: '766', label: 'Service visits last season' },
-  { value: '61', label: 'Properties under contract' },
-  { value: '5,445', label: 'Photos logged to service records' },
-  { value: '97.4%', label: 'Of visits photo-documented' },
-] as const
-
-/** Names the season the figures above were counted over. */
-export const STATS_PERIOD = '2025/26 season · North Shore Snow operating record'
 
 /** Areas shown in nav/footer/form dropdowns — slugs match content collection. */
 export const AREA_LINKS = [

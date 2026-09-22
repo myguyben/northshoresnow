@@ -2,9 +2,9 @@
 import { Image } from 'astro:assets'
 import Base from '../layouts/Base.astro'
 import HeroPage from '../components/HeroPage.astro'
-import StatsBar from '../components/StatsBar.astro'
 import LogoMarquee from '../components/LogoMarquee.astro'
 import CtaBand from '../components/CtaBand.astro'
+import { INSURANCE } from '../lib/site'
 import teamPhoto from '../assets/photos/nss-team.jpg'
 import opsPhoto1 from '../assets/photos/nss-02.jpg'
 import opsPhoto2 from '../assets/photos/nss-05.jpg'
@@ -76,9 +76,12 @@ const values = [
     </div>
   </section>
 
-  <section class="border-y border-frost-100 bg-frost-50 py-14">
-    <div class="container-site">
-      <StatsBar />
+  {/* The stat bar that sat here is gone for good — see lib/site.ts. What a
+      buyer wants from an About page is the cover we carry, not a count of
+      properties. */}
+  <section class="border-y border-frost-100 bg-frost-50 py-12">
+    <div class="container-site max-w-3xl">
+      <p class="text-lg leading-relaxed">{INSURANCE.long}</p>
     </div>
   </section>
 

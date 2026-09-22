@@ -1,16 +1,14 @@
 ---
 import { Image, getImage } from 'astro:assets'
 import Base from '../layouts/Base.astro'
-import StatsBar from '../components/StatsBar.astro'
 import LogoMarquee from '../components/LogoMarquee.astro'
 import QuoteFormMini from '../components/QuoteFormMini.astro'
 import PricingCards from '../components/PricingCards.astro'
-import ServiceRecord from '../components/ServiceRecord.astro'
 import ResponseCommitment from '../components/ResponseCommitment.astro'
 import FaqAccordion from '../components/FaqAccordion.astro'
 import CtaBand from '../components/CtaBand.astro'
 import LocalBusinessSchema from '../components/schema/LocalBusinessSchema.astro'
-import { AREA_LINKS } from '../lib/site'
+import { AREA_LINKS, INSURANCE } from '../lib/site'
 import heroPhoto from '../assets/photos/nss-01.jpg'
 import plowPhoto from '../assets/photos/nss-04.jpg'
 import saltPhoto from '../assets/photos/nss-06.jpg'
@@ -127,19 +125,26 @@ const homeFaqs = [
     </div>
   </section>
 
+  {/*
+    WHO, NOT HOW MANY.
+
+    A counted stat bar sat here — 766 visits, 61 properties — and came out on
+    Ben's call: "our numbers aren't high enough to advertise them, 60 sites
+    is nothing." An accurate figure that loses the comparison is worse than
+    no figure, because it invites the comparison. The logos are the proof
+    instead, and the coverage line under them is the other half: names a
+    buyer recognises, and the cover behind them. See lib/site.ts — do not
+    reintroduce volume statistics.
+  */}
   <LogoMarquee />
 
-  {/*
-    THE OPERATING RECORD.
-
-    Counted from production, not written by marketing — see STATS in
-    lib/site.ts for the queries and the season. It sits directly under the
-    client logos because the two answer the same question in sequence: who
-    trusts us, and what that produced.
-  */}
-  <section class="border-b border-frost-100 bg-white py-14">
-    <div class="container-site">
-      <StatsBar attributed />
+  <section class="border-b border-frost-100 bg-white py-10">
+    <div class="container-site flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-center text-[15px] text-body">
+      <span class="font-semibold text-ink-950">{INSURANCE.limit} commercial general liability</span>
+      <span class="hidden h-4 w-px bg-frost-200 sm:block" aria-hidden="true"></span>
+      <span>WorkSafeBC registered</span>
+      <span class="hidden h-4 w-px bg-frost-200 sm:block" aria-hidden="true"></span>
+      <span>Certificates of insurance available with your quote</span>
     </div>
   </section>
 
@@ -198,7 +203,15 @@ const homeFaqs = [
     weaker time first, in the fifth identical card grid on the page. The
     numbering was decoration too: 01–04 implies a sequence and there was none.
   */}
-  <ServiceRecord />
+  {/*
+    A mock service-record panel sat here — an example report with an invented
+    property name and an EXAMPLE badge. Ben called it gimmicky (2026-09-21)
+    and he is right: it was a mockup dressed as an artifact, which is a
+    weaker thing to show than nothing. The competitive review's point stands
+    (four rivals promise documentation and none shows any), but the way to
+    win it is ONE REAL REDACTED REPORT from a consenting client, not a
+    drawing of one. Do not rebuild the mock.
+  */}
   <ResponseCommitment />
   <PricingCards />
 
