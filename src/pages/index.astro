@@ -149,12 +149,16 @@ const homeFaqs = [
   <link slot="head" rel="preload" as="image" href={heroBg.src} fetchpriority="high" />
 
   {/*
-    HEADER A/B TEST — see lib/experiment.ts. This runs in <head>, before the
-    body is painted, so the arm is decided before either header is visible:
-    no flash of A turning into B. It cannot import lib/experiment.ts, so the
-    storage key and names are written out here; keep them in step.
+    HEADER A/B TEST — see lib/experiment.ts. The assignment runs in the
+    head-first slot: before the body is painted, so the arm is decided before
+    either header is visible (no flash of A turning into B), and before
+    <Analytics />, so the first page_view a new visitor ever sends already
+    carries the home_hero user property — Analytics.astro reads the arm from
+    localStorage as it configures the tag, and it used to run first. This
+    script cannot import lib/experiment.ts, so the storage key and names are
+    written out here; keep them in step.
   */}
-  <script is:inline slot="head">
+  <script is:inline slot="head-first">
     ;(function () {
       var KEY = 'nss_exp_home_hero'
       var v = null
@@ -169,21 +173,40 @@ const homeFaqs = [
         }
         if (!bot) localStorage.setItem(KEY, v)
       } catch (e) {
-        v = v || 'a'
+        // Storage blocked: still a fair coin. Defaulting to A here tilted the
+        // test — every browser that refuses storage landed in the same arm.
+        v = v || (Math.random() < 0.5 ? 'a' : 'b')
       }
       document.documentElement.setAttribute('data-hero', v)
-      if (window.gtag) {
-        window.gtag('set', 'user_properties', { home_hero: v })
-        window.gtag('event', 'experiment_view', { experiment: 'home-hero', variant: v })
-      }
     })()
   </script>
-  <style is:inline slot="head">
+  <style is:inline slot="head-first">
     html:not([data-hero='b']) [data-hero-variant='b'],
     html[data-hero='b'] [data-hero-variant='a'] {
       display: none;
     }
   </style>
+  {/*
+    The denominator event stays in the ordinary head slot, after <Analytics />:
+    gtag has to exist. The user property is Analytics.astro's job now; the
+    parameter on the event is belt and braces. Same prerender gate as the tags
+    — Chrome prerenders a homepage straight from the search results page, and
+    a view nobody opened must not count.
+  */}
+  <script is:inline slot="head">
+    ;(function () {
+      var v = document.documentElement.getAttribute('data-hero')
+      if (!v || !window.gtag) return
+      function experimentView() {
+        window.gtag('event', 'experiment_view', { experiment: 'home-hero', variant: v, home_hero: v })
+      }
+      if (document.prerendering) {
+        document.addEventListener('prerenderingchange', experimentView, { once: true })
+      } else {
+        experimentView()
+      }
+    })()
+  </script>
 
   <!-- HERO, arm A (the new header) — see lib/experiment.ts -->
   <section

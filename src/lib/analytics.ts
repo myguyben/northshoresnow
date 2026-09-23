@@ -14,9 +14,20 @@
  * 2. CONVERSIONS — fire the in-browser events (lead, click-to-call) to GA4,
  *    Google Ads and the Meta pixel.
  *
+ * 3. ENGAGEMENT — scroll depth, CTA clicks and the quote funnel, to GA4 only,
+ *    so the header A/B test (lib/experiment.ts) can be read further up the
+ *    page than the lead: which arm gets people to the pricing section, which
+ *    gets them to start the form.
+ *
  * Every function here no-ops when the corresponding tag is not configured, so
  * the site behaves exactly as it did before the tags were added.
+ *
+ * The per-visitor record (which pages, how long, which network) is a separate
+ * first-party beacon to Icey — lib/visit-beacon.ts — and does not touch GA4.
  */
+
+import { heroVariant } from './experiment'
+import { onActivated } from './prerender'
 
 const STORAGE_KEY = 'nss_attribution'
 
@@ -132,6 +143,20 @@ const EMAIL_LABEL = import.meta.env.PUBLIC_GOOGLE_ADS_EMAIL_LABEL as string | un
 const ENHANCED = import.meta.env.PUBLIC_GOOGLE_ADS_ENHANCED === 'true'
 
 /**
+ * Every custom GA4 event goes out through here so it carries the header-test
+ * arm as an event parameter. Analytics.astro already sets `home_hero` as a
+ * user property before the first page_view; the parameter is belt and braces
+ * — a user property only reaches a report through its own custom dimension,
+ * and an event parameter survives a report built without one. Google Ads
+ * `conversion` hits are not custom events and stay as they are.
+ */
+function sendEvent(name: string, params: Record<string, unknown> = {}): void {
+  if (!window.gtag) return
+  const arm = heroVariant()
+  window.gtag('event', name, arm ? { ...params, home_hero: arm } : params)
+}
+
+/**
  * Declared lead value, in CAD, used only as a bidding signal.
  *
  * This is NOT revenue — it is what an average quote request is worth once the
@@ -227,7 +252,7 @@ export async function trackLead(options: {
       const hashed = await sha256(email)
       if (hashed) window.gtag('set', 'user_data', { sha256_email_address: hashed })
     }
-    window.gtag('event', 'generate_lead', {
+    sendEvent('generate_lead', {
       currency: 'CAD',
       value,
       property_type: propertyType ?? 'unknown',
@@ -253,7 +278,7 @@ export async function trackLead(options: {
  * highest-intent traffic of the season look like it converted at zero.
  */
 export function trackCallClick(): void {
-  window.gtag?.('event', 'click_to_call', { currency: 'CAD', value: LEAD_VALUE.unknown })
+  sendEvent('click_to_call', { currency: 'CAD', value: LEAD_VALUE.unknown })
   if (window.gtag && ADS_ID && CALL_LABEL) {
     window.gtag('event', 'conversion', { send_to: `${ADS_ID}/${CALL_LABEL}` })
   }
@@ -270,7 +295,7 @@ export function trackCallClick(): void {
  * records the click and, with it, whether that visit was organic or paid.
  */
 export function trackEmailClick(): void {
-  window.gtag?.('event', 'email_click', { currency: 'CAD', value: LEAD_VALUE.unknown })
+  sendEvent('email_click', { currency: 'CAD', value: LEAD_VALUE.unknown })
   if (window.gtag && ADS_ID && EMAIL_LABEL) {
     window.gtag('event', 'conversion', { send_to: `${ADS_ID}/${EMAIL_LABEL}` })
   }
@@ -289,7 +314,7 @@ export function trackEmailClick(): void {
  * event and everyone who goes on to finish is counted twice.
  */
 export function trackPartialLead(): void {
-  window.gtag?.('event', 'quote_lead_partial')
+  sendEvent('quote_lead_partial')
 }
 
 /**
@@ -302,7 +327,120 @@ export function trackPartialLead(): void {
  * (`timeout` / `http_500` / `network`) to keep cardinality bounded.
  */
 export function trackQuoteSubmitFailed(reason: string): void {
-  window.gtag?.('event', 'quote_submit_failed', { reason })
+  sendEvent('quote_submit_failed', { reason })
+}
+
+/* ------------------------------------------------------------------ *
+ * Quote funnel
+ * ------------------------------------------------------------------ */
+
+/**
+ * The hero's mini form was submitted (address + email) — the top of the quote
+ * funnel, and the one step the header A/B test changes directly. `variant` is
+ * the card's copy ('price' | 'classic'), which is the arm by another name.
+ */
+export function trackQuoteHeroSubmit(variant: string): void {
+  sendEvent('quote_hero_submit', { variant })
+}
+
+/** First keystroke in the full form. The caller holds the once-latch. */
+export function trackQuoteFormStart(): void {
+  sendEvent('quote_form_start')
+}
+
+/** "Add another property" — `properties` is the total on the form after adding. */
+export function trackQuoteAddProperty(properties: number): void {
+  sendEvent('quote_add_property', { properties })
+}
+
+/* ------------------------------------------------------------------ *
+ * Engagement
+ * ------------------------------------------------------------------ */
+
+/**
+ * How much of the page has been seen, 0–100: the viewport's bottom edge as a
+ * share of the document's height, which is the definition GA4's own scroll
+ * event uses. A page shorter than the viewport is 100 without scrolling.
+ */
+export function scrollPercent(): number {
+  const height = document.documentElement.scrollHeight
+  if (height <= 0) return 0
+  const seen = ((window.scrollY + window.innerHeight) / height) * 100
+  return Math.min(100, Math.max(0, Math.round(seen)))
+}
+
+const SCROLL_MARKS = [25, 50, 75, 90] as const
+
+/**
+ * Scroll depth at 25/50/75/90%, once per mark per page view.
+ *
+ * GA4's built-in scroll event fires at 90% only, which answers "did they reach
+ * the bottom" and nothing about where the rest stopped. Four marks show where
+ * a page loses people, and — read per header arm — whether the new header
+ * carries more of them down to the pricing section.
+ */
+function trackScrollDepth(): void {
+  const reached = new Set<number>()
+  function check(): void {
+    const percent = scrollPercent()
+    for (const mark of SCROLL_MARKS) {
+      if (percent < mark || reached.has(mark)) continue
+      reached.add(mark)
+      sendEvent('scroll_depth', { percent: mark, page_path: window.location.pathname })
+    }
+  }
+  window.addEventListener('scroll', check, { passive: true })
+  // A short page is fully seen at load; wait a frame for layout to settle.
+  requestAnimationFrame(check)
+}
+
+/** GA4 caps a text parameter at 100 characters; 60 keeps the reports legible. */
+const LABEL_MAX = 60
+
+function squeeze(text: string | null | undefined): string {
+  return (text ?? '').replace(/\s+/g, ' ').trim()
+}
+
+/** The section a click came from: its id, a data-section, or its heading. */
+function sectionOf(el: Element): string {
+  const section = el.closest<HTMLElement>('section, [data-section]')
+  if (!section) return ''
+  const label =
+    section.id || section.dataset.section || section.querySelector('h2, h1')?.textContent
+  return squeeze(label).slice(0, LABEL_MAX)
+}
+
+/**
+ * Every link and button in the page content, delegated from <main> so the
+ * header, footer and sticky call bar (all outside it) stay out of the count.
+ * Phone and email links already report as click_to_call / email_click and
+ * are skipped, as is anything inside a form — the quote form has its own
+ * funnel events above.
+ *
+ * A card that is one big link (the audience fork, the service cards) reports
+ * its heading, not its whole text, so the label reads as a name in GA4.
+ */
+function trackCtaClicks(): void {
+  const main = document.getElementById('main')
+  if (!main) return
+  main.addEventListener('click', (event) => {
+    const target = (event.target as Element | null)?.closest<HTMLElement>('a[href], button')
+    if (!target || !main.contains(target)) return
+    const href = target.getAttribute('href') ?? ''
+    if (/^(tel|mailto):/i.test(href)) return
+    if (target.closest('form')) return
+    const label =
+      squeeze(target.querySelector('h1, h2, h3, h4')?.textContent) ||
+      squeeze(target.textContent) ||
+      squeeze(target.getAttribute('aria-label')) ||
+      href
+    sendEvent('cta_click', {
+      cta_label: label.slice(0, LABEL_MAX),
+      cta_href: href,
+      section: sectionOf(target),
+      page_path: window.location.pathname,
+    })
+  })
 }
 
 /**
@@ -318,6 +456,10 @@ export function trackQuoteSubmitFailed(reason: string): void {
  * the GA4 event carries its own traffic source. (Google Ads only reports the
  * ones it can attribute to a click of its own, which is why GA4 has to be
  * configured for the organic half to be countable at all.)
+ *
+ * Scroll depth and CTA clicks wait for activation: /contact is prerendered
+ * from every page (lib/prerender.ts), and a short prerendered page would
+ * otherwise report itself fully read by a visitor who never opened it.
  */
 export function initAnalytics(): void {
   captureAttribution()
@@ -325,5 +467,9 @@ export function initAnalytics(): void {
     const target = event.target as Element | null
     if (target?.closest('a[href^="tel:"]')) trackCallClick()
     else if (target?.closest('a[href^="mailto:"]')) trackEmailClick()
+  })
+  onActivated(() => {
+    trackScrollDepth()
+    trackCtaClicks()
   })
 }

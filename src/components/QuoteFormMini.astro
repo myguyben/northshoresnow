@@ -54,7 +54,7 @@ const formId = idPrefix === 'qfm' ? 'quote-mini' : `${idPrefix}-form`
         : 'Most addresses get a price range on the next screen. Free, no obligation.'
     }
   </p>
-  <form class="mt-5 space-y-3" method="get" action="/contact" id={formId} data-quote-mini>
+  <form class="mt-5 space-y-3" method="get" action="/contact" id={formId} data-quote-mini={copy}>
     <div>
       <label class="label" for={`${idPrefix}-address`}>Property address</label>
       <div class="relative" data-address-autocomplete>
@@ -120,6 +120,7 @@ const formId = idPrefix === 'qfm' ? 'quote-mini' : `${idPrefix}-form`
 
 <script>
   import { attachAddressAutocomplete } from '../scripts/quote-form'
+  import { trackQuoteHeroSubmit } from '../lib/analytics'
   import { saveQuoteDraft } from '../lib/quote-draft'
 
   // Every card on the page — the homepage header test renders two (one
@@ -136,6 +137,10 @@ const formId = idPrefix === 'qfm' ? 'quote-mini' : `${idPrefix}-form`
         email: String(data.get('email') ?? '').trim(),
         from: 'hero',
       })
+      // The funnel's first step, tagged with this card's copy — which is the
+      // header arm by another name. Fired before the navigation: GA4 sends
+      // events as beacons, so it survives the page going away.
+      trackQuoteHeroSubmit(mini.dataset.quoteMini === 'classic' ? 'classic' : 'price')
       // Same URL Base.astro prerenders — query-free so the speculation hits.
       window.location.assign('/contact#quote')
     })

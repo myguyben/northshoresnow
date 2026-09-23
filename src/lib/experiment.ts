@@ -12,17 +12,23 @@
  * Everything below the header is the new site in both arms, and both forms
  * hand off to the same /contact form, so the header is the only difference.
  *
- * ASSIGNMENT happens in an inline script in the homepage <head> (index.astro),
- * before first paint, so nobody sees one header swap for the other. It is
- * 50/50, sticky per browser (localStorage), and `?hero=a` / `?hero=b` forces
- * an arm for checking either one. Crawlers always get A.
+ * ASSIGNMENT happens in an inline script in the homepage <head> (index.astro,
+ * in Base.astro's head-first slot): before first paint, so nobody sees one
+ * header swap for the other, and before the analytics tags, so the first
+ * page_view already carries the arm. It is 50/50, sticky per browser
+ * (localStorage), and `?hero=a` / `?hero=b` forces an arm for checking
+ * either one. Crawlers always get A.
  *
- * MEASUREMENT, two ways:
+ * MEASUREMENT, three ways:
  *   - every lead carries `experiment: "home-hero:a|b"` into Icey
  *     (source_detail + the lead's internal attribution block), which is the
  *     number that decides the test;
- *   - GA4, when configured, gets a `home_hero` user property on every page
- *     and an `experiment_view` event on the homepage, for the denominator.
+ *   - GA4, when configured, gets a `home_hero` user property on every page,
+ *     an `experiment_view` event on the homepage for the denominator, and
+ *     `home_hero` as a parameter on every custom event (lib/analytics.ts) so
+ *     scroll depth, CTA clicks and the quote funnel split by arm too;
+ *   - the visit beacon (lib/visit-beacon.ts) sends the same
+ *     `experiment: "home-hero:a|b"` with every page view.
  *
  * Keep these names in step with the inline scripts in index.astro and
  * Analytics.astro, which cannot import this module.

@@ -74,7 +74,9 @@ const CONSENT_DENIED_REGIONS = [
         // Homepage header A/B test (lib/experiment.ts): tag every hit from a
         // browser that has been assigned an arm, so a lead on /contact or
         // /thank-you can be split by the header its visitor saw. Set before
-        // config so the page_view carries it too.
+        // config so the page_view carries it too — including the very first
+        // one: the homepage assigns the arm in Base.astro's head-first slot,
+        // which renders before this component.
         try {
           var heroArm = localStorage.getItem('nss_exp_home_hero')
           if (heroArm === 'a' || heroArm === 'b') gtag('set', 'user_properties', { home_hero: heroArm })

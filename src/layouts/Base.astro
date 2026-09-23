@@ -84,6 +84,10 @@ const SPECULATION_RULES = JSON.stringify({
     <link rel="preload" as="font" type="font/woff2" href={interWoff2} crossorigin />
     <link rel="preload" as="font" type="font/woff2" href={bricolageWoff2} crossorigin />
     <Seo {...seo} />
+    {/* Before the tags, deliberately: the homepage assigns its header arm here
+        (index.astro), so the very first page_view a new visitor sends already
+        carries it — Analytics.astro reads the arm from localStorage. */}
+    <slot name="head-first" />
     <Analytics />
     {
       speculate && (
@@ -127,10 +131,14 @@ const SPECULATION_RULES = JSON.stringify({
     <MobileCallBar />
 
     <!-- Runs with or without pixels configured: a lead still has to carry its
-         UTMs and click id into Icey so the sale can be traced back to the ad. -->
+         UTMs and click id into Icey so the sale can be traced back to the ad.
+         The visit beacon is first-party too — page views and time on page go
+         to Icey, not to a pixel (lib/visit-beacon.ts). -->
     <script>
       import { initAnalytics } from '../lib/analytics'
+      import { initVisitBeacon } from '../lib/visit-beacon'
       initAnalytics()
+      initVisitBeacon()
     </script>
   </body>
 </html>

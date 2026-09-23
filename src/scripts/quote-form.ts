@@ -5,6 +5,8 @@ import {
   attributionFields,
   stashPendingLead,
   trackPartialLead,
+  trackQuoteAddProperty,
+  trackQuoteFormStart,
   trackQuoteSubmitFailed,
 } from '../lib/analytics'
 import { experimentFields } from '../lib/experiment'
@@ -15,6 +17,7 @@ import {
   saveQuoteDraft,
   type QuoteDraft,
 } from '../lib/quote-draft'
+import { visitorFields } from '../lib/visit-beacon'
 
 // website-estimate = website-lead (same pipeline, same dedupe, same AI quote
 // by email) PLUS an instant price range in the response, rendered on
@@ -386,7 +389,10 @@ export function setupQuoteForm(): void {
     if (focus) input.focus()
   }
 
-  addAddressButton?.addEventListener('click', () => addAddressRow('', true))
+  addAddressButton?.addEventListener('click', () => {
+    addAddressRow('', true)
+    trackQuoteAddProperty(extraAddressInputs().length + 1)
+  })
 
   /* ——— Inline field errors ——— */
 
@@ -482,6 +488,11 @@ export function setupQuoteForm(): void {
   }
   form.addEventListener('input', queueDraftSave)
   propertyTypeSelect?.addEventListener('change', saveDraft)
+  // The first keystroke, once: a visitor who types anything has started the
+  // form, and the funnel step between "saw it" and "sent it" is what the
+  // header test needs. Prefill from the hero sets values without an input
+  // event, so it does not count — that visitor already started in the hero.
+  form.addEventListener('input', () => trackQuoteFormStart(), { once: true })
 
   /**
    * Everything that reads where the visitor came from waits for activation.
@@ -647,6 +658,7 @@ export function setupQuoteForm(): void {
       pageUrl: window.location.origin + window.location.pathname,
       ...attributionFields(),
       ...experimentFields(),
+      ...visitorFields(),
     })
   }
 
@@ -710,6 +722,9 @@ export function setupQuoteForm(): void {
       // signed contract can be traced back to the campaign that paid for it.
       ...attributionFields(),
       ...experimentFields(),
+      // Which browser: joins this lead to the visits that led up to it
+      // (lib/visit-beacon.ts). Absent when nothing was recorded.
+      ...visitorFields(),
     }
   }
 
