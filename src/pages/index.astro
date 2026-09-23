@@ -256,8 +256,10 @@ const homeFaqs = [
   </section>
 
   {/*
-    HERO, arm B — the header exactly as it read on the live site before the
-    2026-09-21 overhaul, stat bar included (Ben chose verbatim, 2026-09-23).
+    HERO, arm B — the header as it read on the live site before the
+    2026-09-21 overhaul, stat bar included (Ben chose verbatim, 2026-09-23),
+    then trimmed the same day: no buttons, and the eyebrow matches arm A's
+    "Snow & ice management · Greater Vancouver".
     Everything below is the new page in both arms. When the test is decided,
     delete the losing arm, StatsBar if B loses, and the head script above.
   */}
@@ -268,7 +270,7 @@ const homeFaqs = [
   >
     <div class="container-site grid items-center gap-12 pt-[128px] pb-16 md:pb-24 lg:grid-cols-[1.2fr_0.8fr] lg:pt-[152px]">
       <div>
-        <p class="eyebrow !text-ice-300">Commercial snow &amp; ice management · North Shore + Vancouver</p>
+        <p class="eyebrow !text-ice-300">Snow &amp; ice management · Greater Vancouver</p>
         {/* A <p>, not a second <h1>: both headers are in the HTML and only one
             is shown, so this borrows the heading's look and role instead. */}
         <p
@@ -284,10 +286,6 @@ const homeFaqs = [
           to keep parking lots, sidewalks and entrances safe all winter — with
           photo-verified service after every visit.
         </p>
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a href="/contact#quote" class="btn-primary">Get a Complimentary Quote</a>
-          <a href="/services" class="btn-ghost-dark">Explore Services</a>
-        </div>
         <div class="mt-12 border-t border-white/10 pt-8">
           <StatsBar dark />
         </div>

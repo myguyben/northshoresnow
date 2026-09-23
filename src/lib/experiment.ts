@@ -3,10 +3,11 @@
  *
  *   A — the new header: "See what your property costs before anyone calls
  *       you back." Instant price range, then the measured quote by email.
- *   B — the old header, exactly as it was on the live site before the
- *       overhaul: "Snow cleared before business hours. Every storm.
- *       Guaranteed." with its stat bar. Ben chose to test it verbatim,
- *       stats included.
+ *   B — the old header from the live site before the overhaul: "Snow
+ *       cleared before business hours. Every storm. Guaranteed." with its
+ *       stat bar (Ben chose to keep the stats). Trimmed the same day on his
+ *       word: no buttons, and the eyebrow reads "Snow & ice management ·
+ *       Greater Vancouver" like arm A.
  *
  * Everything below the header is the new site in both arms, and both forms
  * hand off to the same /contact form, so the header is the only difference.
