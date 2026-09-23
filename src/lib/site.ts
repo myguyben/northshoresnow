@@ -72,6 +72,21 @@ export const INSURANCE = {
  * larger competitor cannot simply out-number us on.
  */
 
+/**
+ * The old hero's stat bar — used ONLY by arm B of the homepage header test
+ * (lib/experiment.ts), which Ben chose to run verbatim on 2026-09-23.
+ *
+ * These are the unsourced figures he took off the site on 2026-09-21 ("60
+ * sites is nothing"); the active book is ~60 properties, not 100+. Do not
+ * use them anywhere else, and delete them with arm B when the test ends.
+ */
+export const STATS = [
+  { value: '98%', label: 'On-time response rate' },
+  { value: '24/7', label: 'Active weather monitoring' },
+  { value: '100+', label: 'Commercial sites managed' },
+  { value: '95%', label: 'Client retention rate' },
+] as const
+
 /** Areas shown in nav/footer/form dropdowns — slugs match content collection. */
 export const AREA_LINKS = [
   { slug: 'north-vancouver', name: 'North Vancouver' },

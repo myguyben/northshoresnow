@@ -1,0 +1,24 @@
+---
+import { STATS } from '../lib/site'
+
+interface Props {
+  /** Rendered inside the dark hero (white text) or on light background. */
+  dark?: boolean
+}
+
+const { dark = false } = Astro.props
+---
+
+<div
+  class:list={[
+    'grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4',
+    dark ? 'text-white' : 'text-ink-950',
+  ]}
+>
+  {STATS.map((stat) => (
+    <div>
+      <p class="font-display text-3xl font-bold tracking-tight md:text-4xl">{stat.value}</p>
+      <p class:list={['mt-1 text-sm', dark ? 'text-body-dark' : 'text-body']}>{stat.label}</p>
+    </div>
+  ))}
+</div>

@@ -7,6 +7,7 @@ import {
   trackPartialLead,
   trackQuoteSubmitFailed,
 } from '../lib/analytics'
+import { experimentFields } from '../lib/experiment'
 import { onActivated } from '../lib/prerender'
 import {
   clearQuoteDraft,
@@ -542,6 +543,7 @@ export function setupQuoteForm(): void {
       website: String(data.get('website') ?? ''),
       pageUrl: window.location.origin + window.location.pathname,
       ...attributionFields(),
+      ...experimentFields(),
     })
   }
 
@@ -602,6 +604,7 @@ export function setupQuoteForm(): void {
       // Which ad produced this lead. Icey renders it on the request so a
       // signed contract can be traced back to the campaign that paid for it.
       ...attributionFields(),
+      ...experimentFields(),
     }
   }
 

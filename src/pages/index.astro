@@ -4,6 +4,7 @@ import Base from '../layouts/Base.astro'
 import LogoMarquee from '../components/LogoMarquee.astro'
 import InsuranceStrip from '../components/InsuranceStrip.astro'
 import QuoteFormMini from '../components/QuoteFormMini.astro'
+import StatsBar from '../components/StatsBar.astro'
 import PricingCards from '../components/PricingCards.astro'
 import ResponseCommitment from '../components/ResponseCommitment.astro'
 import FaqAccordion from '../components/FaqAccordion.astro'
@@ -147,8 +148,46 @@ const homeFaqs = [
 >
   <link slot="head" rel="preload" as="image" href={heroBg.src} fetchpriority="high" />
 
-  <!-- HERO -->
+  {/*
+    HEADER A/B TEST — see lib/experiment.ts. This runs in <head>, before the
+    body is painted, so the arm is decided before either header is visible:
+    no flash of A turning into B. It cannot import lib/experiment.ts, so the
+    storage key and names are written out here; keep them in step.
+  */}
+  <script is:inline slot="head">
+    ;(function () {
+      var KEY = 'nss_exp_home_hero'
+      var v = null
+      try {
+        var forced = new URLSearchParams(location.search).get('hero')
+        var bot = /bot|crawl|spider|slurp|lighthouse|headless/i.test(navigator.userAgent)
+        if (forced === 'a' || forced === 'b') v = forced
+        else if (bot) v = 'a'
+        else {
+          v = localStorage.getItem(KEY)
+          if (v !== 'a' && v !== 'b') v = Math.random() < 0.5 ? 'a' : 'b'
+        }
+        if (!bot) localStorage.setItem(KEY, v)
+      } catch (e) {
+        v = v || 'a'
+      }
+      document.documentElement.setAttribute('data-hero', v)
+      if (window.gtag) {
+        window.gtag('set', 'user_properties', { home_hero: v })
+        window.gtag('event', 'experiment_view', { experiment: 'home-hero', variant: v })
+      }
+    })()
+  </script>
+  <style is:inline slot="head">
+    html:not([data-hero='b']) [data-hero-variant='b'],
+    html[data-hero='b'] [data-hero-variant='a'] {
+      display: none;
+    }
+  </style>
+
+  <!-- HERO, arm A (the new header) — see lib/experiment.ts -->
   <section
+    data-hero-variant="a"
     class="hero-dark relative overflow-hidden"
     style={`background-image: linear-gradient(180deg, rgb(10 20 32 / 0.68), rgb(10 20 32 / 0.9)), radial-gradient(600px at 80% 0%, rgb(99 201 245 / 0.14), transparent), url(${heroBg.src}); background-size: cover; background-position: center;`}
   >
@@ -212,6 +251,49 @@ const homeFaqs = [
       </div>
       <div class="lg:w-full lg:max-w-md lg:justify-self-end">
         <QuoteFormMini />
+      </div>
+    </div>
+  </section>
+
+  {/*
+    HERO, arm B — the header exactly as it read on the live site before the
+    2026-09-21 overhaul, stat bar included (Ben chose verbatim, 2026-09-23).
+    Everything below is the new page in both arms. When the test is decided,
+    delete the losing arm, StatsBar if B loses, and the head script above.
+  */}
+  <section
+    data-hero-variant="b"
+    class="hero-dark relative overflow-hidden"
+    style={`background-image: linear-gradient(180deg, rgb(10 20 32 / 0.68), rgb(10 20 32 / 0.9)), radial-gradient(600px at 80% 0%, rgb(99 201 245 / 0.14), transparent), url(${heroBg.src}); background-size: cover; background-position: center;`}
+  >
+    <div class="container-site grid items-center gap-12 pt-[128px] pb-16 md:pb-24 lg:grid-cols-[1.2fr_0.8fr] lg:pt-[152px]">
+      <div>
+        <p class="eyebrow !text-ice-300">Commercial snow &amp; ice management · North Shore + Vancouver</p>
+        {/* A <p>, not a second <h1>: both headers are in the HTML and only one
+            is shown, so this borrows the heading's look and role instead. */}
+        <p
+          class="h1 mt-4 !text-white font-display font-[650] tracking-[-0.02em] [text-wrap:balance]"
+          role="heading"
+          aria-level="1"
+        >
+          Snow cleared before <span class="text-gradient-ice">business hours.</span>
+          Every storm. Guaranteed.
+        </p>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-body-dark">
+          Strata councils, property managers and businesses across the North Shore trust us
+          to keep parking lots, sidewalks and entrances safe all winter — with
+          photo-verified service after every visit.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/contact#quote" class="btn-primary">Get a Complimentary Quote</a>
+          <a href="/services" class="btn-ghost-dark">Explore Services</a>
+        </div>
+        <div class="mt-12 border-t border-white/10 pt-8">
+          <StatsBar dark />
+        </div>
+      </div>
+      <div class="lg:justify-self-end lg:w-full lg:max-w-md">
+        <QuoteFormMini copy="classic" idPrefix="qfm-b" />
       </div>
     </div>
   </section>

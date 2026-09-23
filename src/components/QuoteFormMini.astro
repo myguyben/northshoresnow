@@ -14,6 +14,22 @@
  * form reads query params too.
  */
 import { INSURANCE } from '../lib/site'
+
+interface Props {
+  /**
+   * 'price' (default) is the current wording everywhere. 'classic' is the
+   * card as it read on the live site before the 2026-09-21 overhaul — used
+   * only by arm B of the homepage header test (lib/experiment.ts). The form
+   * itself, and where it hands off to, is the same in both.
+   */
+  copy?: 'price' | 'classic'
+  /** Element-id prefix, so two cards on one page never share an id. */
+  idPrefix?: string
+}
+
+const { copy = 'price', idPrefix = 'qfm' } = Astro.props
+const classic = copy === 'classic'
+const formId = idPrefix === 'qfm' ? 'quote-mini' : `${idPrefix}-form`
 ---
 
 {/*
@@ -28,17 +44,23 @@ import { INSURANCE } from '../lib/site'
   panel on /thank-you stays hidden when it does.
 */}
 <div class="card p-6 md:p-7">
-  <h2 class="font-display text-xl font-bold">What will my property cost?</h2>
+  <h2 class="font-display text-xl font-bold">
+    {classic ? 'Get a complimentary quote' : 'What will my property cost?'}
+  </h2>
   <p class="mt-1.5 text-sm text-body">
-    Most addresses get a price range on the next screen. Free, no obligation.
+    {
+      classic
+        ? 'Most quotes are ready in one business day.'
+        : 'Most addresses get a price range on the next screen. Free, no obligation.'
+    }
   </p>
-  <form class="mt-5 space-y-3" method="get" action="/contact" id="quote-mini">
+  <form class="mt-5 space-y-3" method="get" action="/contact" id={formId} data-quote-mini>
     <div>
-      <label class="label" for="qfm-address">Property address</label>
+      <label class="label" for={`${idPrefix}-address`}>Property address</label>
       <div class="relative" data-address-autocomplete>
         <input
           class="input"
-          id="qfm-address"
+          id={`${idPrefix}-address`}
           name="address"
           type="text"
           required
@@ -46,13 +68,13 @@ import { INSURANCE } from '../lib/site'
           autocomplete="off"
           role="combobox"
           aria-expanded="false"
-          aria-controls="qfm-address-listbox"
+          aria-controls={`${idPrefix}-address-listbox`}
           aria-autocomplete="list"
           placeholder="Start typing the address…"
         />
         <ul
           class="address-listbox"
-          id="qfm-address-listbox"
+          id={`${idPrefix}-address-listbox`}
           role="listbox"
           aria-label="Address suggestions"
           hidden
@@ -60,10 +82,10 @@ import { INSURANCE } from '../lib/site'
       </div>
     </div>
     <div>
-      <label class="label" for="qfm-email">Email</label>
+      <label class="label" for={`${idPrefix}-email`}>Email</label>
       <input
         class="input"
-        id="qfm-email"
+        id={`${idPrefix}-email`}
         name="email"
         type="email"
         required
@@ -71,10 +93,12 @@ import { INSURANCE } from '../lib/site'
         placeholder="you@example.com"
       />
     </div>
-    <button type="submit" class="btn-primary w-full">Show me my price range</button>
+    <button type="submit" class="btn-primary w-full">
+      {classic ? 'Start my quote' : 'Show me my price range'}
+    </button>
   </form>
   <p class="mt-3 text-center text-[13px] text-body/80">
-    Takes about a minute · Your address stays with us
+    {classic ? 'Takes about a minute · No obligation' : 'Takes about a minute · Your address stays with us'}
   </p>
   {/* Ben, 2026-09-20: the star rating came off the commercial surfaces — a
       property manager is reassured by the coverage limit, not by consumer
@@ -98,19 +122,22 @@ import { INSURANCE } from '../lib/site'
   import { attachAddressAutocomplete } from '../scripts/quote-form'
   import { saveQuoteDraft } from '../lib/quote-draft'
 
-  const mini = document.getElementById('quote-mini') as HTMLFormElement | null
-  const address = document.getElementById('qfm-address') as HTMLInputElement | null
-  if (address) attachAddressAutocomplete(address)
+  // Every card on the page — the homepage header test renders two (one
+  // hidden), and each needs its own autocomplete and submit handler.
+  for (const mini of document.querySelectorAll<HTMLFormElement>('form[data-quote-mini]')) {
+    const address = mini.querySelector<HTMLInputElement>('input[name="address"]')
+    if (address) attachAddressAutocomplete(address)
 
-  mini?.addEventListener('submit', (event) => {
-    event.preventDefault()
-    const data = new FormData(mini)
-    saveQuoteDraft({
-      address: String(data.get('address') ?? '').trim(),
-      email: String(data.get('email') ?? '').trim(),
-      from: 'hero',
+    mini.addEventListener('submit', (event) => {
+      event.preventDefault()
+      const data = new FormData(mini)
+      saveQuoteDraft({
+        address: String(data.get('address') ?? '').trim(),
+        email: String(data.get('email') ?? '').trim(),
+        from: 'hero',
+      })
+      // Same URL Base.astro prerenders — query-free so the speculation hits.
+      window.location.assign('/contact#quote')
     })
-    // Same URL Base.astro prerenders — query-free so the speculation hits.
-    window.location.assign('/contact#quote')
-  })
+  }
 </script>
