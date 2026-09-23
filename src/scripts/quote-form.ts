@@ -30,6 +30,8 @@ const ATTACHMENT_ENDPOINT = ENDPOINT.replace(/\/website-(lead|estimate)$/, '/web
 /** Server enforces the same cap; checking here saves a doomed upload. */
 const MAX_ATTACHMENT_BYTES = 10 * 1024 * 1024
 const MAX_ATTACHMENTS = 2
+/** Properties per request, first one included — the most Icey's extractor lists. */
+const MAX_PROPERTIES = 10
 const CONTACT_EMAIL = 'Quotes@northshoresnow.com'
 /** Bias suggestions toward the North Shore / Greater Vancouver. */
 const LOCATION_BIAS = '49.32,-123.07'
@@ -295,6 +297,97 @@ export function setupQuoteForm(): void {
 
   attachAddressAutocomplete(addressInput)
 
+  /* ——— More than one property ———
+   * The first property stays the required `address` field; each added row is
+   * one more, sent as `additionalAddresses`. Icey lists them all in the
+   * request and quotes each one separately. */
+
+  const moreAddresses = document.getElementById('qf-more-addresses') as HTMLElement | null
+  const addAddressButton = document.getElementById('qf-add-address') as HTMLButtonElement | null
+  const addressRowTemplate = document.getElementById('qf-address-row') as HTMLTemplateElement | null
+  const firstAddressLabel = form.querySelector<HTMLLabelElement>('label[for="qf-address"]')
+  let addressRowSeq = 0
+
+  function extraAddressInputs(): HTMLInputElement[] {
+    return Array.from(form.querySelectorAll<HTMLInputElement>('input[name="additionalAddress"]'))
+  }
+
+  function additionalAddresses(): string[] {
+    return extraAddressInputs()
+      .map((input) => input.value.trim())
+      .filter(Boolean)
+  }
+
+  /** Blank rows are ignored; a row with a few stray characters is not an address. */
+  function validateExtraAddress(input: HTMLInputElement): boolean {
+    const value = input.value.trim()
+    const bad = value.length > 0 && value.length < 5
+    input.setAttribute('aria-invalid', bad ? 'true' : 'false')
+    const slot = document.getElementById(`${input.id}-error`)
+    if (slot) {
+      slot.textContent = bad ? INVALID_MESSAGE.address : ''
+      slot.hidden = !bad
+    }
+    return !bad
+  }
+
+  function renumberAddressRows(): void {
+    const rows = extraAddressInputs()
+    rows.forEach((input, i) => {
+      const label = form.querySelector<HTMLLabelElement>(`label[for="${input.id}"]`)
+      if (label) label.textContent = `Property ${i + 2} address`
+    })
+    if (firstAddressLabel) {
+      firstAddressLabel.textContent = rows.length > 0 ? 'Property 1 address' : 'Property address'
+    }
+    if (addAddressButton) addAddressButton.hidden = rows.length + 1 >= MAX_PROPERTIES
+  }
+
+  function addAddressRow(value = '', focus = false): void {
+    if (!moreAddresses || !addressRowTemplate) return
+    if (extraAddressInputs().length + 1 >= MAX_PROPERTIES) return
+    const fragment = addressRowTemplate.content.cloneNode(true) as DocumentFragment
+    const row = fragment.querySelector<HTMLElement>('[data-extra-address]')
+    const input = row?.querySelector<HTMLInputElement>('input')
+    const listbox = row?.querySelector<HTMLUListElement>('ul')
+    const label = row?.querySelector<HTMLLabelElement>('label')
+    const error = row?.querySelector<HTMLElement>('[data-row-error]')
+    if (!row || !input || !listbox || !label || !error) return
+
+    // Ids are unique per row, so each label, suggestion list and error
+    // message belongs to its own input.
+    const id = `qf-address-extra-${++addressRowSeq}`
+    input.id = id
+    label.htmlFor = id
+    listbox.id = `${id}-listbox`
+    error.id = `${id}-error`
+    input.setAttribute('aria-controls', listbox.id)
+    input.setAttribute('aria-describedby', error.id)
+    input.value = value
+
+    row.querySelector('[data-remove-address]')?.addEventListener('click', () => {
+      row.remove()
+      renumberAddressRows()
+      saveDraft()
+      queuePartial()
+      addAddressButton?.focus()
+    })
+    // No blur check on these rows: an error appearing on blur pushes the
+    // "Add another property" button down mid-click, and the click misses.
+    // They are checked on submit, then corrected live once flagged.
+    input.addEventListener('input', () => {
+      if (input.getAttribute('aria-invalid') === 'true') validateExtraAddress(input)
+      queuePartial()
+    })
+
+    moreAddresses.append(row)
+    attachAddressAutocomplete(input)
+    renumberAddressRows()
+    if (focus) input.focus()
+  }
+
+  addAddressButton?.addEventListener('click', () => addAddressRow('', true))
+
   /* ——— Inline field errors ——— */
 
   function fieldOf(name: RequiredField): HTMLInputElement | HTMLTextAreaElement {
@@ -330,7 +423,10 @@ export function setupQuoteForm(): void {
     const field = fieldOf(name)
     // Blur validates only what was actually touched — nagging someone for
     // tabbing through an empty field is how a form loses people.
-    field.addEventListener('blur', () => {
+    field.addEventListener('blur', (event) => {
+      // Moving to "Add another property" must not shift that button under
+      // the pointer with a freshly shown error — the click would miss.
+      if ((event as FocusEvent).relatedTarget === addAddressButton) return
       if (field.value.trim()) validateField(name)
     })
     // Once a field is showing an error, correct it live rather than making
@@ -375,6 +471,7 @@ export function setupQuoteForm(): void {
     for (const name of draftFields) {
       draft[name] = String(data.get(name) ?? '').trim()
     }
+    draft.additionalAddresses = additionalAddresses()
     saveQuoteDraft(draft)
   }
 
@@ -412,6 +509,11 @@ export function setupQuoteForm(): void {
       if (!value) continue
       const field = form.elements.namedItem(name) as HTMLInputElement | null
       if (field) field.value = value
+    }
+    // Rebuild any extra property rows — once: activation can fire again on a
+    // prerendered page, and the rows must not double.
+    if (extraAddressInputs().length === 0) {
+      for (const extra of draft.additionalAddresses ?? []) addAddressRow(extra)
     }
 
     if (propertyTypeSelect) {
@@ -538,6 +640,7 @@ export function setupQuoteForm(): void {
       email,
       phone: String(data.get('phone') ?? '').trim(),
       address: String(data.get('address') ?? '').trim(),
+      additionalAddresses: additionalAddresses(),
       propertyType: String(data.get('propertyType') ?? '').trim(),
       scope: String(data.get('scope') ?? '').trim(),
       website: String(data.get('website') ?? ''),
@@ -597,6 +700,8 @@ export function setupQuoteForm(): void {
       email: String(data.get('email') ?? '').trim(),
       phone: String(data.get('phone') ?? '').trim(),
       address: String(data.get('address') ?? '').trim(),
+      // Properties 2..n. Blank rows are left out; Icey drops repeats.
+      additionalAddresses: additionalAddresses(),
       propertyType: String(data.get('propertyType') ?? '').trim(),
       scope: String(data.get('scope') ?? '').trim(),
       pageUrl: window.location.origin + window.location.pathname,
@@ -614,8 +719,12 @@ export function setupQuoteForm(): void {
     for (const name of REQUIRED_FIELDS) {
       if (!validateField(name) && !firstInvalid) firstInvalid = name
     }
-    if (firstInvalid) {
-      const field = fieldOf(firstInvalid)
+    let firstBadExtra: HTMLInputElement | null = null
+    for (const input of extraAddressInputs()) {
+      if (!validateExtraAddress(input) && !firstBadExtra) firstBadExtra = input
+    }
+    const field = firstInvalid ? fieldOf(firstInvalid) : firstBadExtra
+    if (field) {
       field.focus({ preventScroll: true })
       field.scrollIntoView({ block: 'center', behavior: 'smooth' })
       return false
@@ -624,13 +733,19 @@ export function setupQuoteForm(): void {
   }
 
   function mailtoFallback(lead: ReturnType<typeof collect>): string {
-    const subject = `Quote request — ${lead.address}`
+    const others = lead.additionalAddresses
+    const subject = `Quote request — ${lead.address}${others.length ? ` (+${others.length} more)` : ''}`
     const name = [lead.firstName, lead.lastName].filter(Boolean).join(' ')
     const body = [
       ...(name ? [`Name: ${name}`] : []),
       `Email: ${lead.email}`,
       ...(lead.phone ? [`Phone: ${lead.phone}`] : []),
-      `Property address: ${lead.address}`,
+      ...(others.length
+        ? [
+            `Property addresses (${others.length + 1}):`,
+            ...[lead.address, ...others].map((address, i) => `${i + 1}. ${address}`),
+          ]
+        : [`Property address: ${lead.address}`]),
       `Property type: ${lead.propertyType || '—'}`,
       // Scope is optional now, so an unfilled one leaves no empty heading
       // behind in the email a visitor is about to send by hand.
@@ -693,6 +808,8 @@ export function setupQuoteForm(): void {
         propertyType: lead.propertyType,
         email: lead.email,
         estimate,
+        address: lead.address,
+        otherProperties: lead.additionalAddresses.length,
       })
       window.location.assign('/thank-you')
     } catch (error) {

@@ -17,7 +17,7 @@ import { SITE } from '../lib/site'
       </div>
       <h1 class="h1 mt-7 !text-white">Request received — we're on it</h1>
       <p class="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-body-dark">
-        Our system is already measuring your property from satellite imagery. You'll get a
+        Our system is already measuring <span id="ty-what">your property</span> from satellite imagery. You'll get a
         confirmation email within minutes, and your quote is usually ready within one business day.
       </p>
       <div
@@ -25,7 +25,7 @@ import { SITE } from '../lib/site'
         hidden
         class="mx-auto mt-8 max-w-xl rounded-2xl border border-ice-400/40 bg-white/5 p-6"
       >
-        <p class="text-sm font-semibold uppercase tracking-wide text-ice-400">
+        <p class="text-sm font-semibold uppercase tracking-wide text-ice-400" id="ballpark-title">
           Your ballpark range
         </p>
         <p class="mt-2 text-2xl font-bold text-white">
@@ -44,6 +44,7 @@ import { SITE } from '../lib/site'
           Based on your property type and lot records — your exact quote, measured from
           satellite imagery, arrives by email.
         </p>
+        <p class="mt-2 text-sm font-medium text-white" id="ballpark-others" hidden></p>
       </div>
       <div class="mx-auto mt-10 grid max-w-lg gap-3 text-left">
         {[
@@ -89,6 +90,14 @@ import { SITE } from '../lib/site'
 
       // Instant ballpark from the submit response (absent = server declined
       // to price; the panel just stays hidden and the promise stays "by email").
+      // Several properties: the instant range is for the FIRST one only (the
+      // others are measured and quoted by email), so say which it is.
+      const others = lead.otherProperties ?? 0
+      if (others > 0) {
+        const what = document.getElementById('ty-what')
+        if (what) what.textContent = `your ${others + 1} properties`
+      }
+
       const est = lead.estimate
       if (est && est.perVisit && est.seasonal) {
         const money = (n: number) => '$' + Math.round(n).toLocaleString('en-CA')
@@ -106,6 +115,15 @@ import { SITE } from '../lib/site'
           if (deice && deiceRow && deiceEl) {
             deiceEl.textContent = range(deice)
             deiceRow.hidden = false
+          }
+          if (others > 0 && lead.address) {
+            const title = document.getElementById('ballpark-title')
+            const note = document.getElementById('ballpark-others')
+            if (title) title.textContent = `Ballpark for ${lead.address}`
+            if (note) {
+              note.textContent = `Your other ${others === 1 ? 'property is' : `${others} properties are`} measured and quoted by email, each on its own.`
+              note.hidden = false
+            }
           }
           panel.hidden = false
         }

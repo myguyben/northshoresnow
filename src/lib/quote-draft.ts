@@ -26,6 +26,8 @@ export interface QuoteDraft {
   phone?: string
   email?: string
   address?: string
+  /** Properties 2..n, when the visitor added more than one. */
+  additionalAddresses?: string[]
   propertyType?: string
   scope?: string
   /** 'hero' means the mini form started this — the full form scrolls to itself. */

@@ -99,6 +99,54 @@ import { SITE, GOOGLE_REVIEWS, INSURANCE } from '../lib/site'
           ></ul>
         </div>
         <p class="field-error" id="qf-address-error" hidden></p>
+
+        {/* MORE THAN ONE PROPERTY — Ben, 2026-09-23. A property manager
+            quoting a portfolio used to send one form per building. Each row
+            is its own property: Icey lists them in the request and runs one
+            satellite quote per address, exactly as it does for an emailed
+            multi-site request. Rows come from the template below
+            (scripts/quote-form.ts); at most 10 properties in total, the most
+            one request can carry. */}
+        <div id="qf-more-addresses" class="mt-3 space-y-3"></div>
+        <button
+          type="button"
+          id="qf-add-address"
+          class="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-600 hover:text-brand-700"
+        >
+          <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <path stroke-linecap="round" d="M8 3v10M3 8h10" />
+          </svg>
+          Add another property
+        </button>
+        <template id="qf-address-row">
+          <div data-extra-address>
+            <div class="flex items-center justify-between">
+              <label class="label" data-row-label>Another property</label>
+              <button
+                type="button"
+                data-remove-address
+                class="text-sm font-medium text-body/70 underline underline-offset-2 hover:text-body"
+              >
+                Remove
+              </button>
+            </div>
+            <div class="relative" data-address-autocomplete>
+              <input
+                class="input"
+                name="additionalAddress"
+                type="text"
+                minlength="5"
+                autocomplete="off"
+                role="combobox"
+                aria-expanded="false"
+                aria-autocomplete="list"
+                placeholder="Start typing the address…"
+              />
+              <ul class="address-listbox" role="listbox" aria-label="Address suggestions" hidden></ul>
+            </div>
+            <p class="field-error" data-row-error hidden></p>
+          </div>
+        </template>
       </div>
 
       <div>

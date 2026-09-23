@@ -164,6 +164,10 @@ export interface PendingLead {
   email?: string
   /** Instant ballpark from the submit response; shown once on /thank-you. */
   estimate?: BallparkEstimate | null
+  /** The first property — the one the ballpark was priced for. */
+  address?: string
+  /** How many more properties the request carried (quoted by email). */
+  otherProperties?: number
 }
 
 export function stashPendingLead(lead: PendingLead): void {
