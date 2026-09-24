@@ -9,6 +9,7 @@ import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
 import Analytics from '../components/Analytics.astro'
 import MobileCallBar from '../components/MobileCallBar.astro'
+import QuotePrompt from '../components/QuotePrompt.astro'
 
 interface Props {
   title: string
@@ -47,6 +48,17 @@ const { overHero = false, ...seo } = Astro.props
 // build.format 'file' means pathname is '/contact.html'.
 const path = Astro.url.pathname.replace(/index\.html$/, '').replace(/\.html$/, '')
 const speculate = path !== '/contact' && path !== '/thank-you'
+
+/**
+ * The corner card that asks a browsing visitor for an address
+ * (components/QuotePrompt.astro; the rules for when it appears are in
+ * scripts/quote-prompt.ts). Not on the page that already asks (/contact),
+ * the page that has just been answered (/thank-you), the legal pages, or
+ * a dead link — none of those is a visitor weighing up a quote.
+ */
+const NO_QUOTE_PROMPT = ['/contact', '/thank-you', '/privacy', '/terms', '/404']
+const quotePrompt = !NO_QUOTE_PROMPT.includes(path)
+
 const SPECULATION_RULES = JSON.stringify({
   prerender: [{ source: 'list', urls: ['/contact#quote'], eagerness: 'immediate' }],
   prefetch: [
@@ -129,6 +141,7 @@ const SPECULATION_RULES = JSON.stringify({
     </main>
     <Footer />
     <MobileCallBar />
+    {quotePrompt && <QuotePrompt />}
 
     <!-- Runs with or without pixels configured: a lead still has to carry its
          UTMs and click id into Icey so the sale can be traced back to the ad.
@@ -137,7 +150,13 @@ const SPECULATION_RULES = JSON.stringify({
     <script>
       import { initAnalytics } from '../lib/analytics'
       import { initVisitBeacon } from '../lib/visit-beacon'
+      import { initQuotePrompt } from '../scripts/quote-prompt'
       initAnalytics()
+      // Before the beacon: this is where the quote-prompt arm is assigned
+      // and the session's page views are counted, and the first view the
+      // beacon sends should already carry the arm. Runs on every page, card
+      // or no card — the count has to include the pages without one.
+      initQuotePrompt()
       initVisitBeacon()
     </script>
   </body>

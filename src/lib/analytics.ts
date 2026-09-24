@@ -26,7 +26,7 @@
  * first-party beacon to Icey — lib/visit-beacon.ts — and does not touch GA4.
  */
 
-import { heroVariant } from './experiment'
+import { heroVariant, quotePromptArm } from './experiment'
 import { onActivated } from './prerender'
 
 const STORAGE_KEY = 'nss_attribution'
@@ -143,17 +143,47 @@ const EMAIL_LABEL = import.meta.env.PUBLIC_GOOGLE_ADS_EMAIL_LABEL as string | un
 const ENHANCED = import.meta.env.PUBLIC_GOOGLE_ADS_ENHANCED === 'true'
 
 /**
- * Every custom GA4 event goes out through here so it carries the header-test
- * arm as an event parameter. Analytics.astro already sets `home_hero` as a
- * user property before the first page_view; the parameter is belt and braces
+ * The arms this browser holds, keyed as GA4 knows them: `home_hero` for the
+ * header test, `quote_prompt` for the corner card (lib/experiment.ts).
+ * Only the ones assigned — a browser in neither test contributes nothing.
+ */
+function experimentArms(): Record<string, string> {
+  const arms: Record<string, string> = {}
+  const hero = heroVariant()
+  if (hero) arms.home_hero = hero
+  const prompt = quotePromptArm()
+  if (prompt) arms.quote_prompt = prompt
+  return arms
+}
+
+/**
+ * Every custom GA4 event goes out through here so it carries each test's
+ * arm as an event parameter. Analytics.astro already sets them as user
+ * properties before the first page_view; the parameters are belt and braces
  * — a user property only reaches a report through its own custom dimension,
  * and an event parameter survives a report built without one. Google Ads
  * `conversion` hits are not custom events and stay as they are.
  */
 function sendEvent(name: string, params: Record<string, unknown> = {}): void {
   if (!window.gtag) return
-  const arm = heroVariant()
-  window.gtag('event', name, arm ? { ...params, home_hero: arm } : params)
+  window.gtag('event', name, { ...params, ...experimentArms() })
+}
+
+/**
+ * Set the arms as GA4 user properties, so hits that do not go through
+ * sendEvent (page_view, the Ads conversions) split by arm too.
+ *
+ * Analytics.astro does this as the tag boots, from localStorage, on every
+ * page — but the quote-prompt arm is assigned client-side AFTER the tag has
+ * booted (scripts/quote-prompt.ts), so the page that assigns it calls this
+ * the moment it does. Always the whole set in one call: whether a later
+ * `set` of `user_properties` merges with or replaces an earlier one is not
+ * something to rely on.
+ */
+export function trackExperimentArms(): void {
+  if (!window.gtag) return
+  const arms = experimentArms()
+  if (Object.keys(arms).length) window.gtag('set', 'user_properties', arms)
 }
 
 /**
@@ -351,6 +381,34 @@ export function trackQuoteFormStart(): void {
 /** "Add another property" — `properties` is the total on the form after adding. */
 export function trackQuoteAddProperty(properties: number): void {
   sendEvent('quote_add_property', { properties })
+}
+
+/* ------------------------------------------------------------------ *
+ * Quote prompt (the corner card — scripts/quote-prompt.ts)
+ * ------------------------------------------------------------------ */
+
+/**
+ * The card appeared. `trigger` is what earned it — 'second_page',
+ * 'engaged', 'pricing' or 'exit' — so the shown → submit rate can be read
+ * per trigger, not just per arm: if exit intent converts and the 45-second
+ * timer only annoys, the timer goes.
+ */
+export function trackQuotePromptShown(trigger: string): void {
+  sendEvent('quote_prompt_shown', { trigger })
+}
+
+/** The ✕ (or Escape). The visitor is not asked again for 14 days. */
+export function trackQuotePromptDismiss(): void {
+  sendEvent('quote_prompt_dismiss')
+}
+
+/**
+ * An address was submitted from the card. Fired before the navigation to
+ * /contact#quote — GA4 sends events as beacons, so it survives the page
+ * going away. The full form's own funnel events take over from there.
+ */
+export function trackQuotePromptSubmit(): void {
+  sendEvent('quote_prompt_submit')
 }
 
 /* ------------------------------------------------------------------ *

@@ -74,11 +74,16 @@ import { SITE } from '../lib/site'
 
   <script>
     import { consumePendingLead, trackLead, LEAD_VALUE } from '../lib/analytics'
+    import { markQuoteSubmitted } from '../scripts/quote-prompt'
 
     // Only a real submission leaves a pending lead behind, so someone who
     // lands here by any other route is not counted as a conversion.
     const lead = consumePendingLead()
     if (lead) {
+      // This browser has asked. The corner card (scripts/quote-prompt.ts)
+      // leaves it alone for 90 days — a customer waiting on a quote must not
+      // be asked to request one.
+      markQuoteSubmitted()
       const value =
         lead.propertyType === 'Residential' ? LEAD_VALUE.residential : LEAD_VALUE.commercial
       void trackLead({

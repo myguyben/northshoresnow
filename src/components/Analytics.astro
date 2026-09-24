@@ -71,15 +71,24 @@ const CONSENT_DENIED_REGIONS = [
 
       function bootGoogleTags() {
         gtag('js', new Date())
-        // Homepage header A/B test (lib/experiment.ts): tag every hit from a
-        // browser that has been assigned an arm, so a lead on /contact or
-        // /thank-you can be split by the header its visitor saw. Set before
-        // config so the page_view carries it too — including the very first
-        // one: the homepage assigns the arm in Base.astro's head-first slot,
-        // which renders before this component.
+        // The A/B tests (lib/experiment.ts): tag every hit from a browser
+        // that has been assigned an arm, so a lead on /contact or /thank-you
+        // can be split by the header its visitor saw and by whether the
+        // corner card was in play. Set before config so the page_view
+        // carries them too — including the very first one for the header
+        // test: the homepage assigns that arm in Base.astro's head-first
+        // slot, which renders before this component. The quote-prompt arm
+        // is assigned later in the page's life (scripts/quote-prompt.ts),
+        // so on the page that assigns it, lib/analytics.ts sets it as well;
+        // from the next page on it is read here. One `set` with both, so
+        // neither arm can overwrite the other.
         try {
+          var arms = {}
           var heroArm = localStorage.getItem('nss_exp_home_hero')
-          if (heroArm === 'a' || heroArm === 'b') gtag('set', 'user_properties', { home_hero: heroArm })
+          if (heroArm === 'a' || heroArm === 'b') arms.home_hero = heroArm
+          var promptArm = localStorage.getItem('nss_exp_quote_prompt')
+          if (promptArm === 'on' || promptArm === 'off') arms.quote_prompt = promptArm
+          if (heroArm || promptArm) gtag('set', 'user_properties', arms)
         } catch (e) {}
         if (ga4Id) gtag('config', ga4Id)
         // allow_enhanced_conversions stays inert until the conversion action

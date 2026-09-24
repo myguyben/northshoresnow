@@ -1,0 +1,122 @@
+---
+/**
+ * The on-site quote prompt: a small card in the corner that asks a visitor
+ * who has been reading, and typed nothing, for their property address.
+ *
+ * Ben, 2026-09-23: "we want to ask for quotes for people who just visit the
+ * site but don't fill anything out." A visitor who never gives an email
+ * cannot be emailed — there is no address, and working one out from their
+ * visit would be a CASL/PIPEDA problem — so the only moment to ask is while
+ * they are still here. This is the ask.
+ *
+ * MARKUP ONLY. Base.astro renders it on every page but /contact, /thank-you,
+ * /privacy, /terms and /404, and Base.astro's script wires it through
+ * scripts/quote-prompt.ts — which holds the rules for WHEN it appears, the
+ * longer list of when it never does, and the handoff. The card starts
+ * `hidden` and stays that way for half of all browsers: it is an A/B test
+ * (lib/experiment.ts, 'quote-prompt'), and the lead count per arm decides
+ * whether asking earns quotes or only closes.
+ *
+ * ONE QUESTION, not two. QuoteFormMini asks for address and email; this
+ * card is an interruption and earns only the address. It saves it to the
+ * same session draft (lib/quote-draft.ts) and lands on the same prerendered
+ * /contact#quote, where the full form asks for the email with the address
+ * already filled in — the handoff QuoteFormMini makes, minus a field.
+ *
+ * NON-MODAL by design: no backdrop, no focus trap, and focus is never moved
+ * into it — a visitor mid-sentence in an article should not find their
+ * cursor somewhere else. The page stays usable underneath; Escape or the ✕
+ * closes it. On phones it sits ABOVE the sticky call bar (MobileCallBar),
+ * never over it: during a storm the call is the higher-intent action and
+ * nothing may cover it.
+ */
+---
+
+<div
+  id="quote-prompt"
+  class="quote-prompt card fixed inset-x-3 z-50 p-5 motion-reduce:transition-none lg:inset-x-auto lg:right-6 lg:w-[360px] lg:p-6"
+  role="dialog"
+  aria-modal="false"
+  aria-labelledby="qp-title"
+  aria-describedby="qp-lede"
+  hidden
+>
+  <button
+    type="button"
+    class="absolute top-3 right-3 inline-flex h-10 w-10 items-center justify-center rounded-full text-body transition-colors hover:bg-frost-100 hover:text-ink-950 focus-visible:ring-2 focus-visible:ring-ice-400 focus-visible:outline-none"
+    aria-label="Close"
+    data-qp-close
+  >
+    <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path stroke-linecap="round" d="M4 4l8 8M12 4l-8 8" />
+    </svg>
+  </button>
+  {/* Same promise, in the same words, as the hero card: the range is what
+      the next screen shows, and "most" because the estimator declines some
+      addresses. */}
+  <h2 id="qp-title" class="pr-10 font-display text-lg font-bold">Want a price for your property?</h2>
+  <p id="qp-lede" class="mt-1.5 text-sm text-body">
+    Most addresses get a price range on the next screen. Free, no obligation.
+  </p>
+  <form class="mt-4 space-y-3" method="get" action="/contact" id="qp-form">
+    <div>
+      <label class="label" for="qp-address">Property address</label>
+      <div class="relative" data-address-autocomplete>
+        <input
+          class="input"
+          id="qp-address"
+          name="address"
+          type="text"
+          required
+          minlength="5"
+          autocomplete="off"
+          role="combobox"
+          aria-expanded="false"
+          aria-controls="qp-address-listbox"
+          aria-autocomplete="list"
+          placeholder="Start typing the address…"
+        />
+        <ul
+          class="address-listbox"
+          id="qp-address-listbox"
+          role="listbox"
+          aria-label="Address suggestions"
+          hidden
+        ></ul>
+      </div>
+    </div>
+    <button type="submit" class="btn-primary w-full">Show me my price range</button>
+  </form>
+  <p class="mt-3 text-center text-[13px] text-body/80">Takes about a minute</p>
+</div>
+
+<style>
+  /* Above the sticky call bar — MobileCallBar is 68px plus the safe-area
+     inset — with a little air. From lg the bar is gone and the card takes
+     the corner. */
+  .quote-prompt {
+    bottom: calc(68px + env(safe-area-inset-bottom) + 0.75rem);
+    /* Start state of the slide-up; `.card`'s own transition carries it and
+       motion-reduce:transition-none (above) turns it into a plain appear. */
+    opacity: 0;
+    translate: 0 0.75rem;
+  }
+  @media (min-width: 64rem) {
+    .quote-prompt {
+      bottom: 1.5rem;
+    }
+  }
+  .quote-prompt[data-open] {
+    opacity: 1;
+    translate: 0 0;
+  }
+  /* The suggestions open UPWARD here. The card is pinned to the bottom of
+     the screen, so a list dropping below the input would run off it — and
+     on a phone, under the call bar. */
+  .quote-prompt .address-listbox {
+    top: auto;
+    bottom: 100%;
+    margin-top: 0;
+    margin-bottom: 0.375rem;
+  }
+</style>
