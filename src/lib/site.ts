@@ -73,12 +73,13 @@ export const INSURANCE = {
  */
 
 /**
- * The old hero's stat bar — used ONLY by arm B of the homepage header test
- * (lib/experiment.ts), which Ben chose to run verbatim on 2026-09-23.
+ * The old hero's stat bar — used ONLY by the homepage header. Ben ran it
+ * verbatim as arm B of the header A/B test (2026-09-23) and kept that
+ * header when the test ended (2026-10-19: "lets stick with header b").
  *
  * These are the unsourced figures he took off the site on 2026-09-21 ("60
- * sites is nothing"); the active book is ~60 properties, not 100+. Do not
- * use them anywhere else, and delete them with arm B when the test ends.
+ * sites is nothing"); the active book is ~60 properties, not 100+. Left as
+ * they are on his call. Do not use them anywhere else.
  */
 export const STATS = [
   { value: '98%', label: 'On-time response rate' },

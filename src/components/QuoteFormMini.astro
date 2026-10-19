@@ -17,10 +17,11 @@ import { INSURANCE } from '../lib/site'
 
 interface Props {
   /**
-   * 'price' (default) is the current wording everywhere. 'classic' is the
-   * card as it read on the live site before the 2026-09-21 overhaul — used
-   * only by arm B of the homepage header test (lib/experiment.ts). The form
-   * itself, and where it hands off to, is the same in both.
+   * 'price' (default) is the wording on the service, industry and area
+   * pages. 'classic' is the card as it read on the live site before the
+   * 2026-09-21 overhaul — used only by the homepage header, which Ben kept
+   * on 2026-10-19 after the header A/B test. The form itself, and where it
+   * hands off to, is the same in both.
    */
   copy?: 'price' | 'classic'
   /** Element-id prefix, so two cards on one page never share an id. */
@@ -123,8 +124,8 @@ const formId = idPrefix === 'qfm' ? 'quote-mini' : `${idPrefix}-form`
   import { trackQuoteHeroSubmit } from '../lib/analytics'
   import { saveQuoteDraft } from '../lib/quote-draft'
 
-  // Every card on the page — the homepage header test renders two (one
-  // hidden), and each needs its own autocomplete and submit handler.
+  // Every card on the page, so a page that ever renders two gives each its
+  // own autocomplete and submit handler.
   for (const mini of document.querySelectorAll<HTMLFormElement>('form[data-quote-mini]')) {
     const address = mini.querySelector<HTMLInputElement>('input[name="address"]')
     if (address) attachAddressAutocomplete(address)
@@ -137,9 +138,9 @@ const formId = idPrefix === 'qfm' ? 'quote-mini' : `${idPrefix}-form`
         email: String(data.get('email') ?? '').trim(),
         from: 'hero',
       })
-      // The funnel's first step, tagged with this card's copy — which is the
-      // header arm by another name. Fired before the navigation: GA4 sends
-      // events as beacons, so it survives the page going away.
+      // The funnel's first step, tagged with this card's copy (homepage
+      // 'classic', elsewhere 'price'). Fired before the navigation: GA4
+      // sends events as beacons, so it survives the page going away.
       trackQuoteHeroSubmit(mini.dataset.quoteMini === 'classic' ? 'classic' : 'price')
       // Same URL Base.astro prerenders — query-free so the speculation hits.
       window.location.assign('/contact#quote')

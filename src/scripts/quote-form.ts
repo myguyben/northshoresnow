@@ -489,8 +489,8 @@ export function setupQuoteForm(): void {
   form.addEventListener('input', queueDraftSave)
   propertyTypeSelect?.addEventListener('change', saveDraft)
   // The first keystroke, once: a visitor who types anything has started the
-  // form, and the funnel step between "saw it" and "sent it" is what the
-  // header test needs. Prefill from the hero sets values without an input
+  // form, and the funnel step between "saw it" and "sent it" is what an A/B
+  // test needs. Prefill from the hero sets values without an input
   // event, so it does not count — that visitor already started in the hero.
   form.addEventListener('input', () => trackQuoteFormStart(), { once: true })
 

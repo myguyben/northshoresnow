@@ -15,9 +15,9 @@
  *    Google Ads and the Meta pixel.
  *
  * 3. ENGAGEMENT — scroll depth, CTA clicks and the quote funnel, to GA4 only,
- *    so the header A/B test (lib/experiment.ts) can be read further up the
- *    page than the lead: which arm gets people to the pricing section, which
- *    gets them to start the form.
+ *    so an A/B test (lib/experiment.ts) can be read further up the page than
+ *    the lead: which arm gets people to the pricing section, which gets them
+ *    to start the form.
  *
  * Every function here no-ops when the corresponding tag is not configured, so
  * the site behaves exactly as it did before the tags were added.
@@ -26,7 +26,7 @@
  * first-party beacon to Icey — lib/visit-beacon.ts — and does not touch GA4.
  */
 
-import { heroVariant, quotePromptArm } from './experiment'
+import { quotePromptArm } from './experiment'
 import { onActivated } from './prerender'
 
 const STORAGE_KEY = 'nss_attribution'
@@ -143,14 +143,12 @@ const EMAIL_LABEL = import.meta.env.PUBLIC_GOOGLE_ADS_EMAIL_LABEL as string | un
 const ENHANCED = import.meta.env.PUBLIC_GOOGLE_ADS_ENHANCED === 'true'
 
 /**
- * The arms this browser holds, keyed as GA4 knows them: `home_hero` for the
- * header test, `quote_prompt` for the corner card (lib/experiment.ts).
- * Only the ones assigned — a browser in neither test contributes nothing.
+ * The arms this browser holds, keyed as GA4 knows them: `quote_prompt` for
+ * the corner card (lib/experiment.ts). Only the ones assigned — a browser in
+ * no test contributes nothing.
  */
 function experimentArms(): Record<string, string> {
   const arms: Record<string, string> = {}
-  const hero = heroVariant()
-  if (hero) arms.home_hero = hero
   const prompt = quotePromptArm()
   if (prompt) arms.quote_prompt = prompt
   return arms
@@ -366,8 +364,8 @@ export function trackQuoteSubmitFailed(reason: string): void {
 
 /**
  * The hero's mini form was submitted (address + email) — the top of the quote
- * funnel, and the one step the header A/B test changes directly. `variant` is
- * the card's copy ('price' | 'classic'), which is the arm by another name.
+ * funnel. `variant` is the card's copy: 'classic' on the homepage, 'price' on
+ * the service, industry and area pages.
  */
 export function trackQuoteHeroSubmit(variant: string): void {
   sendEvent('quote_hero_submit', { variant })

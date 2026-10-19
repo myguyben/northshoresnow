@@ -49,7 +49,7 @@ const ENDPOINT = (
 
 const VISITOR_KEY = 'nss_vid'
 const SESSION_KEY = 'nss_sid'
-/** Same rule as the header test's inline script in index.astro; keep in step. */
+/** Same rule as BOT_UA in lib/experiment.ts; keep in step. */
 const BOT_UA = /bot|crawl|spider|slurp|lighthouse|headless/i
 /** While the page is being read, engagement goes out this often. */
 const HEARTBEAT_MS = 30_000
@@ -64,7 +64,7 @@ interface ViewEvent {
   path: string
   title?: string
   referrer?: string
-  /** e.g. 'home-hero:b' */
+  /** e.g. 'quote-prompt:on' */
   experiment?: string
   /** First view of a session only: landing page, referrer, utm_*, clickIdType. */
   firstTouch?: Record<string, string>

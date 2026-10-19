@@ -161,8 +161,7 @@ function openSession(): Session | null {
 
 /**
  * Whether either quote form is on screen right now. The hero's mini form
- * (`form[data-quote-mini]` — the homepage renders two, one per header arm,
- * and the hidden one never intersects) and the full form (`#quote-form`).
+ * (`form[data-quote-mini]`) and the full form (`#quote-form`).
  * A browser without IntersectionObserver reports "in view" and never
  * shows the card — fail closed, as everywhere else here.
  */

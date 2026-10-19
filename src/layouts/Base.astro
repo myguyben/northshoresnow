@@ -96,10 +96,6 @@ const SPECULATION_RULES = JSON.stringify({
     <link rel="preload" as="font" type="font/woff2" href={interWoff2} crossorigin />
     <link rel="preload" as="font" type="font/woff2" href={bricolageWoff2} crossorigin />
     <Seo {...seo} />
-    {/* Before the tags, deliberately: the homepage assigns its header arm here
-        (index.astro), so the very first page_view a new visitor sends already
-        carries it — Analytics.astro reads the arm from localStorage. */}
-    <slot name="head-first" />
     <Analytics />
     {
       speculate && (
