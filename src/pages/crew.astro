@@ -1,0 +1,316 @@
+---
+/**
+ * /crew — the hiring-day crew guide.
+ *
+ * Opened from an NFC tag and a printed QR code at the hiring event, by
+ * people thinking about joining the winter crew. Most of them are standing
+ * up with a phone in one hand, so: short sections, a sticky jump bar, big
+ * tap targets, and <details> accordions for anything longer than a few
+ * lines.
+ *
+ * Every word of copy lives in src/data/crew-guide.json; edit that file, not
+ * this one. "[Ask today]" in the JSON renders as a grey chip (GuideText).
+ *
+ * Deliberately UNLISTED: noindex, and NOT in sitemap.astro, sitemap.xml.ts,
+ * the header, the footer or any nav. It is reached by tag or QR code only.
+ *
+ * No tel: link for the crew number. initAnalytics() fires click_to_call
+ * (a GA4 key event) and the Google Ads call conversion on EVERY tel: click,
+ * so a job seeker calling would count as a sales lead. sms: is not tracked
+ * as a conversion.
+ */
+import Base from '../layouts/Base.astro'
+import GuideText from '../components/crew/GuideText.astro'
+import guide from '../data/crew-guide.json'
+
+const { job, night, safety, faq, cta } = guide
+
+const jumps = [
+  { id: 'job', label: 'The job' },
+  { id: 'night', label: 'A storm night' },
+  { id: 'safety', label: 'Safety' },
+  { id: 'faq', label: 'Q&A' },
+]
+
+/**
+ * The number to text is read out of the CTA copy itself, so changing it in
+ * the JSON changes the link too. Matches 604-831-6454 style numbers.
+ */
+const PHONE = /(\d{3}-\d{3}-\d{4})/
+const ctaParts = cta.text.split(PHONE)
+const ctaPhone = cta.text.match(PHONE)?.[1]
+const smsHref = (display: string) => `sms:+1${display.replace(/\D/g, '')}`
+
+/** Same open/close glyph as /faq: a plus that turns into a cross. */
+const summaryClass =
+  'flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-display text-lg leading-snug font-semibold text-ink-950 md:px-6 md:py-5 [&::-webkit-details-marker]:hidden'
+---
+
+<Base
+  title={`${guide.title} | North Shore Snow`}
+  description="What the job is, what a storm night looks like, how we keep crews safe, and answers to common questions for people thinking about joining the North Shore Snow winter crew."
+  noindex
+>
+  <section class="hero-dark pt-10 pb-10 md:pt-16 md:pb-16">
+    <div class="container-site max-w-4xl">
+      {/* eyebrow-dark: brand-600 is 3.2:1 on ink-950. */}
+      <p class="eyebrow-dark"><GuideText text={guide.eyebrow} /></p>
+      <h1 class="h1 mt-3 !text-white"><GuideText text={guide.headline} /></h1>
+      <p class="mt-4 max-w-2xl text-lg leading-relaxed text-body-dark"><GuideText text={guide.intro} /></p>
+    </div>
+  </section>
+
+  {/* Sticky under the fixed 72px header. Its own overflow scroll is the
+      fallback on the narrowest phones, so the page itself never scrolls
+      sideways. */}
+  <nav
+    aria-label="On this page"
+    class="sticky top-[72px] z-30 border-b border-frost-200 bg-white/95 backdrop-blur-md"
+  >
+    <div class="container-site max-w-4xl !px-3 md:!px-6">
+      <ul class="flex gap-1 overflow-x-auto py-2 [scrollbar-width:none]" role="list">
+        {jumps.map((jump) => (
+          <li class="shrink-0">
+            <a
+              href={`#${jump.id}`}
+              data-jump={jump.id}
+              class="flex min-h-11 items-center rounded-full px-3.5 text-[15px] font-semibold whitespace-nowrap text-ink-900 transition-colors hover:bg-frost-100 aria-[current=location]:bg-ink-950 aria-[current=location]:text-white"
+            >
+              {jump.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </nav>
+
+  {/* ── The job ─────────────────────────────────────────────── */}
+  <section id="job" class="scroll-mt-[136px] bg-white py-14 md:py-20">
+    <div class="container-site max-w-4xl">
+      <h2 class="h2"><GuideText text={job.heading} /></h2>
+      <p class="mt-4 text-lg leading-relaxed"><GuideText text={job.lede} /></p>
+
+      <ul class="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4" role="list">
+        {job.triggers.map((trigger) => (
+          <li class="card p-4 md:p-5">
+            <p class="figure text-[clamp(1.5rem,7.5vw,2.25rem)] whitespace-nowrap text-brand-600">
+              <GuideText text={trigger.big} />
+            </p>
+            <p class="mt-2.5 text-[15px] leading-snug text-ink-900"><GuideText text={trigger.text} /></p>
+          </li>
+        ))}
+      </ul>
+
+      <h3 class="mt-12 font-display text-xl font-bold md:text-2xl"><GuideText text={job.whoHeading} /></h3>
+      <ul class="mt-5 space-y-3" role="list">
+        {job.who.map((item) => (
+          <li class="card flex gap-4 p-5">
+            <svg
+              class="mt-0.5 h-6 w-6 shrink-0 text-brand-600"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.25"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5" />
+            </svg>
+            <div>
+              <p class="font-display text-lg leading-snug font-semibold text-ink-950"><GuideText text={item.title} /></p>
+              <p class="mt-1 text-[15px] leading-relaxed"><GuideText text={item.note} /></p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* ── A storm night ───────────────────────────────────────── */}
+  <section id="night" class="scroll-mt-[136px] border-y border-frost-100 bg-frost-50 py-14 md:py-20">
+    <div class="container-site max-w-4xl">
+      <h2 class="h2"><GuideText text={night.heading} /></h2>
+      <ol class="mt-8" role="list">
+        {night.steps.map((step, i) => (
+          <li class="relative flex gap-4 pb-8 last:pb-0">
+            {i < night.steps.length - 1 && (
+              <span class="absolute top-12 bottom-2 left-5 w-px bg-frost-200" aria-hidden="true" />
+            )}
+            <span
+              class="figure flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-600 text-lg text-white"
+              aria-hidden="true"
+            >
+              {i + 1}
+            </span>
+            <div class="pt-1.5">
+              <h3 class="font-display text-lg leading-snug font-semibold md:text-xl"><GuideText text={step.title} /></h3>
+              <p class="mt-1.5 text-[15px] leading-relaxed"><GuideText text={step.text} /></p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {/* ── Safety ──────────────────────────────────────────────── */}
+  <section id="safety" class="scroll-mt-[136px] bg-white py-14 md:py-20">
+    <div class="container-site max-w-4xl">
+      <h2 class="h2"><GuideText text={safety.heading} /></h2>
+      <p class="mt-4 text-lg leading-relaxed"><GuideText text={safety.lede} /></p>
+
+      <h3 class="mt-10 font-display text-xl font-bold md:text-2xl"><GuideText text={safety.wearHeading} /></h3>
+      <ul class="card mt-5 divide-y divide-frost-200 overflow-hidden" role="list">
+        {safety.wear.map((item) => (
+          <li class="px-5 py-4 md:px-6">
+            <p class="leading-snug font-semibold text-ink-950"><GuideText text={item.title} /></p>
+            <p class="mt-1 text-[15px] leading-relaxed"><GuideText text={item.note} /></p>
+          </li>
+        ))}
+      </ul>
+
+      <h3 class="mt-10 font-display text-xl font-bold md:text-2xl"><GuideText text={safety.basicsHeading} /></h3>
+      <div class="mt-5 space-y-3">
+        {safety.basics.map((topic) => (
+          <details class="group card overflow-hidden">
+            <summary class={summaryClass}>
+              <span><GuideText text={topic.title} /></span>
+              <svg
+                class="h-5 w-5 shrink-0 text-brand-500 transition-transform duration-200 group-open:rotate-45"
+                viewBox="0 0 20 20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path stroke-linecap="round" d="M10 4v12M4 10h12" />
+              </svg>
+            </summary>
+            <ul class="space-y-2.5 border-t border-frost-200 px-5 py-4 text-[15px] leading-relaxed md:px-6 md:py-5" role="list">
+              {topic.items.map((point) => (
+                <li class="flex gap-3">
+                  <span class="mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500" aria-hidden="true" />
+                  <span><GuideText text={point} /></span>
+                </li>
+              ))}
+            </ul>
+          </details>
+        ))}
+      </div>
+
+      <div class="mt-10 rounded-2xl border border-frost-200 bg-frost-50 px-5 py-4 md:px-6">
+        <p class="text-[15px]"><GuideText text={guide.sourcesIntro} /></p>
+        <ul class="mt-1" role="list">
+          {guide.sources.map((source) => (
+            <li>
+              <a
+                href={source.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex min-h-11 items-center gap-1.5 text-[15px] font-medium text-brand-600 hover:underline"
+              >
+                {source.label}
+                <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 4H4v12h12v-4M11 4h5v5M16 4l-7 7" />
+                </svg>
+                <span class="sr-only">(opens in a new tab)</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* ── Q&A ─────────────────────────────────────────────────── */}
+  <section id="faq" class="scroll-mt-[136px] border-t border-frost-100 bg-frost-50 py-14 md:py-20">
+    <div class="container-site max-w-4xl">
+      <h2 class="h2"><GuideText text={faq.heading} /></h2>
+      {faq.groups.map((group) => (
+        <div class="mt-10 first-of-type:mt-8">
+          <h3 class="eyebrow"><GuideText text={group.label} /></h3>
+          <div class="mt-4 space-y-3">
+            {group.items.map((item) => (
+              <details class="group card overflow-hidden">
+                <summary class={summaryClass}>
+                  <span><GuideText text={item.q} /></span>
+                  <svg
+                    class="h-5 w-5 shrink-0 text-brand-500 transition-transform duration-200 group-open:rotate-45"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path stroke-linecap="round" d="M10 4v12M4 10h12" />
+                  </svg>
+                </summary>
+                <div class="border-t border-frost-200 px-5 py-4 text-[15px] leading-relaxed md:px-6 md:py-5">
+                  <GuideText text={item.a} />
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  {/* ── Questions? ──────────────────────────────────────────── */}
+  <section class="hero-dark py-14 md:py-20">
+    <div class="container-site max-w-4xl">
+      <h2 class="h2 !text-white"><GuideText text={cta.title} /></h2>
+      <p class="mt-3 text-lg leading-relaxed text-body-dark">
+        {ctaParts.map((part) =>
+          PHONE.test(part) ? (
+            <a href={smsHref(part)} class="font-semibold whitespace-nowrap text-white underline decoration-white/40 underline-offset-4 hover:decoration-white">{part}</a>
+          ) : (
+            <GuideText text={part} />
+          )
+        )}
+      </p>
+      {ctaPhone && (
+        <div class="mt-7">
+          <a href={smsHref(ctaPhone)} class="btn-primary w-full !py-3.5 sm:w-auto">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 5.5A1.5 1.5 0 015.5 4h13A1.5 1.5 0 0120 5.5v9a1.5 1.5 0 01-1.5 1.5H9l-5 4V5.5z" />
+            </svg>
+            Text {ctaPhone}
+          </a>
+        </div>
+      )}
+    </div>
+  </section>
+
+  {/* Highlights the jump-bar link for the section on screen. */}
+  <script>
+    const links = new Map<string, HTMLAnchorElement>()
+    document.querySelectorAll<HTMLAnchorElement>('a[data-jump]').forEach((link) => {
+      if (link.dataset.jump) links.set(link.dataset.jump, link)
+    })
+    const setActive = (id: string | null) => {
+      links.forEach((link, key) => {
+        if (key === id) link.setAttribute('aria-current', 'location')
+        else link.removeAttribute('aria-current')
+      })
+    }
+    if ('IntersectionObserver' in window) {
+      const visible = new Set<string>()
+      const order = [...links.keys()]
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) visible.add(entry.target.id)
+            else visible.delete(entry.target.id)
+          })
+          setActive(order.find((id) => visible.has(id)) ?? null)
+        },
+        // A band just under the header and jump bar: the section crossing
+        // it is the one being read.
+        { rootMargin: '-140px 0px -55% 0px' }
+      )
+      order.forEach((id) => {
+        const section = document.getElementById(id)
+        if (section) observer.observe(section)
+      })
+    }
+  </script>
+</Base>

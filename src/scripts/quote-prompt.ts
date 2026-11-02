@@ -36,7 +36,7 @@
  *     that will not keep them would be shown the card on every page. Fail
  *     closed.
  * Base.astro also leaves the card out of /contact, /thank-you, /privacy,
- * /terms and /404 altogether.
+ * /terms, /404 and /crew altogether.
  *
  * PRERENDER: /contact is prerendered from every page (lib/prerender.ts) and
  * initQuotePrompt runs from Base.astro on every page, so everything that

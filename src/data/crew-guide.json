@@ -1,0 +1,88 @@
+{
+  "title": "Join our winter crew",
+  "eyebrow": "North Shore Snow · Hiring day",
+  "headline": "Work a winter with us",
+  "intro": "Thanks for coming. Here is what the job is, what a storm night looks like, how we keep crews safe, and answers to the questions people ask. Anything not here, ask us today.",
+  "job": {
+    "heading": "The job in one minute",
+    "lede": "We keep parking lots, walkways, stairs and entrances safe at commercial and strata buildings in North Vancouver and West Vancouver. Most nights are about ice, not deep snow.",
+    "triggers": [
+      { "big": "1 °C", "text": "or colder, or freezing rain: we salt" },
+      { "big": "2 cm", "text": "of snow: we clear, then salt" },
+      { "big": "6:30", "text": "AM on weekday snow days: priority sites cleared" },
+      { "big": "Nov–Apr", "text": "the season, following the weather" }
+    ],
+    "whoHeading": "Requirements",
+    "who": [
+      { "title": "You pick up when we call", "note": "Storms come at short notice, often overnight. Being reachable is most of the job." },
+      { "title": "You are fine outside in the dark, cold and wet", "note": "North Shore winter is mostly cold rain and ice, with some heavy, wet snow." },
+      { "title": "You work carefully", "note": "Safe footing, salt where it belongs, no damage to clients' property." },
+      { "title": "You keep your phone charged and with you", "note": "Your route, check-ins and photos are all in our crew app." }
+    ]
+  },
+  "night": {
+    "heading": "What a storm night looks like",
+    "steps": [
+      { "title": "The call-out", "text": "The forecast turns cold or icy. Your phone gets a call-out in the crew app: \"Salting expected. Are you available?\" You answer yes or no." },
+      { "title": "Load up", "text": "Bags of salt are loaded into the back of the truck, or bulk salt goes into the salt spreader." },
+      { "title": "Start your route", "text": "The app shows your sites in order, priority sites first." },
+      { "title": "At each site", "text": "Salt or clear the walkways, stairs and lot, take before and after photos, and log how much salt you used. A typical salting visit is about one bag." },
+      { "title": "Can't get in?", "text": "A locked gate or blocked lot gets a photo and a reason in the app, so there is a record we were there." },
+      { "title": "Finish", "text": "On weekday snow days, priority sites are cleared by 6:30 AM. You finish the route in the app, and your hours are recorded from route start to route finish." }
+    ]
+  },
+  "safety": {
+    "heading": "How we keep crews safe",
+    "lede": "Slips and falls are the most expensive injuries at work in BC, and ice is our job. Every new crew member gets a safety orientation before their first shift.",
+    "wearHeading": "What you'd wear on shift",
+    "wear": [
+      { "title": "For salting", "note": "A thick hoodie, a toque and light gloves are recommended." },
+      { "title": "For snow removal", "note": "A base layer that wicks sweat, a warm middle layer, a waterproof jacket and pants, insulated waterproof boots and thick gloves." },
+      { "title": "Gloves plus a dry spare pair, a toque, spare socks", "note": "Wet gloves in the cold lead to major discomfort." },
+      { "title": "A high-visibility vest or jacket and a headlamp (required)", "note": "Every night." },
+      { "title": "A charged phone and a power bank", "note": "Cold drains batteries fast." }
+    ],
+    "basicsHeading": "The safety basics",
+    "basics": [
+      { "title": "Slips and falls", "items": ["Short, slow steps with your feet flat under you.", "Hands out of your pockets so you can catch yourself.", "Watch for black ice in shade and on ramps, stairs and metal plates.", "Getting in or out of a truck or UTV: three points of contact. Never jump down."] },
+      { "title": "Cold and wet", "items": ["Feeling cold is the first warning. Wet clothes and wind chill you fast, even on a mild, rainy night.", "Frostbite: pale or waxy skin that goes numb or stings, often fingers, toes, ears, nose or cheeks.", "Hypothermia: shivering, then dizzy, very tired or cranky. If shivering stops, it is getting worse: get warm and call 911.", "Crew warm up in the truck and check on each other."] },
+      { "title": "Salt, shovels and machines", "items": ["Gloves around ice melt. Wash your hands before you eat.", "Push snow, don't lift it when you can avoid it. Bend your knees, small loads.", "Clearing a jam in a blower or spreader: engine off, wait for everything to stop, use a tool, never a hand.", "UTVs: seatbelt every time, slow on ice and turns."] },
+      { "title": "Night work, traffic and driving", "items": ["High-vis and headlamp on in every lot. Assume drivers can't see you.", "Never stand behind a vehicle, plow or UTV that is backing up.", "On North Shore hills, drive slowly and brake early. No phone while driving."] },
+      { "title": "Your rights", "items": ["In BC every new worker, and every worker under 25, gets a safety orientation before starting.", "You can refuse work you believe is unsafe. Tell your supervisor right away.", "Every injury is reported the same shift, even a small one.", "If you ever have a question, ask in the app, by text, by phone or in person."] }
+    ]
+  },
+  "faq": {
+    "heading": "Questions people ask",
+    "groups": [
+      { "label": "The job", "items": [
+        { "q": "Do I need experience?", "a": "Ideally you have done snow removal before, but it is not required." },
+        { "q": "Is it hard work?", "a": "It can be. North Shore snow is wet and heavy, and so are salt bags. Most nights are salting, which is lighter than shovelling, but you are on your feet outside for hours." },
+        { "q": "What does the season look like?", "a": "Our season runs November to April, and the work follows the weather. Some weeks are busy and some are quiet." }
+      ] },
+      { "label": "Storms and schedule", "items": [
+        { "q": "Is it night work?", "a": "Usually, yes. Sites have to be safe before people arrive in the morning, so many nights start late or very early. A night can be a few hours or most of the night, and a big storm can mean a few nights in a row. Salting is usually done from 6 PM to 10 PM. Snow removal is on call." },
+        { "q": "How much notice do I get?", "a": "Often a heads-up a day or two ahead from the forecast, then the final call a few hours before. North Shore weather changes fast." },
+        { "q": "Do you go out when it just rains?", "a": "Plain rain usually doesn't need salt. Rain near zero that turns to freezing rain does, and so does a clear, cold night after rain, when black ice forms. On site we check the ground temperature with an infrared thermometer." },
+        { "q": "Can I work around school or another job?", "a": "Yes. Tell us your availability and we can talk about how call-outs would work for you." }
+      ] },
+      { "label": "Pay and getting there", "items": [
+        { "q": "What's the pay?", "a": "We'll go over pay, pay day, overtime and standby with you in person." },
+        { "q": "How are hours counted?", "a": "Your shift is recorded in the crew app from when you start your route to when you finish it." },
+        { "q": "Do I need a licence or my own car?", "a": "Yes." },
+        { "q": "What gear do you supply?", "a": "We supply headlamps, helmets for ATVs and UTVs, and safety vests." }
+      ] },
+      { "label": "The app and your phone", "items": [
+        { "q": "What is the crew app?", "a": "We run every storm in our crew app on your phone: your route, check-ins at each site, photos and salt used. We show you how it works before your first shift." },
+        { "q": "Does it track my location?", "a": "Only while your route is running. It stops when you finish the route." }
+      ] }
+    ]
+  },
+  "cta": { "title": "Questions?", "text": "Ask anyone at the hiring event, or text 604-831-6454." },
+  "sourcesIntro": "Safety points are based on WorkSafeBC and CCOHS guidance:",
+  "sources": [
+    { "label": "WorkSafeBC: cold stress", "url": "https://www.worksafebc.com/en/health-safety/hazards-exposures/cold-stress" },
+    { "label": "WorkSafeBC: refusing unsafe work", "url": "https://www.worksafebc.com/en/health-safety/create-manage/rights-responsibilities/refusing-unsafe-work" },
+    { "label": "WorkSafeBC: high-visibility clothing", "url": "https://www.worksafebc.com/en/health-safety/tools-machinery-equipment/personal-protective-equipment-ppe/types/high-visibility-clothing" },
+    { "label": "CCOHS: snow shovelling", "url": "https://www.ccohs.ca/oshanswers/ergonomics/snow_shovelling.html" }
+  ]
+}

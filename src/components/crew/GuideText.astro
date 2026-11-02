@@ -1,0 +1,22 @@
+---
+/**
+ * One line of crew-guide copy from src/data/crew-guide.json.
+ *
+ * The guide marks anything still to be confirmed on the day with the token
+ * "[Ask today]". It renders as a small grey chip instead of literal
+ * brackets, so a placeholder can sit in the copy without reading as a typo.
+ * The current copy has none; this keeps a future edit to the JSON a
+ * one-file change.
+ */
+interface Props {
+  text: string
+}
+
+const { text } = Astro.props
+const TOKEN = '[Ask today]'
+const parts = text.split(TOKEN)
+---
+
+{parts.map((part, i) => (
+  <Fragment>{part}{i < parts.length - 1 && <span class="mx-0.5 inline-flex items-center rounded-full bg-frost-100 px-2 py-0.5 align-middle text-xs font-semibold whitespace-nowrap text-body">Ask today</span>}</Fragment>
+))}

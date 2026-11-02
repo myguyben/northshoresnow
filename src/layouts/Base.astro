@@ -53,10 +53,11 @@ const speculate = path !== '/contact' && path !== '/thank-you'
  * The corner card that asks a browsing visitor for an address
  * (components/QuotePrompt.astro; the rules for when it appears are in
  * scripts/quote-prompt.ts). Not on the page that already asks (/contact),
- * the page that has just been answered (/thank-you), the legal pages, or
- * a dead link — none of those is a visitor weighing up a quote.
+ * the page that has just been answered (/thank-you), the legal pages,
+ * a dead link, or the hiring-day crew guide (/crew, read by job seekers) —
+ * none of those is a visitor weighing up a quote.
  */
-const NO_QUOTE_PROMPT = ['/contact', '/thank-you', '/privacy', '/terms', '/404']
+const NO_QUOTE_PROMPT = ['/contact', '/thank-you', '/privacy', '/terms', '/404', '/crew']
 const quotePrompt = !NO_QUOTE_PROMPT.includes(path)
 
 const SPECULATION_RULES = JSON.stringify({

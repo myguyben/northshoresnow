@@ -2,6 +2,16 @@
 import { SITE, SERVICE_LINKS, AREA_LINKS, INDUSTRY_LINKS } from '../lib/site'
 
 const year = new Date().getFullYear()
+
+/**
+ * The hiring-day crew guide (/crew) is North Shore Snow's page for people
+ * joining the crew, and it calls the dispatch software "our crew app"
+ * without naming a vendor. The "Powered by" credit would undo that, so it
+ * is left off that one page. build.format 'file' means pathname is
+ * '/crew.html'.
+ */
+const path = Astro.url.pathname.replace(/\.html$/, '')
+const showPoweredBy = path !== '/crew'
 ---
 
 <footer class="bg-ink-950 pt-16 pb-8 text-body-dark">
@@ -64,8 +74,12 @@ const year = new Date().getFullYear()
     >
       <p>
         © {year} {SITE.legalName} All rights reserved.
-        <span class="mx-1.5 opacity-40">·</span>
-        <a href="https://iceysoftware.com" class="footer-link">Powered by Icey Software</a>
+        {showPoweredBy && (
+          <Fragment>
+            <span class="mx-1.5 opacity-40">·</span>
+            <a href="https://iceysoftware.com" class="footer-link">Powered by Icey Software</a>
+          </Fragment>
+        )}
       </p>
       <nav class="flex gap-6" aria-label="Legal">
         <a href="/privacy" class="footer-link">Privacy</a>
