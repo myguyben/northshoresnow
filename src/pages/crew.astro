@@ -60,21 +60,26 @@ const summaryClass =
     </div>
   </section>
 
-  {/* Sticky under the fixed 72px header. Its own overflow scroll is the
-      fallback on the narrowest phones, so the page itself never scrolls
-      sideways. */}
+  {/* Sticky under the fixed 72px header. At 15px with px-3.5 the four links
+      need 355px, which clipped "Q&A" on 360px Androids and 375px iPhones
+      and hid it entirely at 320. Below 390px they drop to 14px with px-2
+      (286px) and spread across the bar. The bar's own overflow scroll stays
+      as a fallback, so the page itself never scrolls sideways.
+      The bar is 61px tall, so each section's scroll-mt-[133px] (72 + 61)
+      lands its top exactly under it, with no sliver of the hero between
+      the header and the bar. */}
   <nav
     aria-label="On this page"
     class="sticky top-[72px] z-30 border-b border-frost-200 bg-white/95 backdrop-blur-md"
   >
     <div class="container-site max-w-4xl !px-3 md:!px-6">
-      <ul class="flex gap-1 overflow-x-auto py-2 [scrollbar-width:none]" role="list">
+      <ul class="flex justify-between gap-0.5 overflow-x-auto py-2 [scrollbar-width:none] min-[390px]:justify-start min-[390px]:gap-1" role="list">
         {jumps.map((jump) => (
           <li class="shrink-0">
             <a
               href={`#${jump.id}`}
               data-jump={jump.id}
-              class="flex min-h-11 items-center rounded-full px-3.5 text-[15px] font-semibold whitespace-nowrap text-ink-900 transition-colors hover:bg-frost-100 aria-[current=location]:bg-ink-950 aria-[current=location]:text-white"
+              class="flex min-h-11 items-center rounded-full px-2 text-[14px] font-semibold whitespace-nowrap text-ink-900 transition-colors hover:bg-frost-100 aria-[current=location]:bg-ink-950 aria-[current=location]:text-white min-[390px]:px-3.5 min-[390px]:text-[15px]"
             >
               {jump.label}
             </a>
@@ -85,7 +90,7 @@ const summaryClass =
   </nav>
 
   {/* ── The job ─────────────────────────────────────────────── */}
-  <section id="job" class="scroll-mt-[136px] bg-white py-14 md:py-20">
+  <section id="job" class="scroll-mt-[133px] bg-white py-14 md:py-20">
     <div class="container-site max-w-4xl">
       <h2 class="h2"><GuideText text={job.heading} /></h2>
       <p class="mt-4 text-lg leading-relaxed"><GuideText text={job.lede} /></p>
@@ -126,7 +131,7 @@ const summaryClass =
   </section>
 
   {/* ── A storm night ───────────────────────────────────────── */}
-  <section id="night" class="scroll-mt-[136px] border-y border-frost-100 bg-frost-50 py-14 md:py-20">
+  <section id="night" class="scroll-mt-[133px] border-y border-frost-100 bg-frost-50 py-14 md:py-20">
     <div class="container-site max-w-4xl">
       <h2 class="h2"><GuideText text={night.heading} /></h2>
       <ol class="mt-8" role="list">
@@ -152,7 +157,7 @@ const summaryClass =
   </section>
 
   {/* ── Safety ──────────────────────────────────────────────── */}
-  <section id="safety" class="scroll-mt-[136px] bg-white py-14 md:py-20">
+  <section id="safety" class="scroll-mt-[133px] bg-white py-14 md:py-20">
     <div class="container-site max-w-4xl">
       <h2 class="h2"><GuideText text={safety.heading} /></h2>
       <p class="mt-4 text-lg leading-relaxed"><GuideText text={safety.lede} /></p>
@@ -221,7 +226,7 @@ const summaryClass =
   </section>
 
   {/* ── Q&A ─────────────────────────────────────────────────── */}
-  <section id="faq" class="scroll-mt-[136px] border-t border-frost-100 bg-frost-50 py-14 md:py-20">
+  <section id="faq" class="scroll-mt-[133px] border-t border-frost-100 bg-frost-50 py-14 md:py-20">
     <div class="container-site max-w-4xl">
       <h2 class="h2"><GuideText text={faq.heading} /></h2>
       {faq.groups.map((group) => (
