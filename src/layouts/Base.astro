@@ -60,6 +60,15 @@ const speculate = path !== '/contact' && path !== '/thank-you'
 const NO_QUOTE_PROMPT = ['/contact', '/thank-you', '/privacy', '/terms', '/404', '/crew']
 const quotePrompt = !NO_QUOTE_PROMPT.includes(path)
 
+/**
+ * The sticky Call / Email / Get a Quote bar (components/MobileCallBar.astro)
+ * is for customers. Not on the hiring-day crew guide (/crew): its Call link
+ * counts as a sales call in Google Ads, and a job seeker tapping it would
+ * show up as a customer conversion. Ben, 2026-11-02.
+ */
+const NO_CALL_BAR = ['/crew']
+const callBar = !NO_CALL_BAR.includes(path)
+
 const SPECULATION_RULES = JSON.stringify({
   prerender: [{ source: 'list', urls: ['/contact#quote'], eagerness: 'immediate' }],
   prefetch: [
@@ -137,7 +146,7 @@ const SPECULATION_RULES = JSON.stringify({
       <slot />
     </main>
     <Footer />
-    <MobileCallBar />
+    {callBar && <MobileCallBar />}
     {quotePrompt && <QuotePrompt />}
 
     <!-- Runs with or without pixels configured: a lead still has to carry its
